@@ -33,7 +33,7 @@ class Instapago
 	protected $keyId;
 	protected $publicKeyId;
 
-	public function __construct ($keyId,$publicKeyId) 
+	public function __construct ($keyId,$publicKeyId)
 	{
 
 		try {
@@ -80,4 +80,4 @@ class Instapago
 		# code...
 	} // process
 
-}
+} // end class

@@ -12,9 +12,22 @@
 
 ## instalación
 
-```bash
-$ composer require abr4xas/instapago
+// TODO
+
+
+## ejemplo
+
+```php
+$api = new Instapago('<keyId>','<publicKeyId>');
 ```
+
+### llaves de pruebas
+
+```
+* keyId = 74D4A278-C3F8-4D7A-9894-FA0571D7E023
+* publicKeyId = e9a5893e047b645fed12c82db877e05a
+```
+
 
 ## enlaces
 
