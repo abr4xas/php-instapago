@@ -30,5 +30,54 @@
 class Instapago
 {
 
-	// Code
+	protected $keyId;
+	protected $publicKeyId;
+
+	public function __construct ($keyId,$publicKeyId) 
+	{
+
+		try {
+			if (empty($keyId) && empty($publicKeyId)) {
+				throw new Exception('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
+			}elseif (empty($keyId)) {
+				throw new Exception('El parámetro "keyId" es requerido para procesar la petición. sss');
+			}else{
+				$this->keyId = $keyId;
+			}
+			if (empty($publicKeyId)) {
+				throw new Exception('El parámetro "publicKeyId" es requerido para procesar la petición.');
+			}else{
+				$this->publicKeyId = $publicKeyId;
+			}
+		} catch (Exception $e) {
+			echo '<pre>Message: ' . $e->getMessage() . '</pre>';
+		} // end try/catch
+
+	} // end construct
+
+	public function payment()
+	{
+		# code...
+	} // end payment
+
+	public function continuePayment()
+	{
+		# code...
+	} // continuePayment
+
+	public function cancelPayment()
+	{
+		# code...
+	} // cancelPayment
+
+	public function paymentInfo()
+	{
+		# code...
+	} // paymentInfo
+
+	public function process()
+	{
+		# code...
+	} // process
+
 }
