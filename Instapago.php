@@ -25,7 +25,7 @@
  * @author Angel Cruz <me@abr4xas.org>
 */
 
-namespace Instapago;
+
 
 class Instapago
 {
