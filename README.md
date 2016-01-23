@@ -16,6 +16,13 @@
 $ composer require abr4xas/instapago
 ```
 
+## enlaces
+
+* [Documentación de la librería](DOCUMENTACION.md)
+* [Registro de cambios](CHANGELOG.md)
+* [Colaboración](CONTRIBUCION.md)
+* [Autores](AUTORES.md)
+
 ## licencia
 
 Licencia [MIT](http://opensource.org/licenses/MIT) :copyright: 2016
