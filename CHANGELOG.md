@@ -5,5 +5,5 @@
 
 ### Nuevo 
 
-* Métodos '__construct`, `get_ip`, `payment`.
+* Métodos `__construct`, `get_ip`, `payment`.
 * `DOCUMENTACION.md`
