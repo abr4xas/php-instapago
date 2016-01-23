@@ -28,7 +28,6 @@ $api = new Instapago('<keyId>','<publicKeyId>');
 * publicKeyId = e9a5893e047b645fed12c82db877e05a
 ```
 
-
 ## enlaces
 
 * [Documentación de la librería](DOCUMENTACION.md)
