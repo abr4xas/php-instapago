@@ -168,9 +168,4 @@ class Instapago
         # code...
     } // paymentInfo
 
-    public function process()
-    {
-        # code...
-    } // process
-
 } // end class
