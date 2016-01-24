@@ -39,6 +39,7 @@ class Instapago
     public 		$Amount;
     public 		$Description;
     public 		$StatusId;
+    public      $ip_addres;
     public      $idpago;
 
 
@@ -63,31 +64,14 @@ class Instapago
         } // end try/catch
 
     } // end construct
-    // https://www.chriswiegman.com/2014/05/getting-correct-ip-address-php/
-    public function get_ip()
-    {
-        if (function_exists( 'apache_request_headers')) {
-            $headers = apache_request_headers();
-        } else {
-            $headers = $_SERVER;
-        }
-        if (array_key_exists('X-Forwarded-For', $headers) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            $the_ip = $headers['X-Forwarded-For'];
-        }elseif (array_key_exists( 'HTTP_X_FORWARDED_FOR', $headers) && filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            $the_ip = $headers['HTTP_X_FORWARDED_FOR'];
-        }else {
-            $the_ip = filter_var( $_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-        }
-        return $the_ip;
-    } // end get_ip
 
-    public function payment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId)
+    public function payment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres)
     {
         try {
             if (empty($Amount) && empty($Description) &&
                 empty($CardHolder) && empty($CardHolderId) &&
                 empty($CardNumber) && empty($CVC) &&
-                empty($ExpirationDate) && empty($StatusId)) {
+                empty($ExpirationDate) && empty($StatusId) && empty($ip_addres)) {
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
@@ -99,6 +83,7 @@ class Instapago
             $this->CVC 			= $CVC;
             $this->ExpirationDate = $ExpirationDate;
             $this->StatusId		= $StatusId;
+            $thi->ip_addres     = $ip_addres;
 
             $url = 'https://api.instapago.com/payment'; // endpoint
             $fields = [
@@ -112,7 +97,7 @@ class Instapago
                 "CVC"               => $this->CVC, //required
                 "ExpirationDate"    => $this->ExpirationDate, //required
                 "StatusId"          => $this->StatusId, //required
-                "IP"                => $this->get_ip() //required
+                "IP"                => $this->ip_addres //required
             ];
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL,$url );
