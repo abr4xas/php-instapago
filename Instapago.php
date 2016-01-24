@@ -163,7 +163,7 @@ class Instapago
         # code...
     } // cancelPayment
 
-    public function paymentInfo() // este es el unico que sera GET
+    public function paymentInfo()
     {
         # code...
     } // paymentInfo
