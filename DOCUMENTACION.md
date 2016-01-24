@@ -10,7 +10,7 @@
 ## tabla de contenido
 
 * [instalación](#instalación)
-* [uso de la librería](#usodela-librería)
+* [uso de la librería](#uso-de-la-librería)
 	* [crear un pago](#crear-un-pago)
         * [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
         * [parámetros opcionales para crear el pago](#parámetros-opcionales-para-crear-el-pago)
