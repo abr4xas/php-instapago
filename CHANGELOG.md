@@ -4,6 +4,8 @@
 
 
 ### Nuevo
-* Eliminado `process()`
+
+* Agregado `paymentInfo`
+* Eliminado `process`
 * Métodos `__construct`, `get_ip`, `payment`.
 * `DOCUMENTACION.md`
