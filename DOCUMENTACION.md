@@ -72,7 +72,7 @@ en la misma MM/YYYY. Por Ejemplo: 10/2015.
 ```php
 $api = new Instapago('<keyId>','<publicKeyId>');
 
-$pago = $api->payment(200,"test","jon doe",11111111,4111111111111111,123,"02/2016","2");
+$pago = $api->payment("200","test","jon doe","11111111","4111111111111111","123","02/2016","2");
 
 echo '
 	Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br> 
