@@ -23,7 +23,7 @@
 ## instalación
 
 ```bash
-// TODO
+$ composer require abr4xas/instapago
 ```
 
 ## uso de la librería

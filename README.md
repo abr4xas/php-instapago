@@ -12,7 +12,9 @@
 
 ## instalación
 
-// TODO
+```bash
+$ composer require abr4xas/instapago
+```
 
 
 ## ejemplo
