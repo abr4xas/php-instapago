@@ -90,8 +90,6 @@ class Instapago
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
-            $url = 'https://api.instapago.com/payment'; // endpoint
-
             $this->Amount 		= $Amount;
             $this->Description 	= $Description;
             $this->CardHolder 	= $CardHolder;
@@ -101,7 +99,7 @@ class Instapago
             $this->ExpirationDate = $ExpirationDate;
             $this->StatusId		= $StatusId;
 
-            $url = 'https://api.instapago.com/payment';
+            $url = 'https://api.instapago.com/payment'; // endpoint
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
