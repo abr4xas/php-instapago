@@ -5,6 +5,7 @@
 
 ### Nuevo
 
+* Agregado  `continuePayment` y `cancelayment`
 * Eliminado `get_ip`
 * Agregado `paymentInfo`
 * Eliminado `process`
