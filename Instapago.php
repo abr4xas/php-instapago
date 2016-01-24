@@ -39,6 +39,7 @@ class Instapago
     public 		$Amount;
     public 		$Description;
     public 		$StatusId;
+    public      $idpago;
 
 
     public function __construct ($keyId,$publicKeyId)
@@ -135,9 +136,9 @@ class Instapago
                 throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
             }elseif ($code == 201) {
                 $msg_banco  = $obj->message;
-                $voucher  = $obj->voucher;
-                $voucher = html_entity_decode($voucher);
-                $id_pago  = $obj->id;
+                $voucher    = $obj->voucher;
+                $voucher    = html_entity_decode($voucher);
+                $id_pago    = $obj->id;
                 $reference  = $obj->reference;
             }
         } catch (Exception $e) {
@@ -163,9 +164,48 @@ class Instapago
         # code...
     } // cancelPayment
 
-    public function paymentInfo()
+    public function paymentInfo($idpago)
     {
-        # code...
+        try {
+            if (empty($idpago)) {
+                throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+            }
+
+            $this->idpago = $idpago;
+
+            $url = 'https://api.instapago.com/payment'; // endpoint
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idpago);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $server_output = curl_exec($ch);
+            curl_close ($ch);
+            $obj = json_decode($server_output);
+            $code = $obj->code;
+
+            if ($code == 400) {
+                throw new Exception('Error al validar los datos enviados.');
+            }elseif ($code == 401) {
+                throw new Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+            }elseif ($code == 500) {
+                throw new Exception('Ha Ocurrido un error interno dentro del servidor.');
+            }elseif ($code == 503) {
+                throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+            }elseif ($code == 201) {
+                $msg_banco  = $obj->message;
+                $voucher    = $obj->voucher;
+                $voucher    = html_entity_decode($voucher);
+                $id_pago    = $obj->id;
+                $reference  = $obj->reference;
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        } // end try/catch
+        return array(
+            'msg_banco' => $msg_banco,
+            'voucher' 	=> $voucher,
+            'id_pago'	=> $id_pago,
+            'reference' => $reference
+        );
     } // paymentInfo
 
 } // end class
