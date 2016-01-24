@@ -122,12 +122,12 @@ Para realizar las pruebas, se provee de los siguientes datos para comprobar la i
 
 Pueden indicar cualquier valor para Cédula o RIF, Fecha de Vencimiento y CVC:
 
-    * Visa: ```4111111111111111```
-    * American Express: ```378282246310005```
-    * MasterCard: ```5105105105105100```
-    * Sambil: ```8244001100110011``
-    * Rattan: ```8244021100110011```
-    * Locatel: ```8244041100110011```
+* Visa: ```4111111111111111```
+* American Express: ```378282246310005```
+* MasterCard: ```5105105105105100```
+* Sambil: ```8244001100110011``
+* Rattan: ```8244021100110011```
+* Locatel: ```8244041100110011```
 
 # licencia
 

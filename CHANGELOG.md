@@ -5,6 +5,7 @@
 
 ### Nuevo
 
+* Eliminado `get_ip`
 * Agregado `paymentInfo`
 * Eliminado `process`
 * Métodos `__construct`, `get_ip`, `payment`.
