@@ -16,7 +16,7 @@
     "support": {
         "issues": "https://github.com/abr4xas/php-instapago/issues"
     },
-    "minimum-stability": "dev-master",
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0"
     },
