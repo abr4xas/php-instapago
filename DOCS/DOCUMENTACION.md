@@ -11,10 +11,11 @@
 
 * [instalación](#instalación)
 * [uso de la librería](#uso-de-la-librería)
-	* [crear un pago](#crear-un-pago)
+    * [crear un pago](#crear-un-pago)
         * [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
         * [parámetros opcionales para crear el pago](#parámetros-opcionales-para-crear-el-pago)
         * [ejemplo](#ejemplo)
+* [tarjetas de prueba](#tarjetas-de-prueba)
 * [códigos de respuesta](#códigos-de-respuesta)
 * [licencia](#licencia)
 
@@ -75,10 +76,10 @@ $api = new Instapago('<keyId>','<publicKeyId>');
 $pago = $api->payment("200","test","jon doe","11111111","4111111111111111","123","02/2016","2");
 
 echo '
-	Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br> 
-	Voucher</br>'.$pago['voucher'] .'</br> 
-	Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br> 
-	Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
+    Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br>
+    Voucher</br>'.$pago['voucher'] .'</br>
+    Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
+    Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
 ```
 
 ### códigos de respuesta
@@ -95,6 +96,19 @@ caracteres con la descripción del error).
 enviados y vuelva a intentarlo.
 
 > **Importante**: Si recibe un código de respuesta diferente a los antes descritos deben ser tomados como errores de protocolo HTTP.
+
+## Tarjetas de prueba
+Para realizar las pruebas, se provee de los siguientes datos para comprobar la integración:
+
+* tarjetas aprobadas:
+Pueden indicar cualquier valor para Cédula o RIF, Fecha de Vencimiento y CVC:
+
+    * Visa: ```4111111111111111```
+    * American Express: ```378282246310005```
+    * MasterCard: ```5105105105105100```
+    * Sambil: ```8244001100110011``
+    * Rattan: ```8244021100110011```
+    * Locatel: ```8244041100110011```
 
 # licencia
 
