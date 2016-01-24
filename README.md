@@ -7,8 +7,9 @@
 <p align="center">
     <sup style="color: #d0d0d0;"><b>NOTA</b> Los logos son propiedad de Instapago y Banesco, respectivamente.</sup>
 </p>
-[![Latest Stable Version](https://poser.pugx.org/abr4xas/instapago/v/stable)](https://packagist.org/packages/abr4xas/instapago)
-[![Total Downloads](https://poser.pugx.org/abr4xas/instapago/downloads)](https://packagist.org/packages/abr4xas/instapago)[![License](https://poser.pugx.org/abr4xas/instapago/license)](https://packagist.org/packages/abr4xas/instapago)
+
+[![Stable Version](https://poser.pugx.org/abr4xas/instapago/v/stable)](https://packagist.org/packages/abr4xas/instapago)
+[![Total Downloads](https://poser.pugx.org/abr4xas/instapago/downloads)](https://packagist.org/packages/abr4xas/instapago) [![License](https://poser.pugx.org/abr4xas/instapago/license)](https://packagist.org/packages/abr4xas/instapago)
 ----
 
 ## instalación
