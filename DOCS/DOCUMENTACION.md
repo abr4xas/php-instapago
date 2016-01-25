@@ -58,10 +58,6 @@ separadores.
     * 2: Pagar (Autorización).
 * `ip` Dirección IP del cliente.
 
-#### Parámetros _opcionales_ para crear el pago
-
-// TODO
-
 ### ejemplo
 
 ```php
@@ -75,6 +71,14 @@ echo '
     Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
     Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
 ```
+
+#### Parámetros _opcionales_ para crear el pago
+
+* `order_number` Número de orden del pago según el comercio.
+* `address` Dirección asociada a la tarjeta. Utilizada por algunos bancos para mayor seguridad.
+* `city` Ciudad asociada a la tarjeta. Utilizada por algunos bancos para mayor seguridad.
+* `zip_code` Código Postal asociada a la tarjeta. Utilizado por algunos bancos para mayor seguridad.
+* `state` Estado o provincia asociada a la tarjeta. Utilizado por algunos bancos para mayor seguridad.
 
 ### información del pago
 
