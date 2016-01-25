@@ -80,6 +80,14 @@ echo '
 * `zip_code` Código Postal asociada a la tarjeta. Utilizado por algunos bancos para mayor seguridad.
 * `state` Estado o provincia asociada a la tarjeta. Utilizado por algunos bancos para mayor seguridad.
 
+### ejemplo
+
+```
+// TODO
+
+```
+
+
 ### información del pago
 
 Consulta información sobre un pago generado anteriormente. Requiere como parámetro el `id` que es el código de referencia de la transacción ejemplo:
