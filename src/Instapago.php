@@ -42,7 +42,6 @@ class Instapago
     public      $ip_addres;
     public      $idpago;
 
-
     public function __construct ($keyId,$publicKeyId)
     {
 
@@ -75,15 +74,15 @@ class Instapago
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
-            $this->Amount 		= $Amount;
-            $this->Description 	= $Description;
-            $this->CardHolder 	= $CardHolder;
-            $this->CardHolderId = $CardHolderId;
-            $this->CardNumber 	= $CardNumber;
-            $this->CVC 			= $CVC;
-            $this->ExpirationDate = $ExpirationDate;
-            $this->StatusId		= $StatusId;
-            $this->ip_addres     = $ip_addres;
+            $this->Amount           = $Amount;
+            $this->Description      = $Description;
+            $this->CardHolder       = $CardHolder;
+            $this->CardHolderId     = $CardHolderId;
+            $this->CardNumber       = $CardNumber;
+            $this->CVC 			    = $CVC;
+            $this->ExpirationDate   = $ExpirationDate;
+            $this->StatusId		    = $StatusId;
+            $this->ip_addres        = $ip_addres;
 
             $url = 'https://api.instapago.com/payment'; // endpoint
             $fields = [
