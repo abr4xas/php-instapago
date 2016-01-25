@@ -9,7 +9,6 @@
 
 ## tabla de contenido
 
-* [instalación](#instalación)
 * [uso de la librería](#uso-de-la-librería)
     * [crear un pago](#crear-un-pago)
         * [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
@@ -20,11 +19,6 @@
 * [códigos de respuesta](#códigos-de-respuesta)
 * [licencia](#licencia)
 
-## instalación
-
-```bash
-$ composer require abr4xas/instapago
-```
 
 ## uso de la librería
 

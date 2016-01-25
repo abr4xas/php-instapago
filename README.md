@@ -10,14 +10,7 @@
 
 ----
 
-## instalación
-
-```bash
-$ composer require abr4xas/instapago
-```
-
-
-## ejemplo
+## como usar
 
 ```php
 $api = new Instapago('<keyId>','<publicKeyId>');
