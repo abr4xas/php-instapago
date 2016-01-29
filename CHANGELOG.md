@@ -5,6 +5,7 @@
 
 ### Nuevo
 
+* Actualizada `DOCUMENTACION.md` y el archivo `Instapago.php`
 * Agregado  `continuePayment` y `cancelayment`.
 * Eliminado `get_ip`.
 * Agregado `paymentInfo`.
