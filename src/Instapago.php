@@ -2,7 +2,7 @@
 
 /**
  * The MIT License (MIT)
- * Copyright © 2013 Angel Cruz <me@abr4xas.org>
+ * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -42,6 +42,12 @@ class Instapago
     public      $ip_addres;
     public      $idpago;
 
+    /**
+     * Crear un nuevo objeto de Instapago
+     * @param string $keyId llave privada
+     * @param string $publicKeyId llave publica
+     * Requeridas.
+     */
     public function __construct ($keyId,$publicKeyId)
     {
 
@@ -63,6 +69,12 @@ class Instapago
         } // end try/catch
 
     } // end construct
+
+    /**
+     * Crear un pago
+     * Efectúa un pago con tarjeta de crédito, una vez procesado retornar una respuesta.
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#crear-un-pago
+     */
 
     public function payment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres)
     {
@@ -138,6 +150,13 @@ class Instapago
 
     } // end payment
 
+    /**
+     * Completar Pago
+     * Este método funciona para procesar un bloqueo o pre-autorización, para así procesarla y hacer el cobro respectivo.
+     * Para usar este método es necesario configurar en payment() el parametro StatusId a 1
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago
+     */
+
     public function continuePayment($Amount,$idpago)
     {
         try {
@@ -193,6 +212,12 @@ class Instapago
         );
     } // continuePayment
 
+    /**
+     * Anular Pago
+     * Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago
+     */
+
     public function cancelPayment($idpago)
     {
         try {
@@ -245,6 +270,13 @@ class Instapago
             'reference' => $reference
         );
     } // cancelPayment
+
+    /**
+     * Información del Pago
+     * Consulta información sobre un pago generado anteriormente. 
+     * Requiere como parámetro el `id` que es el código de referencia de la transacción 
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#información-del-pago
+     */
 
     public function paymentInfo($idpago)
     {
