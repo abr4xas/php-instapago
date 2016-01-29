@@ -25,10 +25,10 @@ $api = new Instapago('<keyId>','<publicKeyId>');
 
 ## enlaces
 
-* [Documentación de la librería](DOCS/DOCUMENTACION.md)
+* [Documentación de la librería](help/DOCUMENTACION.md)
 * [Registro de cambios](CHANGELOG.md)
-* [Colaboración](DOCS/CONTRIBUCION.md)
-* [Autores](DOCS/AUTORES.md)
+* [Colaboración](help/CONTRIBUCION.md)
+* [Autores](help/AUTORES.md)
 
 ## licencia
 

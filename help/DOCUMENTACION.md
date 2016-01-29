@@ -14,6 +14,8 @@
         * [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
         * [parámetros opcionales para crear el pago](#parámetros-opcionales-para-crear-el-pago)
         * [ejemplo](#ejemplo)
+    * [completar pago](#completar-pago)
+    * [anular pago](#anular-pago)
     * [información del pago](#información-del-pago)
 * [tarjetas de prueba](#tarjetas-de-prueba)
 * [códigos de respuesta](#códigos-de-respuesta)
@@ -84,6 +86,36 @@ echo '
 
 ```
 // TODO
+```
+
+### completar pago
+
+Este método funciona para procesar un bloqueo o pre-autorización, para así procesarla y hacer el cobro respectivo.
+Para usar este método es necesario configurar en `payment()` el parámetro `$StatusId` a `1`.
+
+* KeyId (Requerido): Llave generada desde Instapago.
+* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.
+* Id (Requerido): Identificador único del pago.
+* Amount (Requerido): Monto por el cual se desea procesar el pago final.
+
+```php
+$api = new Instapago('<keyId>','<publicKeyId>');
+
+$continue = $api->continuePayment('af614bca-0e2b-4232-bc8c-dbedbdf73b48','200');
+```
+
+### anular pago
+
+Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.
+
+* KeyId (Requerido): Llave generada desde Instapago.
+* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.
+* Id (Requerido): Identificador único del pago.
+
+```php
+$api = new Instapago('<keyId>','<publicKeyId>');
+
+$anular = $api->cancelPayment('af614bca-0e2b-4232-bc8c-dbedbdf73b48');
 ```
 
 
