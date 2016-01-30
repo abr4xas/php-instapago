@@ -330,7 +330,7 @@ class Instapago
     /**
      * Crear un pago con parámetros opcionales
      * Efectúa un pago con tarjeta de crédito, una vez procesado retornar una respuesta.
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md##parámetros-opcionales-para-crear-el-pago
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#parámetros-opcionales-para-crear-el-pago
      */
 
     public function fullPayment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres,$order_number,$address,$city,$zip_code,$state)
