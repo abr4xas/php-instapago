@@ -84,8 +84,11 @@ echo '
 
 ### ejemplo
 
-```
-// TODO
+```php
+$api = new Instapago('<keyId>','<publicKeyId>');
+
+$pago = $api->fullPayment('200','test','jon doe','11111111','4111111111111111','123','02/2016','2','127.0.0.1','123','calle 1, edificio 2, apartamento 3','Valencia','2001','Carabobo');
+
 ```
 
 ### completar pago

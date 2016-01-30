@@ -5,6 +5,8 @@
 
 ### Nuevo
 
+* Agregado `fullPayment` en `Instapago.php` y actualizada la `DOCUMENTACION.md`
+* Eliminado archivo `composer.json`
 * Actualizada `DOCUMENTACION.md` y el archivo `Instapago.php`
 * Agregado  `continuePayment` y `cancelayment`.
 * Eliminado `get_ip`.
