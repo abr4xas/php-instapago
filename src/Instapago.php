@@ -25,8 +25,7 @@
  * @author Angel Cruz <me@abr4xas.org>
 */
 
-
-class Instapago extends Exception
+class Instapago
 {
 
     protected 	$keyId;
@@ -80,17 +79,16 @@ class Instapago extends Exception
      * Efectúa un pago con tarjeta de crédito, una vez procesado retornar una respuesta.
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#crear-un-pago
      */
-
     public function payment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres)
     {
         try {
-            if (empty($Amount) && empty($Description) &&
-                empty($CardHolder) && empty($CardHolderId) &&
-                empty($CardNumber) && empty($CVC) &&
-                empty($ExpirationDate) && empty($StatusId) && empty($ip_addres)) {
+            if (empty($Amount) || empty($Description)  ||
+                empty($CardHolder)  || empty($CardHolderId)  ||
+                empty($CardNumber)  || empty($CVC)  ||
+                empty($ExpirationDate)  || empty($StatusId)  || empty($ip_addres)) {
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                die();
             }
-
             $this->Amount           = $Amount;
             $this->Description      = $Description;
             $this->CardHolder       = $CardHolder;
@@ -100,7 +98,6 @@ class Instapago extends Exception
             $this->ExpirationDate   = $ExpirationDate;
             $this->StatusId		    = $StatusId;
             $this->ip_addres        = $ip_addres;
-
             $url = 'https://api.instapago.com/payment'; // endpoint
             $fields = [
                 "KeyID"             => $this->keyId, //required
@@ -124,7 +121,6 @@ class Instapago extends Exception
             curl_close ($ch);
             $obj = json_decode($server_output);
             $code = $obj->code;
-
             if ($code == 400) {
                 throw new Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
@@ -142,17 +138,20 @@ class Instapago extends Exception
                 $id_pago    = $obj->id;
                 $reference  = $obj->reference;
             }
+
+            return [
+                'code'      => $code ,
+                'msg_banco' => $msg_banco,
+                'voucher' 	=> $voucher,
+                'id_pago'	=> $id_pago,
+                'reference' => $reference
+            ];
+
         } catch (Exception $e) {
             echo $e->getMessage();
         } // end try/catch
 
-        return array(
-            'msg_banco' => $msg_banco,
-            'voucher' 	=> $voucher,
-            'id_pago'	=> $id_pago,
-            'reference' => $reference
-        );
-
+        return false;
     } // end payment
 
     /**
@@ -165,7 +164,7 @@ class Instapago extends Exception
     public function continuePayment($Amount,$idpago)
     {
         try {
-            if (empty($Amount) && empty($idpago)) {
+            if (empty($Amount) || empty($idpago)) {
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
@@ -206,15 +205,18 @@ class Instapago extends Exception
                 $id_pago    = $obj->id;
                 $reference  = $obj->reference;
             }
+
+            return [
+                'msg_banco' => $msg_banco,
+                'voucher' 	=> $voucher,
+                'id_pago'	=> $id_pago,
+                'reference' => $reference
+            ];
         } catch (Exception $e) {
             echo $e->getMessage();
         } // end try/catch
-        return array(
-            'msg_banco' => $msg_banco,
-            'voucher' 	=> $voucher,
-            'id_pago'	=> $id_pago,
-            'reference' => $reference
-        );
+
+        return false;
     } // continuePayment
 
     /**
