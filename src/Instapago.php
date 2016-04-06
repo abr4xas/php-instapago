@@ -87,7 +87,6 @@ class Instapago
                 empty($CardNumber)  || empty($CVC)  ||
                 empty($ExpirationDate)  || empty($StatusId)  || empty($ip_addres)) {
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
-                die();
             }
             $this->Amount           = $Amount;
             $this->Description      = $Description;
@@ -112,6 +111,7 @@ class Instapago
                 "StatusId"          => $this->StatusId, //required
                 "IP"                => $this->ip_addres //required
             ];
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL,$url );
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -119,8 +119,11 @@ class Instapago
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $server_output = curl_exec ($ch);
             curl_close ($ch);
+
             $obj = json_decode($server_output);
+
             $code = $obj->code;
+
             if ($code == 400) {
                 throw new Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
@@ -148,10 +151,13 @@ class Instapago
             ];
 
         } catch (Exception $e) {
+
             echo $e->getMessage();
+
         } // end try/catch
 
         return false;
+
     } // end payment
 
     /**
@@ -212,8 +218,11 @@ class Instapago
                 'id_pago'	=> $id_pago,
                 'reference' => $reference
             ];
+
         } catch (Exception $e) {
+
             echo $e->getMessage();
+
         } // end try/catch
 
         return false;
