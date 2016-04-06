@@ -26,7 +26,7 @@
 */
 
 
-class Instapago
+class Instapago extends Exception
 {
 
     protected 	$keyId;
@@ -278,8 +278,8 @@ class Instapago
 
     /**
      * Información del Pago
-     * Consulta información sobre un pago generado anteriormente. 
-     * Requiere como parámetro el `id` que es el código de referencia de la transacción 
+     * Consulta información sobre un pago generado anteriormente.
+     * Requiere como parámetro el `id` que es el código de referencia de la transacción
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#información-del-pago
      */
 
@@ -336,11 +336,7 @@ class Instapago
     public function fullPayment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres,$order_number,$address,$city,$zip_code,$state)
     {
         try {
-            if (empty($Amount) && empty($Description) &&
-                empty($CardHolder) && empty($CardHolderId) &&
-                empty($CardNumber) && empty($CVC) &&
-                empty($ExpirationDate) && empty($StatusId) && empty($ip_addres) && empty($order_number)
-                empty($address) && empty($city) && empty($zip_code) && empty($state)) {
+            if (empty($Amount) && empty($Description) && empty($CardHolder) && empty($CardHolderId) && empty($CardNumber) && empty($CVC) && empty($ExpirationDate) && empty($StatusId) && empty($ip_addres) && empty($order_number) && empty($address) && empty($city) && empty($zip_code) && empty($state)) {
                 throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
