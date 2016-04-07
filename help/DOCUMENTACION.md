@@ -1,4 +1,4 @@
-![Php Instapago](help/hYNsH6B.png)
+![Php Instapago](hYNsH6B.png)
 <p align="center">
     Documentación de la librería <b>Instapago</b>
 </p>
