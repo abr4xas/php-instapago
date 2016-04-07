@@ -1,5 +1,5 @@
 {
-    "name": "instaphp/instapago",
+    "name": "instapagophp/instapago",
     "description": "Librería Instapago para PHP",
     "minimum-stability": "stable",
     "prefer-stable" : true,
