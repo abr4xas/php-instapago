@@ -4,6 +4,8 @@
     "description": "Librería Instapago para PHP",
     "keywords": ["venezuela","instapago","banesco"],
     "license": "MIT",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "abr4xas",
@@ -11,6 +13,9 @@
             "homepage": "http://abr4xas.org"
         }
     ],
+    "require": {
+        "php": ">=5.5.0"
+    },
     "autoload": {
         "psr-0": {
             "Instapago": "src/"
