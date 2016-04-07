@@ -26,7 +26,7 @@ creamos un archivo `index.php`
 
 ```php
 <?php 
-require_once 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 use Instapago\Instapago;
 
