@@ -8,9 +8,9 @@
             "email": "me@abr4xas.org"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "require": {
-        "php": "5.6.*"
+        "php": ">=5.6.*"
     },
     "autoload": {
         "psr-0": {
