@@ -5,6 +5,7 @@
 <p align="center">
     <sup style="color: #d0d0d0;"><b>NOTA</b> Los logos son propiedad de Instapago y Banesco, respectivamente.</sup>
 </p>
+[![GitHub issues](https://img.shields.io/github/issues/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/issues) [![GitHub forks](https://img.shields.io/github/forks/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/network) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/abr4xas/php-instapago/master/LICENSE)
 
 ----
 
@@ -32,7 +33,7 @@ use Instapago\Instapago;
 
 $api = new Instapago('<keyId>','<publicKeyId>');
 ```
-Podemos revisar rapidamente si todo funciona correctamente escribiendo:
+Podemos revisar rápidamente si todo funciona correctamente escribiendo:
 
 ```bash
 $ php -S localhost:8000
