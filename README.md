@@ -8,10 +8,34 @@
 
 ----
 
-## como usar
+## instalación
+
+Primero, `composer`
+
+`curl -sS https://getcomposer.org/installer | php`
+
+Luego:
+
+```
+$ composer require instapago/instapago "0.3.1-beta"
+$ composer dumpautoload -o
+```
+### como usar
+
+creamos un archivo `index.php`
 
 ```php
+<?php 
+require_once 'vendor/autoload.php';
+
+use Instapago\Instapago;
+
 $api = new Instapago('<keyId>','<publicKeyId>');
+```
+Podemos revisar rapidamente si todo funciona correctamente escribiendo:
+
+```bash
+$ php -S localhost:8000
 ```
 
 ### llaves de pruebas
