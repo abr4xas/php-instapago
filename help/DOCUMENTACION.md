@@ -1,6 +1,6 @@
 ![Php Instapago](hYNsH6B.png)
 <p align="center">
-    Documentación de la librería <b>Instapago</b>
+Documentación de la librería <b>Instapago</b>
 </p>
 
 ----
@@ -8,13 +8,13 @@
 ## tabla de contenido
 
 * [uso de la librería](#uso-de-la-librería)
-    * [crear un pago](#crear-un-pago)
-        * [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
-        * [parámetros opcionales para crear el pago](#parámetros-opcionales-para-crear-el-pago)
-        * [ejemplo](#ejemplo)
-    * [completar pago](#completar-pago)
-    * [anular pago](#anular-pago)
-    * [información del pago](#información-del-pago)
+* [crear un pago](#crear-un-pago)
+* [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
+* [parámetros opcionales para crear el pago](#parámetros-opcionales-para-crear-el-pago)
+* [ejemplo](#ejemplo)
+* [completar pago](#completar-pago)
+* [anular pago](#anular-pago)
+* [información del pago](#información-del-pago)
 * [tarjetas de prueba](#tarjetas-de-prueba)
 * [códigos de respuesta](#códigos-de-respuesta)
 * [licencia](#licencia)
@@ -54,8 +54,8 @@ separadores.
 * `cvc` Código secreto de la Tarjeta de crédito.
 * `expiration_date` Fecha de expiración de la tarjeta en el formato mostrado en la misma MM/YYYY. Por Ejemplo: 10/2015.
 * `status_id` Status en el que se creará la transacción.
-    * 1: Retener (Pre-Autorización).
-    * 2: Pagar (Autorización).
+* 1: Retener (Pre-Autorización).
+* 2: Pagar (Autorización).
 * `ip` Dirección IP del cliente.
 
 ### ejemplo
@@ -65,11 +65,14 @@ $api = new Instapago('<keyId>','<publicKeyId>');
 
 $pago = $api->payment('200','test','jon doe','11111111','4111111111111111','123','02/2016','2','127.0.0.1');
 
-echo '
+if ($pago['code'] == 201) {
+    echo '
     Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br>
     Voucher</br>'.$pago['voucher'] .'</br>
     Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
     Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
+}
+
 ```
 
 #### Parámetros _opcionales_ para crear el pago
@@ -133,10 +136,10 @@ $api = new Instapago('<keyId>','<publicKeyId>');
 $info = $api->paymentInfo('af614bca-0e2b-4232-bc8c-dbedbdf73b48');
 
 echo '
-    Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br>
-    Voucher</br>'.$pago['voucher'] .'</br>
-    Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
-    Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
+Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br>
+Voucher</br>'.$pago['voucher'] .'</br>
+Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
+Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
 ```
 
 ### códigos de respuesta
