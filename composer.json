@@ -1,13 +1,14 @@
 {
-    "name": "php-instapago/instapago",
+    "name": "instapago/instapago",
+    "type": "library",
     "description": "Librería Instapago para PHP",
-    "minimum-stability": "stable",
-    "prefer-stable" : true,
+    "keywords": ["venezuela","instapago","banesco"],
     "license": "MIT",
     "authors": [
         {
             "name": "abr4xas",
-            "email": "me@abr4xas.org"
+            "email": "me@abr4xas.org",
+            "homepage": "http://abr4xas.org"
         }
     ],
     "autoload": {
