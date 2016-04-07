@@ -1,6 +1,4 @@
-<p align="center">
-    <img alt="node-instapago" src="http://i.imgur.com/hYNsH6B.jpg" width="auto">
-</p>
+![Php Instapago](help/hYNsH6B.png)
 <p align="center">
     Documentación de la librería <b>Instapago</b>
 </p>
