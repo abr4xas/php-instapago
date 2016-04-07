@@ -1,0 +1,20 @@
+{
+    "name": "php-instapago/instapago",
+    "description": "Librería Instapago para PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "abr4xas",
+            "email": "me@abr4xas.org"
+        }
+    ],
+    "minimum-stability": "master",
+    "require": {
+        "php": "5.6.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Instapago": "src/"
+        }
+    }
+}

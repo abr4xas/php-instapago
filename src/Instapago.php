@@ -25,6 +25,8 @@
  * @author Angel Cruz <me@abr4xas.org>
 */
 
+namespace Instapago;
+
 class Instapago
 {
 
@@ -56,20 +58,24 @@ class Instapago
     {
 
         try {
+
             if (empty($keyId) && empty($publicKeyId)) {
-                throw new Exception('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
+                throw new \Exception('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
             }elseif (empty($keyId)) {
-                throw new Exception('El parámetro "keyId" es requerido para procesar la petición. sss');
+                throw new \Exception('El parámetro "keyId" es requerido para procesar la petición. sss');
             }else{
                 $this->keyId = $keyId;
             }
             if (empty($publicKeyId)) {
-                throw new Exception('El parámetro "publicKeyId" es requerido para procesar la petición.');
+                throw new \Exception('El parámetro "publicKeyId" es requerido para procesar la petición.');
             }else{
                 $this->publicKeyId = $publicKeyId;
             }
-        } catch (Exception $e) {
-            echo '<pre>Message: ' . $e->getMessage() . '</pre>';
+
+        } catch (\Exception $e) {
+
+            echo $e->getMessage();
+
         } // end try/catch
 
     } // end construct
@@ -82,12 +88,11 @@ class Instapago
     public function payment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres)
     {
         try {
-            if (empty($Amount) || empty($Description)  ||
-                empty($CardHolder)  || empty($CardHolderId)  ||
-                empty($CardNumber)  || empty($CVC)  ||
-                empty($ExpirationDate)  || empty($StatusId)  || empty($ip_addres)) {
-                throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+
+            if (empty($Amount) || empty($Description) || empty($CardHolder) || empty($CardHolderId) || empty($CardNumber) || empty($CVC) || empty($ExpirationDate) || empty($StatusId) || empty($ip_addres)) {
+                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
+
             $this->Amount           = $Amount;
             $this->Description      = $Description;
             $this->CardHolder       = $CardHolder;
@@ -97,7 +102,9 @@ class Instapago
             $this->ExpirationDate   = $ExpirationDate;
             $this->StatusId		    = $StatusId;
             $this->ip_addres        = $ip_addres;
+
             $url = 'https://api.instapago.com/payment'; // endpoint
+
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
@@ -119,21 +126,19 @@ class Instapago
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $server_output = curl_exec ($ch);
             curl_close ($ch);
-
             $obj = json_decode($server_output);
-
             $code = $obj->code;
 
             if ($code == 400) {
-                throw new Exception('Error al validar los datos enviados.');
+                throw new \Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
-                throw new Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
             }elseif ($code == 403) {
-                throw new Exception('Pago Rechazado por el banco.');
+                throw new \Exception('Pago Rechazado por el banco.');
             }elseif ($code == 500) {
-                throw new Exception('Ha Ocurrido un error interno dentro del servidor.');
+                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
             }elseif ($code == 503) {
-                throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
             }elseif ($code == 201) {
                 $msg_banco  = $obj->message;
                 $voucher    = $obj->voucher;
@@ -150,13 +155,13 @@ class Instapago
                 'reference' => $reference
             ];
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             echo $e->getMessage();
 
         } // end try/catch
 
-        return false;
+        return;
 
     } // end payment
 
@@ -170,20 +175,23 @@ class Instapago
     public function continuePayment($Amount,$idpago)
     {
         try {
+
             if (empty($Amount) || empty($idpago)) {
-                throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->Amount = $Amount;
             $this->idpago = $idpago;
 
             $url = 'https://api.instapago.com/complete'; // endpoint
+
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
                 "Amount"            => $this->Amount, //required
                 "id"                => $this->idpago, //required
             ];
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL,$url);
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -195,15 +203,15 @@ class Instapago
             $code = $obj->code;
 
             if ($code == 400) {
-                throw new Exception('Error al validar los datos enviados.');
+                throw new \Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
-                throw new Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
             }elseif ($code == 403) {
-                throw new Exception($obj->message);
+                throw new \Exception($obj->message);
             }elseif ($code == 500) {
-                throw new Exception('Ha Ocurrido un error interno dentro del servidor.');
+                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
             }elseif ($code == 503) {
-                throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
             }elseif ($code == 201) {
                 $msg_banco  = $obj->message;
                 $voucher    = $obj->voucher;
@@ -213,37 +221,40 @@ class Instapago
             }
 
             return [
+                'code'      => $code ,
                 'msg_banco' => $msg_banco,
                 'voucher' 	=> $voucher,
                 'id_pago'	=> $id_pago,
                 'reference' => $reference
             ];
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             echo $e->getMessage();
 
         } // end try/catch
 
-        return false;
+        return;
     } // continuePayment
 
     /**
      * Anular Pago
-     * Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.
+     * Este método funciona para procesar una anulación de un pago o un bloqueo.
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago
      */
 
     public function cancelPayment($idpago)
     {
         try {
+
             if (empty($idpago)) {
-                throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->idpago = $idpago;
 
             $url = 'https://api.instapago.com/payment'; // endpoint
+
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
@@ -262,13 +273,13 @@ class Instapago
             $code = $obj->code;
 
             if ($code == 400) {
-                throw new Exception('Error al validar los datos enviados.');
+                throw new \Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
-                throw new Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
             }elseif ($code == 500) {
-                throw new Exception('Ha Ocurrido un error interno dentro del servidor.');
+                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
             }elseif ($code == 503) {
-                throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
             }elseif ($code == 201) {
                 $msg_banco  = $obj->message;
                 $voucher    = $obj->voucher;
@@ -276,15 +287,22 @@ class Instapago
                 $id_pago    = $obj->id;
                 $reference  = $obj->reference;
             }
-        } catch (Exception $e) {
+
+            return [
+                'code'      => $code ,
+                'msg_banco' => $msg_banco,
+                'voucher' 	=> $voucher,
+                'id_pago'	=> $id_pago,
+                'reference' => $reference
+            ];
+
+        } catch (\Exception $e) {
+
             echo $e->getMessage();
+
         } // end try/catch
-        return array(
-            'msg_banco' => $msg_banco,
-            'voucher' 	=> $voucher,
-            'id_pago'	=> $id_pago,
-            'reference' => $reference
-        );
+
+        return;
     } // cancelPayment
 
     /**
@@ -297,13 +315,15 @@ class Instapago
     public function paymentInfo($idpago)
     {
         try {
+
             if (empty($idpago)) {
-                throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->idpago = $idpago;
 
             $url = 'https://api.instapago.com/payment'; // endpoint
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idpago);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -313,13 +333,13 @@ class Instapago
             $code = $obj->code;
 
             if ($code == 400) {
-                throw new Exception('Error al validar los datos enviados.');
+                throw new \Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
-                throw new Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
             }elseif ($code == 500) {
-                throw new Exception('Ha Ocurrido un error interno dentro del servidor.');
+                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
             }elseif ($code == 503) {
-                throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
             }elseif ($code == 201) {
                 $msg_banco  = $obj->message;
                 $voucher    = $obj->voucher;
@@ -327,15 +347,22 @@ class Instapago
                 $id_pago    = $obj->id;
                 $reference  = $obj->reference;
             }
-        } catch (Exception $e) {
+
+            return [
+                'code'      => $code ,
+                'msg_banco' => $msg_banco,
+                'voucher' 	=> $voucher,
+                'id_pago'	=> $id_pago,
+                'reference' => $reference
+            ];
+
+        } catch (\Exception $e) {
+
             echo $e->getMessage();
+
         } // end try/catch
-        return array(
-            'msg_banco' => $msg_banco,
-            'voucher' 	=> $voucher,
-            'id_pago'	=> $id_pago,
-            'reference' => $reference
-        );
+
+        return;
     } // paymentInfo
 
     /**
@@ -347,8 +374,9 @@ class Instapago
     public function fullPayment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres,$order_number,$address,$city,$zip_code,$state)
     {
         try {
-            if (empty($Amount) && empty($Description) && empty($CardHolder) && empty($CardHolderId) && empty($CardNumber) && empty($CVC) && empty($ExpirationDate) && empty($StatusId) && empty($ip_addres) && empty($order_number) && empty($address) && empty($city) && empty($zip_code) && empty($state)) {
-                throw new Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+
+            if (empty($Amount) || empty($Description) || empty($CardHolder) || empty($CardHolderId) || empty($CardNumber) || empty($CVC) || empty($ExpirationDate) || empty($StatusId) || empty($ip_addres) || empty($order_number) || empty($address) || empty($city) || empty($zip_code) || empty($state)) {
+                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->Amount           = $Amount;
@@ -367,6 +395,7 @@ class Instapago
             $this->state            = $state;
 
             $url = 'https://api.instapago.com/payment'; // endpoint
+
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
@@ -385,6 +414,7 @@ class Instapago
                 "zip_code"          => $this->zip_code, // optional
                 "state"             => $this->state // optional
             ];
+
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL,$url );
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -396,15 +426,15 @@ class Instapago
             $code = $obj->code;
 
             if ($code == 400) {
-                throw new Exception('Error al validar los datos enviados.');
+                throw new \Exception('Error al validar los datos enviados.');
             }elseif ($code == 401) {
-                throw new Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
             }elseif ($code == 403) {
-                throw new Exception('Pago Rechazado por el banco.');
+                throw new \Exception('Pago Rechazado por el banco.');
             }elseif ($code == 500) {
-                throw new Exception('Ha Ocurrido un error interno dentro del servidor.');
+                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
             }elseif ($code == 503) {
-                throw new Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
             }elseif ($code == 201) {
                 $msg_banco  = $obj->message;
                 $voucher    = $obj->voucher;
@@ -412,16 +442,22 @@ class Instapago
                 $id_pago    = $obj->id;
                 $reference  = $obj->reference;
             }
-        } catch (Exception $e) {
+
+            return [
+                'code'      => $code ,
+                'msg_banco' => $msg_banco,
+                'voucher' 	=> $voucher,
+                'id_pago'	=> $id_pago,
+                'reference' => $reference
+            ];
+
+        } catch (\Exception $e) {
+
             echo $e->getMessage();
+
         } // end try/catch
 
-        return array(
-            'msg_banco' => $msg_banco,
-            'voucher'   => $voucher,
-            'id_pago'   => $id_pago,
-            'reference' => $reference
-        );
+        return;
 
     } // end payment
 
