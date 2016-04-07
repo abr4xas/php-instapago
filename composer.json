@@ -1,6 +1,8 @@
 {
     "name": "php-instapago/instapago",
     "description": "Librería Instapago para PHP",
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
     "license": "MIT",
     "authors": [
         {
