@@ -4,6 +4,12 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+### v0.3.1-beta
+### Nuevo
+
+* Se re-escribe parte del código en el archivo `Instapago.php`
+* Se agrega en [packagist](https://packagist.org/packages/instapago/instapago)
+
 ### v0.3.0
 ### Nuevo
 
