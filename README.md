@@ -18,7 +18,7 @@ Primero, `composer`
 Luego:
 
 ```
-$ composer require instapago/instapago "0.3.1-beta"
+$ composer require instapago/instapago "0.3.2-beta"
 $ composer dumpautoload -o
 ```
 ### como usar
