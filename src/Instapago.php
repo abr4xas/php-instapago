@@ -32,14 +32,14 @@ class Instapago
 
     protected 	$keyId;
     protected 	$publicKeyId;
-    public 		$CardHolder;
-    public 		$CardHolderId;
-    public 		$CardNumber;
-    public 		$CVC;
-    public 		$ExpirationDate;
-    public 		$Amount;
-    public 		$Description;
-    public 		$StatusId;
+    public 	  	$CardHolder;
+    public  		$CardHolderId;
+    public 		  $CardNumber;
+    public 		  $CVC;
+    public 		  $ExpirationDate;
+    public 		  $Amount;
+    public 		  $Description;
+    public 		  $StatusId;
     public      $ip_addres;
     public      $idpago;
     public      $order_number;
@@ -47,6 +47,7 @@ class Instapago
     public      $city;
     public      $zip_code;
     public      $state;
+    public      $root = 'https://api.instapago.com/';
 
     /**
      * Crear un nuevo objeto de Instapago
@@ -98,12 +99,12 @@ class Instapago
             $this->CardHolder       = $CardHolder;
             $this->CardHolderId     = $CardHolderId;
             $this->CardNumber       = $CardNumber;
-            $this->CVC 			    = $CVC;
+            $this->CVC 			        = $CVC;
             $this->ExpirationDate   = $ExpirationDate;
-            $this->StatusId		    = $StatusId;
+            $this->StatusId		      = $StatusId;
             $this->ip_addres        = $ip_addres;
 
-            $url = 'https://api.instapago.com/payment'; // endpoint
+            $url = $this->root . 'payment'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
@@ -119,41 +120,10 @@ class Instapago
                 "IP"                => $this->ip_addres //required
             ];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL,$url );
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($fields));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $server_output = curl_exec ($ch);
-            curl_close ($ch);
-            $obj = json_decode($server_output);
-            $code = $obj->code;
+            $obj = $this->curlTransaccion($url, $fields);
+            $result = $this->checkResponseCode($obj);
 
-            if ($code == 400) {
-                throw new \Exception('Error al validar los datos enviados.');
-            }elseif ($code == 401) {
-                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
-            }elseif ($code == 403) {
-                throw new \Exception('Pago Rechazado por el banco.');
-            }elseif ($code == 500) {
-                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
-            }elseif ($code == 503) {
-                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
-            }elseif ($code == 201) {
-                $msg_banco  = $obj->message;
-                $voucher    = $obj->voucher;
-                $voucher    = html_entity_decode($voucher);
-                $id_pago    = $obj->id;
-                $reference  = $obj->reference;
-            }
-
-            return [
-                'code'      => $code ,
-                'msg_banco' => $msg_banco,
-                'voucher' 	=> $voucher,
-                'id_pago'	=> $id_pago,
-                'reference' => $reference
-            ];
+            return $result;
 
         } catch (\Exception $e) {
 
@@ -183,7 +153,7 @@ class Instapago
             $this->Amount = $Amount;
             $this->idpago = $idpago;
 
-            $url = 'https://api.instapago.com/complete'; // endpoint
+            $url = $this->root . 'complete'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
@@ -192,41 +162,10 @@ class Instapago
                 "id"                => $this->idpago, //required
             ];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL,$url);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($fields));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $server_output = curl_exec ($ch);
-            curl_close ($ch);
-            $obj = json_decode($server_output);
-            $code = $obj->code;
+            $obj = $this->curlTransaccion($url, $fields);
+            $result = $this->checkResponseCode($obj);
 
-            if ($code == 400) {
-                throw new \Exception('Error al validar los datos enviados.');
-            }elseif ($code == 401) {
-                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
-            }elseif ($code == 403) {
-                throw new \Exception($obj->message);
-            }elseif ($code == 500) {
-                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
-            }elseif ($code == 503) {
-                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
-            }elseif ($code == 201) {
-                $msg_banco  = $obj->message;
-                $voucher    = $obj->voucher;
-                $voucher    = html_entity_decode($voucher);
-                $id_pago    = $obj->id;
-                $reference  = $obj->reference;
-            }
-
-            return [
-                'code'      => $code ,
-                'msg_banco' => $msg_banco,
-                'voucher' 	=> $voucher,
-                'id_pago'	=> $id_pago,
-                'reference' => $reference
-            ];
+            return $result;
 
         } catch (\Exception $e) {
 
@@ -253,7 +192,7 @@ class Instapago
 
             $this->idpago = $idpago;
 
-            $url = 'https://api.instapago.com/payment'; // endpoint
+            $url = $this->root . 'payment'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
@@ -261,40 +200,10 @@ class Instapago
                 "id"                => $this->idpago, //required
             ];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-            curl_setopt($ch, CURLOPT_FAILONERROR, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($fields));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $server_output = curl_exec($ch);
-            curl_close ($ch);
-            $obj = json_decode($server_output);
-            $code = $obj->code;
+            $obj = $this->curlTransaccion($url, $fields);
+            $result = $this->checkResponseCode($obj);
 
-            if ($code == 400) {
-                throw new \Exception('Error al validar los datos enviados.');
-            }elseif ($code == 401) {
-                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
-            }elseif ($code == 500) {
-                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
-            }elseif ($code == 503) {
-                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
-            }elseif ($code == 201) {
-                $msg_banco  = $obj->message;
-                $voucher    = $obj->voucher;
-                $voucher    = html_entity_decode($voucher);
-                $id_pago    = $obj->id;
-                $reference  = $obj->reference;
-            }
-
-            return [
-                'code'      => $code ,
-                'msg_banco' => $msg_banco,
-                'voucher' 	=> $voucher,
-                'id_pago'	=> $id_pago,
-                'reference' => $reference
-            ];
+            return $result;
 
         } catch (\Exception $e) {
 
@@ -322,7 +231,7 @@ class Instapago
 
             $this->idpago = $idpago;
 
-            $url = 'https://api.instapago.com/payment'; // endpoint
+            $url = $this->root . 'payment'; // endpoint
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idpago);
@@ -330,31 +239,9 @@ class Instapago
             $server_output = curl_exec($ch);
             curl_close ($ch);
             $obj = json_decode($server_output);
-            $code = $obj->code;
+            $result = $this->checkResponseCode($obj);
 
-            if ($code == 400) {
-                throw new \Exception('Error al validar los datos enviados.');
-            }elseif ($code == 401) {
-                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
-            }elseif ($code == 500) {
-                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
-            }elseif ($code == 503) {
-                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
-            }elseif ($code == 201) {
-                $msg_banco  = $obj->message;
-                $voucher    = $obj->voucher;
-                $voucher    = html_entity_decode($voucher);
-                $id_pago    = $obj->id;
-                $reference  = $obj->reference;
-            }
-
-            return [
-                'code'      => $code ,
-                'msg_banco' => $msg_banco,
-                'voucher' 	=> $voucher,
-                'id_pago'	=> $id_pago,
-                'reference' => $reference
-            ];
+            return $result;
 
         } catch (\Exception $e) {
 
@@ -394,7 +281,7 @@ class Instapago
             $thi->zip_code          = $zip_code;
             $this->state            = $state;
 
-            $url = 'https://api.instapago.com/payment'; // endpoint
+            $url = $this->root . 'payment'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
@@ -415,41 +302,10 @@ class Instapago
                 "state"             => $this->state // optional
             ];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL,$url );
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($fields));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $server_output = curl_exec ($ch);
-            curl_close ($ch);
-            $obj = json_decode($server_output);
-            $code = $obj->code;
+            $obj = $this->curlTransaccion($url, $fields);
+            $result = $this->checkResponseCode($obj);
 
-            if ($code == 400) {
-                throw new \Exception('Error al validar los datos enviados.');
-            }elseif ($code == 401) {
-                throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
-            }elseif ($code == 403) {
-                throw new \Exception('Pago Rechazado por el banco.');
-            }elseif ($code == 500) {
-                throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
-            }elseif ($code == 503) {
-                throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
-            }elseif ($code == 201) {
-                $msg_banco  = $obj->message;
-                $voucher    = $obj->voucher;
-                $voucher    = html_entity_decode($voucher);
-                $id_pago    = $obj->id;
-                $reference  = $obj->reference;
-            }
-
-            return [
-                'code'      => $code ,
-                'msg_banco' => $msg_banco,
-                'voucher' 	=> $voucher,
-                'id_pago'	=> $id_pago,
-                'reference' => $reference
-            ];
+            return $result;
 
         } catch (\Exception $e) {
 
@@ -460,5 +316,58 @@ class Instapago
         return;
 
     } // end payment
+
+    /**
+     * Realiza Transaccion
+     * Efectúa y retornar una respuesta a un metodo de pago.
+     *@param $url endpoint a consultar
+     *@param $fields datos para la consulta
+     *@return $obj array resultados de la transaccion
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
+     */
+    public function curlTransaccion($url, $fields)
+    {
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL,$url );
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($fields));
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $server_output = curl_exec ($ch);
+      curl_close ($ch);
+      $obj = json_decode($server_output);
+      return $obj;
+    }
+
+    /**
+     * Verifica Codigo de Estado de transaccion
+     * Verifica y retornar el resultado de la transaccion.
+     *@param $obj datos de la consulta
+     *@return $result array datos de transaccion
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
+     */
+    public function checkResponseCode($obj)
+    {
+      $code = $obj->code;
+
+      if ($code == 400) {
+          throw new \Exception('Error al validar los datos enviados.');
+      }elseif ($code == 401) {
+          throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+      }elseif ($code == 403) {
+          throw new \Exception('Pago Rechazado por el banco.');
+      }elseif ($code == 500) {
+          throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
+      }elseif ($code == 503) {
+          throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+      }elseif ($code == 201) {
+        return [
+            'code'      => $code ,
+            'msg_banco' => $obj->message,
+            'voucher' 	=> html_entity_decode($obj->voucher),
+            'id_pago'	  => $obj->id,
+            'reference' =>$obj->reference
+        ];
+      }
+    }
 
 } // end class
