@@ -18,7 +18,7 @@ Primero, `composer`
 Luego:
 
 ```
-$ composer require instapago/instapago "0.3.2-beta"
+$ composer require instapago/instapago
 $ composer dumpautoload -o
 ```
 ### como usar
@@ -26,7 +26,7 @@ $ composer dumpautoload -o
 creamos un archivo `index.php`
 
 ```php
-<?php 
+<?php
 require 'vendor/autoload.php';
 
 use Instapago\Instapago;
