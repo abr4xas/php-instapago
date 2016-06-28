@@ -4,6 +4,17 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+### v0.5.0
+### Nuevo
+* Se actualiza estructura de directorio
+* El autoload de composer ahora usa `psr-4`
+* Actualizado el README con información de instalación con composer
+* Actualizado el README con información de como usar sin composer
+* Agregado manejo de errores.
+* Agregado archivo autoload personalizado
+* Se crea estructura para las pruebas unitarias :bug:
+* Se agrega una prueba unitara sencilla :bug:
+
 ### v0.5.0-alpha
 ### Nuevo
 * Se actualiza estructura de directorio
