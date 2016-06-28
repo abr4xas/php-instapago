@@ -23,23 +23,31 @@
  * THE SOFTWARE.
  *
  * @author Angel Cruz <me@abr4xas.org>
-*/
+ * @package php-instapago
+ * @license MIT License
+ * @copyright 2016 Angel Cruz
+ */
 
-namespace Instapago;
+namespace Instapago\InstapagoGateway;
 
-class Instapago
+
+/**
+ * Clase para la pasarela de pagos Instapago
+ */
+
+class InstapagoPayment
 {
 
     protected 	$keyId;
     protected 	$publicKeyId;
     public 	  	$CardHolder;
-    public  		$CardHolderId;
-    public 		  $CardNumber;
-    public 		  $CVC;
-    public 		  $ExpirationDate;
-    public 		  $Amount;
-    public 		  $Description;
-    public 		  $StatusId;
+    public  	$CardHolderId;
+    public 		$CardNumber;
+    public 		$CVC;
+    public 		$ExpirationDate;
+    public 		$Amount;
+    public 		$Description;
+    public 		$StatusId;
     public      $ip_addres;
     public      $idpago;
     public      $order_number;
@@ -61,19 +69,19 @@ class Instapago
         try {
 
             if (empty($keyId) && empty($publicKeyId)) {
-                throw new \Exception('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
+                throw new InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
             }elseif (empty($keyId)) {
-                throw new \Exception('El parámetro "keyId" es requerido para procesar la petición. sss');
+                throw new InstapagoException('El parámetro "keyId" es requerido para procesar la petición. ');
             }else{
                 $this->keyId = $keyId;
             }
             if (empty($publicKeyId)) {
-                throw new \Exception('El parámetro "publicKeyId" es requerido para procesar la petición.');
+                throw new InstapagoException('El parámetro "publicKeyId" es requerido para procesar la petición.');
             }else{
                 $this->publicKeyId = $publicKeyId;
             }
 
-        } catch (\Exception $e) {
+        } catch (InstapagoException $e) {
 
             echo $e->getMessage();
 
@@ -91,7 +99,7 @@ class Instapago
         try {
 
             if (empty($Amount) || empty($Description) || empty($CardHolder) || empty($CardHolderId) || empty($CardNumber) || empty($CVC) || empty($ExpirationDate) || empty($StatusId) || empty($ip_addres)) {
-                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->Amount           = $Amount;
@@ -99,9 +107,9 @@ class Instapago
             $this->CardHolder       = $CardHolder;
             $this->CardHolderId     = $CardHolderId;
             $this->CardNumber       = $CardNumber;
-            $this->CVC 			        = $CVC;
+            $this->CVC 			    = $CVC;
             $this->ExpirationDate   = $ExpirationDate;
-            $this->StatusId		      = $StatusId;
+            $this->StatusId		    = $StatusId;
             $this->ip_addres        = $ip_addres;
 
             $url = $this->root . 'payment'; // endpoint
@@ -125,7 +133,7 @@ class Instapago
 
             return $result;
 
-        } catch (\Exception $e) {
+        } catch (InstapagoException $e) {
 
             echo $e->getMessage();
 
@@ -137,8 +145,9 @@ class Instapago
 
     /**
      * Completar Pago
-     * Este método funciona para procesar un bloqueo o pre-autorización, para así procesarla y hacer el cobro respectivo.
-     * Para usar este método es necesario configurar en payment() el parametro StatusId a 1
+     * Este método funciona para procesar un bloqueo o pre-autorización
+     * para así procesarla y hacer el cobro respectivo.
+     * Para usar este método es necesario configurar en `payment()` el parametro StatusId a 1
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago
      */
 
@@ -147,7 +156,7 @@ class Instapago
         try {
 
             if (empty($Amount) || empty($idpago)) {
-                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->Amount = $Amount;
@@ -167,7 +176,7 @@ class Instapago
 
             return $result;
 
-        } catch (\Exception $e) {
+        } catch (InstapagoException $e) {
 
             echo $e->getMessage();
 
@@ -187,7 +196,7 @@ class Instapago
         try {
 
             if (empty($idpago)) {
-                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->idpago = $idpago;
@@ -205,7 +214,7 @@ class Instapago
 
             return $result;
 
-        } catch (\Exception $e) {
+        } catch (InstapagoException $e) {
 
             echo $e->getMessage();
 
@@ -226,7 +235,7 @@ class Instapago
         try {
 
             if (empty($idpago)) {
-                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->idpago = $idpago;
@@ -243,7 +252,7 @@ class Instapago
 
             return $result;
 
-        } catch (\Exception $e) {
+        } catch (InstapagoException $e) {
 
             echo $e->getMessage();
 
@@ -263,7 +272,7 @@ class Instapago
         try {
 
             if (empty($Amount) || empty($Description) || empty($CardHolder) || empty($CardHolderId) || empty($CardNumber) || empty($CVC) || empty($ExpirationDate) || empty($StatusId) || empty($ip_addres) || empty($order_number) || empty($address) || empty($city) || empty($zip_code) || empty($state)) {
-                throw new \Exception('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
             $this->Amount           = $Amount;
@@ -307,7 +316,7 @@ class Instapago
 
             return $result;
 
-        } catch (\Exception $e) {
+        } catch (InstapagoException $e) {
 
             echo $e->getMessage();
 
@@ -350,15 +359,15 @@ class Instapago
       $code = $obj->code;
 
       if ($code == 400) {
-          throw new \Exception('Error al validar los datos enviados.');
+          throw new InstapagoException('Error al validar los datos enviados.');
       }elseif ($code == 401) {
-          throw new \Exception('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+          throw new InstapagoException('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
       }elseif ($code == 403) {
-          throw new \Exception('Pago Rechazado por el banco.');
+          throw new InstapagoException('Pago Rechazado por el banco.');
       }elseif ($code == 500) {
-          throw new \Exception('Ha Ocurrido un error interno dentro del servidor.');
+          throw new InstapagoException('Ha Ocurrido un error interno dentro del servidor.');
       }elseif ($code == 503) {
-          throw new \Exception('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+          throw new InstapagoException('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
       }elseif ($code == 201) {
         return [
             'code'      => $code ,

@@ -2,7 +2,11 @@
     "name": "instapago/instapago",
     "type": "library",
     "description": "Librería Instapago para PHP",
-    "keywords": ["venezuela","instapago","banesco"],
+    "keywords": [
+        "venezuela",
+        "instapago",
+        "banesco"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -14,9 +18,12 @@
     "require": {
         "php": ">=5.5.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "5.4.6"
+    },
     "autoload": {
-        "psr-0": {
-            "Instapago": "src/"
+        "psr-4": {
+            "Instapago\\": "Instapago"
         }
     }
 }

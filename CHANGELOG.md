@@ -4,6 +4,25 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+### v0.5.0-alpha
+### Nuevo
+* Se actualiza estructura de directorio
+* El autoload de composer ahora usa `psr-4`
+* Actualizado el README con información de instalación con composer
+* Actualizado el README con información de como usar sin composer
+* Agregado manejo de errores.
+* Agregado archivo autoload personalizado
+* Se crea estructura para las pruebas unitarias :bug:
+
+### v0.4.0
+### Nuevo
+* Actualizado el README con información de instalación con composer
+
+### v0.3.2-beta
+### Nuevo
+
+* Se re-escribe parte del código en el archivo `Instapago.php` para más detalle ver: https://github.com/abr4xas/php-instapago/pull/2
+
 ### v0.3.1-beta
 ### Nuevo
 

@@ -25,14 +25,31 @@ $ composer dumpautoload -o
 
 creamos un archivo `index.php`
 
+
+#### composer
+
 ```php
 <?php
+
 require 'vendor/autoload.php';
 
-use Instapago\Instapago;
+use \Instapago\InstapagoGateway\InstapagoPayment;
 
-$api = new Instapago('<keyId>','<publicKeyId>');
+$api = new InstapagoPayment('<keyId>','<publicKeyId>');
 ```
+
+#### sin composer
+
+```php
+<?php
+
+require_once 'Instapago/autoload.php';
+
+use \Instapago\InstapagoGateway\InstapagoPayment;
+
+$api = new InstapagoPayment('<keyId>','<publicKeyId>');
+```
+
 Podemos revisar rápidamente si todo funciona correctamente escribiendo:
 
 ```bash
