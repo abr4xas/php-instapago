@@ -8,7 +8,8 @@
 ### v0.5.1
 ### Nuevo
 * Fix `InstapagoException` does not exist :bug:
-* Agregada carpeta `Exceptions` 
+* Agregada carpeta `Exceptions`
+* Fix `namespace` de archivo `Exceptions` :bug:
 
 ### v0.5.0
 ### Nuevo

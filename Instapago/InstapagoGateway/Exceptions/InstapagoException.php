@@ -28,7 +28,7 @@
  * @copyright 2016 Angel Cruz
  */
 
-namespace Instapago\InstapagoGateway;
+namespace Instapago\InstapagoGateway\Exceptions;
 use Exception;
 
 /**
