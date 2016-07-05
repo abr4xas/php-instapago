@@ -4,6 +4,11 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+
+### v0.5.1
+### Nuevo
+* Fix `InstapagoException` does not exist :bug:
+
 ### v0.5.0
 ### Nuevo
 * Se actualiza estructura de directorio

@@ -6,6 +6,8 @@
     <sup style="color: #d0d0d0;"><b>NOTA</b> Los logos son propiedad de Instapago y Banesco, respectivamente.</sup>
 </p>
 [![GitHub issues](https://img.shields.io/github/issues/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/issues) [![GitHub forks](https://img.shields.io/github/forks/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/network) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/abr4xas/php-instapago/master/LICENSE)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/abr4xas/php-instapago/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/abr4xas/php-instapago/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/abr4xas/php-instapago/badges/build.png?b=master)](https://scrutinizer-ci.com/g/abr4xas/php-instapago/build-status/master)
 
 ----
 
