@@ -30,7 +30,7 @@
 
 namespace Instapago\InstapagoGateway;
 
-use Instapago\InstapagoException;
+use InstapagoException;
 
 /**
  * Clase para la pasarela de pagos Instapago
