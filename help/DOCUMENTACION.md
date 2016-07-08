@@ -10,7 +10,6 @@ Documentación de la librería <b>Instapago</b>
 * [uso de la librería](#uso-de-la-librería)
 * [crear un pago](#crear-un-pago)
 * [parámetros requeridos para crear el pago](#parámetros-requeridos-para-crear-el-pago)
-* [parámetros opcionales para crear el pago](#parámetros-opcionales-para-crear-el-pago)
 * [ejemplo](#ejemplo)
 * [completar pago](#completar-pago)
 * [anular pago](#anular-pago)
@@ -72,23 +71,6 @@ if ($pago['code'] == 201) {
     Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
     Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
 }
-
-```
-
-#### Parámetros _opcionales_ para crear el pago
-
-* `order_number` Número de orden del pago según el comercio.
-* `address` Dirección asociada a la tarjeta. Utilizada por algunos bancos para mayor seguridad.
-* `city` Ciudad asociada a la tarjeta. Utilizada por algunos bancos para mayor seguridad.
-* `zip_code` Código Postal asociada a la tarjeta. Utilizado por algunos bancos para mayor seguridad.
-* `state` Estado o provincia asociada a la tarjeta. Utilizado por algunos bancos para mayor seguridad.
-
-### ejemplo
-
-```php
-$api = new Instapago('<keyId>','<publicKeyId>');
-
-$pago = $api->fullPayment('200','test','jon doe','11111111','4111111111111111','123','02/2016','2','127.0.0.1','123','calle 1, edificio 2, apartamento 3','Valencia','2001','Carabobo');
 
 ```
 
