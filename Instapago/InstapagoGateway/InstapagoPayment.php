@@ -41,16 +41,16 @@ class InstapagoPayment
 
     protected 	$keyId;
     protected 	$publicKeyId;
-    public 	  	$CardHolder;
-    public  	$CardHolderId;
-    public 		$CardNumber;
-    public 		$CVC;
-    public 		$ExpirationDate;
-    public 		$Amount;
-    public 		$Description;
-    public 		$StatusId;
-    public      $ip_addres;
-    public      $idpago;
+    public 	  	$cardHolder;
+    public  	$cardHolderId;
+    public 		$cardNumber;
+    public 		$cvc;
+    public 		$expirationDate;
+    public 		$amount;
+    public 		$description;
+    public 		$statusId;
+    public      $ipAddres;
+    public      $idPago;
     public      $root = 'https://api.instapago.com/';
 
     /**
@@ -67,9 +67,11 @@ class InstapagoPayment
             if (empty($keyId) && empty($publicKeyId)) {
                 throw new InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
             }
+
             if (empty($keyId)) {
                 throw new InstapagoException('El parámetro "keyId" es requerido para procesar la petición. ');
             }
+            
             if (empty($publicKeyId)) {
                 throw new InstapagoException('El parámetro "publicKeyId" es requerido para procesar la petición.');
             }
@@ -90,38 +92,38 @@ class InstapagoPayment
      * Efectúa un pago con tarjeta de crédito, una vez procesado retornar una respuesta.
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#crear-un-pago
      */
-    public function payment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres)
+    public function payment($amount,$description,$cardHolder,$cardHolderId,$cardNumber,$cvc,$expirationDate,$statusId,$ipAddres)
     {
         try {
 
-            if (empty($Amount) || empty($Description) || empty($CardHolder) || empty($CardHolderId) || empty($CardNumber) || empty($CVC) || empty($ExpirationDate) || empty($StatusId) || empty($ip_addres)) {
+            if (empty($amount) || empty($description) || empty($cardHolder) || empty($cardHolderId) || empty($cardNumber) || empty($cvc) || empty($expirationDate) || empty($statusId) || empty($ipAddres)) {
                 throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
-            $this->Amount           = $Amount;
-            $this->Description      = $Description;
-            $this->CardHolder       = $CardHolder;
-            $this->CardHolderId     = $CardHolderId;
-            $this->CardNumber       = $CardNumber;
-            $this->CVC 			    = $CVC;
-            $this->ExpirationDate   = $ExpirationDate;
-            $this->StatusId		    = $StatusId;
-            $this->ip_addres        = $ip_addres;
+            $this->amount           = $amount;
+            $this->description      = $description;
+            $this->cardHolder       = $cardHolder;
+            $this->cardHolderId     = $cardHolderId;
+            $this->cardNumber       = $cardNumber;
+            $this->cvc 			    = $cvc;
+            $this->expirationDate   = $expirationDate;
+            $this->statusId		    = $statusId;
+            $this->ipAddres        = $ipAddres;
 
             $url = $this->root . 'payment'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
-                "Amount"            => $this->Amount, //required
-                "Description"       => $this->Description, //required
-                "CardHolder"        => $this->CardHolder, //required
-                "CardHolderId"      => $this->CardHolderId, //required
-                "CardNumber"        => $this->CardNumber, //required
-                "CVC"               => $this->CVC, //required
-                "ExpirationDate"    => $this->ExpirationDate, //required
-                "StatusId"          => $this->StatusId, //required
-                "IP"                => $this->ip_addres //required
+                "amount"            => $this->amount, //required
+                "description"       => $this->description, //required
+                "cardHolder"        => $this->cardHolder, //required
+                "cardHolderId"      => $this->cardHolderId, //required
+                "cardNumber"        => $this->cardNumber, //required
+                "cvc"               => $this->cvc, //required
+                "expirationDate"    => $this->expirationDate, //required
+                "statusId"          => $this->statusId, //required
+                "IP"                => $this->ipAddres //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
@@ -143,28 +145,28 @@ class InstapagoPayment
      * Completar Pago
      * Este método funciona para procesar un bloqueo o pre-autorización
      * para así procesarla y hacer el cobro respectivo.
-     * Para usar este método es necesario configurar en `payment()` el parametro StatusId a 1
+     * Para usar este método es necesario configurar en `payment()` el parametro statusId a 1
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago
      */
 
-    public function continuePayment($Amount,$idpago)
+    public function continuePayment($amount,$idPago)
     {
         try {
 
-            if (empty($Amount) || empty($idpago)) {
+            if (empty($amount) || empty($idPago)) {
                 throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
-            $this->Amount = $Amount;
-            $this->idpago = $idpago;
+            $this->amount = $amount;
+            $this->idPago = $idPago;
 
             $url = $this->root . 'complete'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
-                "Amount"            => $this->Amount, //required
-                "id"                => $this->idpago, //required
+                "amount"            => $this->amount, //required
+                "id"                => $this->idPago, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
@@ -187,22 +189,22 @@ class InstapagoPayment
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago
      */
 
-    public function cancelPayment($idpago)
+    public function cancelPayment($idPago)
     {
         try {
 
-            if (empty($idpago)) {
+            if (empty($idPago)) {
                 throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
-            $this->idpago = $idpago;
+            $this->idPago = $idPago;
 
             $url = $this->root . 'payment'; // endpoint
 
             $fields = [
                 "KeyID"             => $this->keyId, //required
                 "PublicKeyId"       => $this->publicKeyId, //required
-                "id"                => $this->idpago, //required
+                "id"                => $this->idPago, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
@@ -226,20 +228,20 @@ class InstapagoPayment
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#información-del-pago
      */
 
-    public function paymentInfo($idpago)
+    public function paymentInfo($idPago)
     {
         try {
 
-            if (empty($idpago)) {
+            if (empty($idPago)) {
                 throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
             }
 
-            $this->idpago = $idpago;
+            $this->idPago = $idPago;
 
             $url = $this->root . 'payment'; // endpoint
 
             $myCurl = curl_init();
-            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idpago);
+            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idPago);
             curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
             $server_output = curl_exec($myCurl);
             curl_close ($myCurl);
