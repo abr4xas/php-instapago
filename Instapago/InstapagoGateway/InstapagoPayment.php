@@ -71,16 +71,16 @@ class InstapagoPayment
 
             if (empty($keyId) && empty($publicKeyId)) {
                 throw new InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
-            }elseif (empty($keyId)) {
+            }
+            if (empty($keyId)) {
                 throw new InstapagoException('El parámetro "keyId" es requerido para procesar la petición. ');
-            }else{
-                $this->keyId = $keyId;
             }
             if (empty($publicKeyId)) {
                 throw new InstapagoException('El parámetro "publicKeyId" es requerido para procesar la petición.');
-            }else{
-                $this->publicKeyId = $publicKeyId;
             }
+            
+            $this->publicKeyId = $publicKeyId;
+            $this->keyId = $keyId;
 
         } catch (InstapagoException $e) {
 
@@ -243,11 +243,11 @@ class InstapagoPayment
 
             $url = $this->root . 'payment'; // endpoint
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idpago);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $server_output = curl_exec($ch);
-            curl_close ($ch);
+            $myCurl = curl_init();
+            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idpago);
+            curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
+            $server_output = curl_exec($myCurl);
+            curl_close ($myCurl);
             $obj = json_decode($server_output);
             $result = $this->checkResponseCode($obj);
 
@@ -288,7 +288,7 @@ class InstapagoPayment
             $this->order_number     = $order_number;
             $this->address          = $address;
             $this->city             = $city;
-            $thi->zip_code          = $zip_code;
+            $this->zip_code          = $zip_code;
             $this->state            = $state;
 
             $url = $this->root . 'payment'; // endpoint
@@ -337,13 +337,13 @@ class InstapagoPayment
      */
     public function curlTransaccion($url, $fields)
     {
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL,$url );
-      curl_setopt($ch, CURLOPT_POST, 1);
-      curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($fields));
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      $server_output = curl_exec ($ch);
-      curl_close ($ch);
+      $myCurl = curl_init();
+      curl_setopt($myCurl, CURLOPT_URL,$url );
+      curl_setopt($myCurl, CURLOPT_POST, 1);
+      curl_setopt($myCurl, CURLOPT_POSTFIELDS,http_build_query($fields));
+      curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, true);
+      $server_output = curl_exec ($myCurl);
+      curl_close ($myCurl);
       $obj = json_decode($server_output);
       return $obj;
     }
