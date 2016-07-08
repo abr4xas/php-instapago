@@ -51,11 +51,6 @@ class InstapagoPayment
     public 		$StatusId;
     public      $ip_addres;
     public      $idpago;
-    public      $order_number;
-    public      $address;
-    public      $city;
-    public      $zip_code;
-    public      $state;
     public      $root = 'https://api.instapago.com/';
 
     /**
@@ -261,71 +256,6 @@ class InstapagoPayment
 
         return;
     } // paymentInfo
-
-    /**
-     * Crear un pago con parámetros opcionales
-     * Efectúa un pago con tarjeta de crédito, una vez procesado retornar una respuesta.
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#parámetros-opcionales-para-crear-el-pago
-     */
-
-    public function fullPayment($Amount,$Description,$CardHolder,$CardHolderId,$CardNumber,$CVC,$ExpirationDate,$StatusId,$ip_addres,$order_number,$address,$city,$zip_code,$state)
-    {
-        try {
-
-            if (empty($Amount) || empty($Description) || empty($CardHolder) || empty($CardHolderId) || empty($CardNumber) || empty($CVC) || empty($ExpirationDate) || empty($StatusId) || empty($ip_addres) || empty($order_number) || empty($address) || empty($city) || empty($zip_code) || empty($state)) {
-                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
-            }
-
-            $this->Amount           = $Amount;
-            $this->Description      = $Description;
-            $this->CardHolder       = $CardHolder;
-            $this->CardHolderId     = $CardHolderId;
-            $this->CardNumber       = $CardNumber;
-            $this->CVC              = $CVC;
-            $this->ExpirationDate   = $ExpirationDate;
-            $this->StatusId         = $StatusId;
-            $this->ip_addres        = $ip_addres;
-            $this->order_number     = $order_number;
-            $this->address          = $address;
-            $this->city             = $city;
-            $this->zip_code          = $zip_code;
-            $this->state            = $state;
-
-            $url = $this->root . 'payment'; // endpoint
-
-            $fields = [
-                "KeyID"             => $this->keyId, //required
-                "PublicKeyId"       => $this->publicKeyId, //required
-                "Amount"            => $this->Amount, //required
-                "Description"       => $this->Description, //required
-                "CardHolder"        => $this->CardHolder, //required
-                "CardHolderId"      => $this->CardHolderId, //required
-                "CardNumber"        => $this->CardNumber, //required
-                "CVC"               => $this->CVC, //required
-                "ExpirationDate"    => $this->ExpirationDate, //required
-                "StatusId"          => $this->StatusId, //required
-                "IP"                => $this->ip_addres, //required
-                "order_number"      => $this->order_number, // optional
-                "address"           => $this->address, // optional
-                "city"              => $this->city, // optional
-                "zip_code"          => $this->zip_code, // optional
-                "state"             => $this->state // optional
-            ];
-
-            $obj = $this->curlTransaccion($url, $fields);
-            $result = $this->checkResponseCode($obj);
-
-            return $result;
-
-        } catch (InstapagoException $e) {
-
-            echo $e->getMessage();
-
-        } // end try/catch
-
-        return;
-
-    } // end payment
 
     /**
      * Realiza Transaccion
