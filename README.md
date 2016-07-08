@@ -11,6 +11,8 @@
 
 ----
 
+[![Join the chat at https://gitter.im/abr4xas/php-instapago](https://badges.gitter.im/abr4xas/php-instapago.svg)](https://gitter.im/abr4xas/php-instapago?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## instalación
 
 Primero, `composer`
