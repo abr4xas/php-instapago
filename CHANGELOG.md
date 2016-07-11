@@ -4,6 +4,15 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+### v1.0.0
+### Nuevo
+* Optimizaciones generales 
+* Agregada una funcion para el manejo de errores (exceptions).
+* Eliminado `fullPayment`
+* Optimizado ` __construct` (Else is never necessary and you can simplify the code to work without else.)
+* Optimización de consulta usando `curl` (Avoid variables with short names like `$ch`.)
+* Actualizada documentación
+
 ### v0.5.2
 ### Nuevo
 * Eliminado `fullPayment`
