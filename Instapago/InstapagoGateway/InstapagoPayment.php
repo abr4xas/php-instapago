@@ -71,11 +71,11 @@ class InstapagoPayment
             if (empty($keyId)) {
                 throw new InstapagoException('El parámetro "keyId" es requerido para procesar la petición. ');
             }
-            
+
             if (empty($publicKeyId)) {
                 throw new InstapagoException('El parámetro "publicKeyId" es requerido para procesar la petición.');
             }
-            
+
             $this->publicKeyId = $publicKeyId;
             $this->keyId = $keyId;
 
@@ -95,10 +95,8 @@ class InstapagoPayment
     public function payment($amount,$description,$cardHolder,$cardHolderId,$cardNumber,$cvc,$expirationDate,$statusId,$ipAddres)
     {
         try {
-
-            if (empty($amount) || empty($description) || empty($cardHolder) || empty($cardHolderId) || empty($cardNumber) || empty($cvc) || empty($expirationDate) || empty($statusId) || empty($ipAddres)) {
-                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
-            }
+            $params = array($amount,$description,$cardHolder,$cardHolderId,$cardNumber,$cvc,$expirationDate,$statusId,$ipAddres);
+            $this->checkRequiredParams($params);
 
             $this->amount           = $amount;
             $this->description      = $description;
@@ -152,10 +150,8 @@ class InstapagoPayment
     public function continuePayment($amount,$idPago)
     {
         try {
-
-            if (empty($amount) || empty($idPago)) {
-                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
-            }
+            $params = array($amount,$idPago);
+            $this->checkRequiredParams($params);
 
             $this->amount = $amount;
             $this->idPago = $idPago;
@@ -193,9 +189,8 @@ class InstapagoPayment
     {
         try {
 
-            if (empty($idPago)) {
-                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
-            }
+            $params = array($idPago);
+            $this->checkRequiredParams($params);
 
             $this->idPago = $idPago;
 
@@ -231,10 +226,8 @@ class InstapagoPayment
     public function paymentInfo($idPago)
     {
         try {
-
-            if (empty($idPago)) {
-                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
-            }
+            $params = array($idPago);
+            $this->checkRequiredParams($params);
 
             $this->idPago = $idPago;
 
@@ -309,6 +302,23 @@ class InstapagoPayment
             'id_pago'	  => $obj->id,
             'reference' =>$obj->reference
         ];
+      }
+    }
+
+    /**
+     * Verifica parametros para realizar operación
+     * Verifica y retorna exception si algun parametro esta vacio.
+     *@param $params Array con parametros a verificar
+     *@return new InstapagoException
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
+     */
+    private function checkRequiredParams(Array $params)
+    {
+      foreach ($params as $param) {
+        if(empty($param))
+        {
+          throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+        }
       }
     }
 
