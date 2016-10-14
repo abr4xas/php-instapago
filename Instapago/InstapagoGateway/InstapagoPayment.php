@@ -2,7 +2,7 @@
 
 /**
  * The MIT License (MIT)
- * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>
+ * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -23,47 +23,42 @@
  * THE SOFTWARE.
  *
  * @author Angel Cruz <me@abr4xas.org>
- * @package php-instapago
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
-
 namespace Instapago\InstapagoGateway;
 
 use Instapago\InstapagoGateway\Exceptions\InstapagoException;
 
 /**
- * Clase para la pasarela de pagos Instapago
+ * Clase para la pasarela de pagos Instapago.
  */
-
 class InstapagoPayment
 {
-
-    protected 	$keyId;
-    protected 	$publicKeyId;
-    public 	  	$cardHolder;
-    public  	$cardHolderId;
-    public 		$cardNumber;
-    public 		$cvc;
-    public 		$expirationDate;
-    public 		$amount;
-    public 		$description;
-    public 		$statusId;
-    public      $ipAddres;
-    public      $idPago;
-    public      $root = 'https://api.instapago.com/';
+    protected $keyId;
+    protected $publicKeyId;
+    public $cardHolder;
+    public $cardHolderId;
+    public $cardNumber;
+    public $cvc;
+    public $expirationDate;
+    public $amount;
+    public $description;
+    public $statusId;
+    public $ipAddres;
+    public $idPago;
+    public $root = 'https://api.instapago.com/';
 
     /**
-     * Crear un nuevo objeto de Instapago
-     * @param string $keyId llave privada
+     * Crear un nuevo objeto de Instapago.
+     *
+     * @param string $keyId       llave privada
      * @param string $publicKeyId llave publica
-     * Requeridas.
+     *                            Requeridas.
      */
-    public function __construct ($keyId,$publicKeyId)
+    public function __construct($keyId, $publicKeyId)
     {
-
         try {
-
             if (empty($keyId) && empty($publicKeyId)) {
                 throw new InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
             }
@@ -78,248 +73,234 @@ class InstapagoPayment
 
             $this->publicKeyId = $publicKeyId;
             $this->keyId = $keyId;
-
         } catch (InstapagoException $e) {
-
             echo $e->getMessage();
-
         } // end try/catch
+    }
 
-    } // end construct
+ // end construct
 
     /**
      * Crear un pago
      * Efectúa un pago con tarjeta de crédito, una vez procesado retornar una respuesta.
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#crear-un-pago
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#crear-un-pago.
      */
-    public function payment($amount,$description,$cardHolder,$cardHolderId,$cardNumber,$cvc,$expirationDate,$statusId,$ipAddres)
+    public function payment($amount, $description, $cardHolder, $cardHolderId, $cardNumber, $cvc, $expirationDate, $statusId, $ipAddres)
     {
         try {
-            $params = array($amount,$description,$cardHolder,$cardHolderId,$cardNumber,$cvc,$expirationDate,$statusId,$ipAddres);
+            $params = [$amount, $description, $cardHolder, $cardHolderId, $cardNumber, $cvc, $expirationDate, $statusId, $ipAddres];
             $this->checkRequiredParams($params);
 
-            $this->amount           = $amount;
-            $this->description      = $description;
-            $this->cardHolder       = $cardHolder;
-            $this->cardHolderId     = $cardHolderId;
-            $this->cardNumber       = $cardNumber;
-            $this->cvc 			    = $cvc;
-            $this->expirationDate   = $expirationDate;
-            $this->statusId		    = $statusId;
-            $this->ipAddres        = $ipAddres;
+            $this->amount = $amount;
+            $this->description = $description;
+            $this->cardHolder = $cardHolder;
+            $this->cardHolderId = $cardHolderId;
+            $this->cardNumber = $cardNumber;
+            $this->cvc = $cvc;
+            $this->expirationDate = $expirationDate;
+            $this->statusId = $statusId;
+            $this->ipAddres = $ipAddres;
 
-            $url = $this->root . 'payment'; // endpoint
+            $url = $this->root.'payment'; // endpoint
 
             $fields = [
-                "KeyID"             => $this->keyId, //required
-                "PublicKeyId"       => $this->publicKeyId, //required
-                "amount"            => $this->amount, //required
-                "description"       => $this->description, //required
-                "cardHolder"        => $this->cardHolder, //required
-                "cardHolderId"      => $this->cardHolderId, //required
-                "cardNumber"        => $this->cardNumber, //required
-                "cvc"               => $this->cvc, //required
-                "expirationDate"    => $this->expirationDate, //required
-                "statusId"          => $this->statusId, //required
-                "IP"                => $this->ipAddres //required
+                'KeyID'             => $this->keyId, //required
+                'PublicKeyId'       => $this->publicKeyId, //required
+                'amount'            => $this->amount, //required
+                'description'       => $this->description, //required
+                'cardHolder'        => $this->cardHolder, //required
+                'cardHolderId'      => $this->cardHolderId, //required
+                'cardNumber'        => $this->cardNumber, //required
+                'cvc'               => $this->cvc, //required
+                'expirationDate'    => $this->expirationDate, //required
+                'statusId'          => $this->statusId, //required
+                'IP'                => $this->ipAddres, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
             $result = $this->checkResponseCode($obj);
 
             return $result;
-
         } catch (InstapagoException $e) {
-
             echo $e->getMessage();
-
         } // end try/catch
+    }
 
-        return;
-
-    } // end payment
+ // end payment
 
     /**
      * Completar Pago
      * Este método funciona para procesar un bloqueo o pre-autorización
      * para así procesarla y hacer el cobro respectivo.
      * Para usar este método es necesario configurar en `payment()` el parametro statusId a 1
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago.
      */
-
-    public function continuePayment($amount,$idPago)
+    public function continuePayment($amount, $idPago)
     {
         try {
-            $params = array($amount,$idPago);
+            $params = [$amount, $idPago];
             $this->checkRequiredParams($params);
 
             $this->amount = $amount;
             $this->idPago = $idPago;
 
-            $url = $this->root . 'complete'; // endpoint
+            $url = $this->root.'complete'; // endpoint
 
             $fields = [
-                "KeyID"             => $this->keyId, //required
-                "PublicKeyId"       => $this->publicKeyId, //required
-                "amount"            => $this->amount, //required
-                "id"                => $this->idPago, //required
+                'KeyID'             => $this->keyId, //required
+                'PublicKeyId'       => $this->publicKeyId, //required
+                'amount'            => $this->amount, //required
+                'id'                => $this->idPago, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
             $result = $this->checkResponseCode($obj);
 
             return $result;
-
         } catch (InstapagoException $e) {
-
             echo $e->getMessage();
-
         } // end try/catch
+    }
 
-        return;
-    } // continuePayment
+ // continuePayment
 
     /**
      * Anular Pago
      * Este método funciona para procesar una anulación de un pago o un bloqueo.
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago.
      */
-
     public function cancelPayment($idPago)
     {
         try {
-
-            $params = array($idPago);
+            $params = [$idPago];
             $this->checkRequiredParams($params);
 
             $this->idPago = $idPago;
 
-            $url = $this->root . 'payment'; // endpoint
+            $url = $this->root.'payment'; // endpoint
 
             $fields = [
-                "KeyID"             => $this->keyId, //required
-                "PublicKeyId"       => $this->publicKeyId, //required
-                "id"                => $this->idPago, //required
+                'KeyID'             => $this->keyId, //required
+                'PublicKeyId'       => $this->publicKeyId, //required
+                'id'                => $this->idPago, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
             $result = $this->checkResponseCode($obj);
 
             return $result;
-
         } catch (InstapagoException $e) {
-
             echo $e->getMessage();
-
         } // end try/catch
+    }
 
-        return;
-    } // cancelPayment
+ // cancelPayment
 
     /**
      * Información del Pago
      * Consulta información sobre un pago generado anteriormente.
      * Requiere como parámetro el `id` que es el código de referencia de la transacción
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#información-del-pago
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#información-del-pago.
      */
-
     public function paymentInfo($idPago)
     {
         try {
-            $params = array($idPago);
+            $params = [$idPago];
             $this->checkRequiredParams($params);
 
             $this->idPago = $idPago;
 
-            $url = $this->root . 'payment'; // endpoint
+            $url = $this->root.'payment'; // endpoint
 
             $myCurl = curl_init();
-            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='. $this->keyId .'&PublicKeyId='. $this->publicKeyId .'&id=' . $this->idPago);
+            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='.$this->keyId.'&PublicKeyId='.$this->publicKeyId.'&id='.$this->idPago);
             curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
             $server_output = curl_exec($myCurl);
-            curl_close ($myCurl);
+            curl_close($myCurl);
             $obj = json_decode($server_output);
             $result = $this->checkResponseCode($obj);
 
             return $result;
-
         } catch (InstapagoException $e) {
-
             echo $e->getMessage();
-
         } // end try/catch
+    }
 
-        return;
-    } // paymentInfo
+ // paymentInfo
 
     /**
      * Realiza Transaccion
      * Efectúa y retornar una respuesta a un metodo de pago.
+     *
      *@param $url endpoint a consultar
      *@param $fields datos para la consulta
+     *
      *@return $obj array resultados de la transaccion
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
      */
     public function curlTransaccion($url, $fields)
     {
-      $myCurl = curl_init();
-      curl_setopt($myCurl, CURLOPT_URL,$url );
-      curl_setopt($myCurl, CURLOPT_POST, 1);
-      curl_setopt($myCurl, CURLOPT_POSTFIELDS,http_build_query($fields));
-      curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, true);
-      $server_output = curl_exec ($myCurl);
-      curl_close ($myCurl);
-      $obj = json_decode($server_output);
-      return $obj;
+        $myCurl = curl_init();
+        curl_setopt($myCurl, CURLOPT_URL, $url);
+        curl_setopt($myCurl, CURLOPT_POST, 1);
+        curl_setopt($myCurl, CURLOPT_POSTFIELDS, http_build_query($fields));
+        curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, true);
+        $server_output = curl_exec($myCurl);
+        curl_close($myCurl);
+        $obj = json_decode($server_output);
+
+        return $obj;
     }
 
     /**
      * Verifica Codigo de Estado de transaccion
      * Verifica y retornar el resultado de la transaccion.
+     *
      *@param $obj datos de la consulta
+     *
      *@return $result array datos de transaccion
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
      */
     public function checkResponseCode($obj)
     {
-      $code = $obj->code;
+        $code = $obj->code;
 
-      if ($code == 400) {
-          throw new InstapagoException('Error al validar los datos enviados.');
-      }elseif ($code == 401) {
-          throw new InstapagoException('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
-      }elseif ($code == 403) {
-          throw new InstapagoException('Pago Rechazado por el banco.');
-      }elseif ($code == 500) {
-          throw new InstapagoException('Ha Ocurrido un error interno dentro del servidor.');
-      }elseif ($code == 503) {
-          throw new InstapagoException('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
-      }elseif ($code == 201) {
-        return [
-            'code'      => $code ,
-            'msg_banco' => $obj->message,
-            'voucher' 	=> html_entity_decode($obj->voucher),
-            'id_pago'	  => $obj->id,
-            'reference' =>$obj->reference
+        if ($code == 400) {
+            throw new InstapagoException('Error al validar los datos enviados.');
+        } elseif ($code == 401) {
+            throw new InstapagoException('Error de autenticación, ha ocurrido un error con las llaves utilizadas.');
+        } elseif ($code == 403) {
+            throw new InstapagoException('Pago Rechazado por el banco.');
+        } elseif ($code == 500) {
+            throw new InstapagoException('Ha Ocurrido un error interno dentro del servidor.');
+        } elseif ($code == 503) {
+            throw new InstapagoException('Ha Ocurrido un error al procesar los parámetros de entrada. Revise los datos enviados y vuelva a intentarlo.');
+        } elseif ($code == 201) {
+            return [
+            'code'         => $code,
+            'msg_banco'    => $obj->message,
+            'voucher'      => html_entity_decode($obj->voucher),
+            'id_pago'      => $obj->id,
+            'reference'    => $obj->reference,
         ];
-      }
+        }
     }
 
     /**
      * Verifica parametros para realizar operación
      * Verifica y retorna exception si algun parametro esta vacio.
+     *
      *@param $params Array con parametros a verificar
+     *
      *@return new InstapagoException
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
      */
-    private function checkRequiredParams(Array $params)
+    private function checkRequiredParams(array $params)
     {
-      foreach ($params as $param) {
-        if(empty($param))
-        {
-          throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+        foreach ($params as $param) {
+            if (empty($param)) {
+                throw new InstapagoException('Parámetros faltantes para procesar el pago. Verifique la documentación.');
+            }
         }
-      }
     }
-
 } // end class

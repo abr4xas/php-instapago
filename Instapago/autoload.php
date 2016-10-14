@@ -2,7 +2,7 @@
 
 /**
  * The MIT License (MIT)
- * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>
+ * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -23,15 +23,12 @@
  * THE SOFTWARE.
  *
  * @author Angel Cruz <me@abr4xas.org>
- * @package php-instapago
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
 
- 
-spl_autoload_register(function($class)
-{
-	$file = dirname(__DIR__). DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-	
-	return ( ! is_file($file)) ?: require $file;
+spl_autoload_register(function ($class) {
+    $file = dirname(__DIR__).DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
+
+    return (!is_file($file)) ?: require $file;
 });
