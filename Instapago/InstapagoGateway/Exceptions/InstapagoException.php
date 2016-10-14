@@ -2,7 +2,7 @@
 
 /**
  * The MIT License (MIT)
- * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>
+ * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -23,23 +23,20 @@
  * THE SOFTWARE.
  *
  * @author Angel Cruz <me@abr4xas.org>
- * @package php-instapago
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
-
 namespace Instapago\InstapagoGateway\Exceptions;
+
 use Exception;
 
 /**
- * Custom InstapagoException
+ * Custom InstapagoException.
  */
-
-class InstapagoException extends Exception {
-	
-	public function __construct($message = null)
-	{
-		parent::__construct($message);
-	}
-	
+class InstapagoException extends Exception
+{
+    public function __construct($message = null)
+    {
+        parent::__construct($message);
+    }
 }
