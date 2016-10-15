@@ -182,7 +182,7 @@ class InstapagoPayment
 
             $myCurl = curl_init();
             curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($myCurl, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($myCurl, CURLOPT_CUSTOMREQUEST, 'DELETE');
             curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='.$this->keyId.'&PublicKeyId='.$this->publicKeyId.'&id='.$this->idPago);
             $server_output = curl_exec($myCurl);
             curl_close($myCurl);
@@ -249,9 +249,8 @@ class InstapagoPayment
         $server_output = curl_exec($myCurl);
         curl_close($myCurl);
         $obj = json_decode($server_output);
-        
-        return $obj;
 
+        return $obj;
     }
 
     /**
