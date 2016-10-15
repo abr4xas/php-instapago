@@ -26,12 +26,16 @@
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
+
+require_once 'Instapago/autoload.php';
+
 use \Instapago\InstapagoGateway\InstapagoPayment;
 use \PHPUnit_Framework_TestCase as Test;
 
 class InstapagoPaymentTest extends Test
 {
     protected $api;
+    protected $pago;
 
     protected function setUp()
     {
@@ -40,8 +44,41 @@ class InstapagoPaymentTest extends Test
 
     public function testCreaPago()
     {
-        $pago = $this->api->payment('200', 'test', 'jon doe', '11111111', '4111111111111111', '123', '12/2016', '2', '127.0.0.1');
+        $this->pago = $this->api->payment('200', 'test', 'jon doe', '11111111', '4111111111111111', '123', '12/2020', '1', '127.0.0.1');
+        $this->assertEquals(201, $this->pago['code']);
 
-        $this->assertEquals(201, $pago['code']);
+        return $this->pago;
     }
+
+    /**
+     * @depends testCreaPago
+     */
+    public function testContinuarPago($pago)
+    {
+        $this->pago = $pago;
+        $continue = $this->api->continuePayment($this->pago['id_pago'],'200');
+        $this->assertContains('Pago Completado', $continue['msg_banco'], '', true);
+    }
+
+    /**
+     * @depends testCreaPago
+     */
+    public function testInfoPago($pago)
+    {
+        $this->pago = $pago;
+        $info = $this->api->paymentInfo($this->pago['id_pago']);
+        $this->assertContains('Completada', $info['msg_banco']);
+    }
+
+    /**
+     * @depends testCreaPago
+     * En modo pruebas este método no funciona. 
+     * El personal de instapago asegura que en producción no hay problemas
+     */
+    // public function testCancelPago(array $pago)
+    // {
+    //     $this->pago = $pago;
+    //     $info = $this->api->cancelPayment($this->pago['id_pago']);
+    //     $this->assertContains('Anulada', $info['msg_banco']);
+    // }
 }
