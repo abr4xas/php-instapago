@@ -173,24 +173,7 @@ class InstapagoPayment
     public function cancelPayment($idPago)
     {
         try {
-            $params = [$idPago];
-
-            $this->checkRequiredParams($params);
-
-            $this->idPago = $idPago;
-
-            $url = $this->root.'payment'; // endpoint
-
-            $myCurl = curl_init();
-            curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($myCurl, CURLOPT_CUSTOMREQUEST, "DELETE");
-            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='.$this->keyId.'&PublicKeyId='.$this->publicKeyId.'&id='.$this->idPago);
-            $server_output = curl_exec($myCurl);
-            curl_close($myCurl);
-            $obj = json_decode($server_output);
-            $result = $this->checkResponseCode($obj);
-
-            return $result;
+            // TODO
         } catch (InstapagoException $e) {
             echo $e->getMessage();
         } // end try/catch
@@ -208,14 +191,20 @@ class InstapagoPayment
     {
         try {
             $params = [$idPago];
-
             $this->checkRequiredParams($params);
+
+            $this->idPago = $idPago;
 
             $url = $this->root.'payment'; // endpoint
 
-            $obj = $this->curlTransaccionInfo($url, $idPago);
+            $myCurl = curl_init();
+            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='.$this->keyId.'&PublicKeyId='.$this->publicKeyId.'&id='.$this->idPago);
+            curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
+            $server_output = curl_exec($myCurl);
+            curl_close($myCurl);
+            $obj = json_decode($server_output);
             $result = $this->checkResponseCode($obj);
-            
+
             return $result;
         } catch (InstapagoException $e) {
             echo $e->getMessage();
@@ -247,29 +236,6 @@ class InstapagoPayment
 
         return $obj;
     }
-
-    /**
-     * Realiza Transaccion para los métodos `cancelPayment` y `paymentInfo`
-     *
-     *@param $url endpoint a consultar
-     *
-     *@return $obj array resultados de la transaccion
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
-     */
-    public function curlTransaccionInfo($url, $idPago)
-    {
-        $this->idPago = $idPago;
-
-        $myCurl = curl_init();
-        curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='.$this->keyId.'&PublicKeyId='.$this->publicKeyId.'&id='.$this->idPago);
-        curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
-        $server_output = curl_exec($myCurl);
-        curl_close($myCurl);
-        $obj = json_decode($server_output);
-
-        return $obj;
-    }
-
 
     /**
      * Verifica Codigo de Estado de transaccion
