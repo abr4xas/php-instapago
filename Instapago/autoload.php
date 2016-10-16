@@ -26,7 +26,6 @@
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
-
 spl_autoload_register(function ($class) {
     $file = dirname(__DIR__).DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
 
