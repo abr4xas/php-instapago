@@ -174,18 +174,12 @@ class InstapagoPayment
     {
         try {
             $params = [$idPago];
-            
+
             $this->checkRequiredParams($params);
 
             $this->idPago = $idPago;
 
             $url = $this->root.'payment'; // endpoint
-
-            $fields = [
-                'KeyID'             => $this->keyId, //required
-                'PublicKeyId'       => $this->publicKeyId, //required
-                'id'                => $this->idPago, //required
-            ];
 
             $myCurl = curl_init();
             curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
@@ -256,7 +250,7 @@ class InstapagoPayment
         $server_output = curl_exec($myCurl);
         curl_close($myCurl);
         $obj = json_decode($server_output);
-        
+
         return $obj;
     }
 
