@@ -172,11 +172,7 @@ class InstapagoPayment
      */
     public function cancelPayment($idPago)
     {
-        try {
-            // TODO
-        } catch (InstapagoException $e) {
-            echo $e->getMessage();
-        } // end try/catch
+        // TODO
     }
 
  // cancelPayment
