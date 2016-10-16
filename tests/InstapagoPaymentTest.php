@@ -26,7 +26,6 @@
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
-
 require_once 'Instapago/autoload.php';
 
 use \Instapago\InstapagoGateway\InstapagoPayment;
@@ -56,7 +55,7 @@ class InstapagoPaymentTest extends Test
     public function testContinuarPago($pago)
     {
         $this->pago = $pago;
-        $continue = $this->api->continuePayment($this->pago['id_pago'],'200');
+        $continue = $this->api->continuePayment($this->pago['id_pago'], '200');
         $this->assertContains('Pago Completado', $continue['msg_banco'], '', true);
     }
 
@@ -70,9 +69,9 @@ class InstapagoPaymentTest extends Test
         $this->assertContains('Completada', $info['msg_banco']);
     }
 
-    /**
+    /*
      * @depends testCreaPago
-     * En modo pruebas este método no funciona. 
+     * En modo pruebas este método no funciona.
      * El personal de instapago asegura que en producción no hay problemas
      */
     // public function testCancelPago(array $pago)
