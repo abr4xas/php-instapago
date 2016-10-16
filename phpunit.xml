@@ -1,0 +1,7 @@
+<phpunit bootstrap="Instapago/autoload.php">
+  <testsuites>
+    <testsuite name="instapago">
+      <file>tests/InstapagoPaymentTest.php</file>
+    </testsuite>
+  </testsuites>
+</phpunit>
