@@ -23,6 +23,13 @@ Luego:
 $ composer require instapago/instapago
 $ composer dumpautoload -o
 ```
+
+## phpunit
+
+```
+$ phpunit --configuration="phpunit.xml" --include-path="tests"
+```
+
 ### como usar
 
 creamos un archivo `index.php`
