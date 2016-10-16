@@ -135,22 +135,23 @@ class InstapagoPayment
      * Para usar este método es necesario configurar en `payment()` el parametro statusId a 1
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago.
      */
-    public function continuePayment($amount, $idPago)
+
+    public function continuePayment($idPago, $amount)
     {
         try {
-            $params = [$amount, $idPago];
+            $params = [$idPago, $amount];
             $this->checkRequiredParams($params);
 
-            $this->amount = $amount;
             $this->idPago = $idPago;
+            $this->amount = $amount;
 
             $url = $this->root.'complete'; // endpoint
 
             $fields = [
                 'KeyID'             => $this->keyId, //required
                 'PublicKeyId'       => $this->publicKeyId, //required
-                'amount'            => $this->amount, //required
                 'id'                => $this->idPago, //required
+                'amount'            => $this->amount, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
@@ -169,29 +170,9 @@ class InstapagoPayment
      * Este método funciona para procesar una anulación de un pago o un bloqueo.
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago.
      */
-    public function cancelPayment($idPago)
+    public function cancelPayment()
     {
-        try {
-            $params = [$idPago];
-            $this->checkRequiredParams($params);
-
-            $this->idPago = $idPago;
-
-            $url = $this->root.'payment'; // endpoint
-
-            $fields = [
-                'KeyID'             => $this->keyId, //required
-                'PublicKeyId'       => $this->publicKeyId, //required
-                'id'                => $this->idPago, //required
-            ];
-
-            $obj = $this->curlTransaccion($url, $fields);
-            $result = $this->checkResponseCode($obj);
-
-            return $result;
-        } catch (InstapagoException $e) {
-            echo $e->getMessage();
-        } // end try/catch
+        // TODO
     }
 
  // cancelPayment

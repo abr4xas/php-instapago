@@ -4,6 +4,15 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+### v1.0.1
+### Nuevo
+* Optimizaciones generales
+* Agregando cambios en el método `continuePayment`
+* Agregando más pruebas unitarias :smile:
+* El método `cancelPayment` está pendiente de revisón. Se solicita información al personal de instapago. :bug:
+* Agregado archivo de configuración de phpunit
+* Actualizada versión de phpunit
+
 ### v1.0.0
 ### Nuevo
 * Optimizaciones generales 

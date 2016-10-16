@@ -89,22 +89,6 @@ $api = new Instapago('<keyId>','<publicKeyId>');
 
 $continue = $api->continuePayment('af614bca-0e2b-4232-bc8c-dbedbdf73b48','200');
 ```
-
-### anular pago
-
-Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.
-
-* KeyId (Requerido): Llave generada desde Instapago.
-* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.
-* Id (Requerido): Identificador único del pago.
-
-```php
-$api = new Instapago('<keyId>','<publicKeyId>');
-
-$anular = $api->cancelPayment('af614bca-0e2b-4232-bc8c-dbedbdf73b48');
-```
-
-
 ### información del pago
 
 Consulta información sobre un pago generado anteriormente. Requiere como parámetro el `id` que es el código de referencia de la transacción ejemplo:
@@ -123,6 +107,17 @@ Voucher</br>'.$pago['voucher'] .'</br>
 Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
 Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
 ```
+
+
+### anular pago
+
+Por el momento no disponible. :smile: 
+
+~~Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.~~
+
+~~* KeyId (Requerido): Llave generada desde Instapago.~~
+~~* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.~~
+~~* Id (Requerido): Identificador único del pago.~~
 
 ### códigos de respuesta
 
