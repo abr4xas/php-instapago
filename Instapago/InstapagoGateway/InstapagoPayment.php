@@ -135,22 +135,23 @@ class InstapagoPayment
      * Para usar este método es necesario configurar en `payment()` el parametro statusId a 1
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#completar-pago.
      */
-    public function continuePayment($amount, $idPago)
+
+    public function continuePayment($idPago, $amount)
     {
         try {
-            $params = [$amount, $idPago];
+            $params = [$idPago, $amount];
             $this->checkRequiredParams($params);
 
-            $this->amount = $amount;
             $this->idPago = $idPago;
+            $this->amount = $amount;
 
             $url = $this->root.'complete'; // endpoint
 
             $fields = [
                 'KeyID'             => $this->keyId, //required
                 'PublicKeyId'       => $this->publicKeyId, //required
-                'amount'            => $this->amount, //required
                 'id'                => $this->idPago, //required
+                'amount'            => $this->amount, //required
             ];
 
             $obj = $this->curlTransaccion($url, $fields);
@@ -173,6 +174,7 @@ class InstapagoPayment
     {
         try {
             $params = [$idPago];
+            
             $this->checkRequiredParams($params);
 
             $this->idPago = $idPago;
@@ -185,7 +187,13 @@ class InstapagoPayment
                 'id'                => $this->idPago, //required
             ];
 
-            $obj = $this->curlTransaccion($url, $fields);
+            $myCurl = curl_init();
+            curl_setopt($myCurl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($myCurl, CURLOPT_CUSTOMREQUEST, "DELETE");
+            curl_setopt($myCurl, CURLOPT_URL, $url.'?'.'KeyID='.$this->keyId.'&PublicKeyId='.$this->publicKeyId.'&id='.$this->idPago);
+            $server_output = curl_exec($myCurl);
+            curl_close($myCurl);
+            $obj = json_decode($server_output);
             $result = $this->checkResponseCode($obj);
 
             return $result;
@@ -248,8 +256,14 @@ class InstapagoPayment
         $server_output = curl_exec($myCurl);
         curl_close($myCurl);
         $obj = json_decode($server_output);
+<<<<<<< HEAD
 
         return $obj;
+=======
+        
+        return $obj;
+
+>>>>>>> dev
     }
 
     /**
