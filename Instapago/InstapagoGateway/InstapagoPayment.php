@@ -170,7 +170,7 @@ class InstapagoPayment
      * Este método funciona para procesar una anulación de un pago o un bloqueo.
      * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago.
      */
-    public function cancelPayment($idPago)
+    public function cancelPayment()
     {
         // TODO
     }
