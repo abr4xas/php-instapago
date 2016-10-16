@@ -256,14 +256,8 @@ class InstapagoPayment
         $server_output = curl_exec($myCurl);
         curl_close($myCurl);
         $obj = json_decode($server_output);
-<<<<<<< HEAD
-
-        return $obj;
-=======
         
         return $obj;
-
->>>>>>> dev
     }
 
     /**
