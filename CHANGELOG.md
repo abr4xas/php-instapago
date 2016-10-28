@@ -4,6 +4,12 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+
+### v2.0.0
+### Nuevo
+* Optimizaciones generales
+* Ahora utiliza Guzzle para realizar las consultas al API de instapago
+
 ### v1.0.1
 ### Nuevo
 * Optimizaciones generales
