@@ -108,16 +108,13 @@ Identificador del pago</br><strong>'. $pago['id_pago'] .'</strong></br>
 Código de referencia: ' . '<strong>' . $pago['reference'] .'</strong>';
 ```
 
-
 ### anular pago
 
-Por el momento no disponible. :smile: 
+Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.
 
-~~Este método funciona para procesar una anulación de un pago, ya sea un pago o un bloqueo.~~
-
-~~* KeyId (Requerido): Llave generada desde Instapago.~~
-~~* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.~~
-~~* Id (Requerido): Identificador único del pago.~~
+* KeyId (Requerido): Llave generada desde Instapago.
+* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.
+* Id (Requerido): Identificador único del pago.
 
 ### códigos de respuesta
 

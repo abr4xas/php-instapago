@@ -75,10 +75,10 @@ class InstapagoPaymentTest extends Test
      * En modo pruebas este método no funciona. 
      * El personal de instapago asegura que en producción no hay problemas
      */
-    // public function testCancelPago(array $pago)
-    // {
-    //     $this->pago = $pago;
-    //     $info = $this->api->cancelPayment($this->pago['id_pago']);
-    //     $this->assertContains('Anulada', $info['msg_banco']);
-    // }
+    public function testCancelPago(array $pago)
+    {
+        $this->pago = $pago;
+        $info = $this->api->cancelPayment($this->pago['id_pago']);
+        $this->assertContains('El pago ha sido anulado', $info['msg_banco']);
+    }
 }
