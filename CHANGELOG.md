@@ -9,6 +9,7 @@
 ### Nuevo
 * Optimizaciones generales
 * Ahora utiliza Guzzle para realizar las consultas al API de instapago
+* Mejoras en los métodos de cancelar y obtener información del pago, se convierte en uno solo ya que son los mismos parámetros.
 
 ### v1.0.1
 ### Nuevo

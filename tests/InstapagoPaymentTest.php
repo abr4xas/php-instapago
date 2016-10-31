@@ -66,7 +66,7 @@ class InstapagoPaymentTest extends Test
     public function testInfoPago($pago)
     {
         $this->pago = $pago;
-        $info = $this->api->paymentInfo($this->pago['id_pago']);
+        $info = $this->api->paymentCancelOrInfo($this->pago['id_pago'], 'GET');
         $this->assertContains('Completada', $info['msg_banco']);
     }
 
@@ -78,7 +78,7 @@ class InstapagoPaymentTest extends Test
     public function testCancelPago(array $pago)
     {
         $this->pago = $pago;
-        $info = $this->api->cancelPayment($this->pago['id_pago']);
+        $info = $this->api->paymentCancelOrInfo($this->pago['id_pago'], 'DELETE');
         $this->assertContains('El pago ha sido anulado', $info['msg_banco']);
     }
 }
