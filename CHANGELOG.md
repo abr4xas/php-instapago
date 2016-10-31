@@ -5,6 +5,10 @@
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
 
+### v2.0.1
+### Nuevo
+* Mejoras en los métodos de cancelar y obtener información del pago, se convierte en uno solo ya que son los mismos parámetros.
+
 ### v2.0.0
 ### Nuevo
 * Optimizaciones generales
