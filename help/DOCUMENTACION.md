@@ -91,15 +91,23 @@ $continue = $api->continuePayment('af614bca-0e2b-4232-bc8c-dbedbdf73b48','200');
 ```
 ### información del pago
 
-Consulta información sobre un pago generado anteriormente. Requiere como parámetro el `id` que es el código de referencia de la transacción ejemplo:
+Consulta información sobre un pago generado anteriormente.
+
+* KeyId (Requerido): Llave generada desde Instapago.
+* PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.
+* Id (Requerido): Identificador único del pago.
+* Metodo: GET
+
+Ejemplo:
 
 ```
 id = af614bca-0e2b-4232-bc8c-dbedbdf73b48
+method = GET
 ```
 ```php
 $api = new Instapago('<keyId>','<publicKeyId>');
 
-$info = $api->paymentInfo('af614bca-0e2b-4232-bc8c-dbedbdf73b48');
+$info = $api->paymentCancelOrInfo('af614bca-0e2b-4232-bc8c-dbedbdf73b48', 'GET');
 
 echo '
 Mensaje del banco: <strong>'.$pago['msg_banco'].'</strong> </br>
@@ -115,6 +123,24 @@ Este método funciona para procesar una anulación de un pago, ya sea un pago o 
 * KeyId (Requerido): Llave generada desde Instapago.
 * PublicKeyId (Requerido): Llave compartida Enviada por correo al crear una cuenta en Instapago.
 * Id (Requerido): Identificador único del pago.
+* Metodo: DELETE
+
+Ejemplo:
+
+```
+id = af614bca-0e2b-4232-bc8c-dbedbdf73b48
+method = DELETE
+```
+```php
+$api = new Instapago('<keyId>','<publicKeyId>');
+
+$deletePayment = $api->paymentCancelOrInfo('af614bca-0e2b-4232-bc8c-dbedbdf73b48', 'DELETE');
+
+echo '
+Mensaje del banco: <strong>'.$deletePayment['msg_banco'].'</strong> </br>
+Identificador del pago</br><strong>'. $deletePayment['id_pago'] .'</strong></br>
+Código de referencia: ' . '<strong>' . $deletePayment['reference'] .'</strong>';
+```
 
 ### códigos de respuesta
 

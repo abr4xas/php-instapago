@@ -163,44 +163,16 @@ class InstapagoPayment
     }
 
     /**
-     * Anular Pago
-     * Este método funciona para procesar una anulación de un pago o un bloqueo.
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#anular-pago.
-     */
-    public function cancelPayment($idPago)
-    {
-        try {
-            $params = [$idPago];
-            $this->checkRequiredParams($params);
-
-            $this->idPago = $idPago;
-
-            $url = 'payment'; // endpoint
-
-            $fields = [
-                'KeyID'             => $this->keyId, //required
-                'PublicKeyId'       => $this->publicKeyId, //required
-                'Id'                => $this->idPago, //required
-            ];
-            $obj = $this->curlTransaccion($url, $fields, 'DELETE');
-
-            $result = $this->checkResponseCode($obj);
-            return $result;
-
-        } catch (InstapagoException $e) {
-            echo $e->getMessage();
-        } // end try/catch
-    }
-
- // cancelPayment
-
-    /**
-     * Información del Pago
-     * Consulta información sobre un pago generado anteriormente.
+     * Información o Cancelación del pago
+     * Consulta información sobre un pago generado anteriormente o puede cancelarlo.
      * Requiere como parámetro el `id` que es el código de referencia de la transacción
-     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#información-del-pago.
+     * @param `$idPago` que es el código de referencia de la transacción
+     * @param `$method` que puede ser GET o DELETE según lo que desea hacer
+     *
+     * @return $obj array resultados de la transaccion
+     * https://github.com/abr4xas/php-instapago/blob/master/help/DOCUMENTACION.md#PENDIENTE
      */
-    public function paymentInfo($idPago)
+    public function paymentCancelOrInfo($idPago, $method)
     {
         try {
             $params = [$idPago];
@@ -216,7 +188,7 @@ class InstapagoPayment
                 'id'                => $this->idPago, //required
             ];
 
-            $obj = $this->curlTransaccion($url, $fields, 'GET');
+            $obj = $this->curlTransaccion($url, $fields, $method);
 
             $result = $this->checkResponseCode($obj);
 
