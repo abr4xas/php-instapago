@@ -49,18 +49,6 @@ use \Instapago\InstapagoGateway\InstapagoPayment;
 $api = new InstapagoPayment('<keyId>','<publicKeyId>');
 ```
 
-#### sin composer
-
-```php
-<?php
-
-require_once 'Instapago/autoload.php';
-
-use \Instapago\InstapagoGateway\InstapagoPayment;
-
-$api = new InstapagoPayment('<keyId>','<publicKeyId>');
-```
-
 Podemos revisar rápidamente si todo funciona correctamente escribiendo:
 
 ```bash
