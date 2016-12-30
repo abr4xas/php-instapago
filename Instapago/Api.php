@@ -191,11 +191,11 @@ class Api
    * Realiza Transaccion
    * Efectúa y retornar una respuesta a un metodo de pago.
    *
-   * @param $url endpoint a consultar
-   * @param $fields datos para la consulta
-   * @param $method verbo http de la consulta
+   * @param $url string endpoint a consultar
+   * @param $fields array datos para la consulta
+   * @param $method string verbo http de la consulta
    *
-   * @return $obj array resultados de la transaccion
+   * @return array resultados de la transaccion
    */
   public function curlTransaccion($url, $fields, $method)
   {
@@ -204,11 +204,10 @@ class Api
     ]);
 
     $args = [];
-    $key = null;
     if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
       throw new Exception("Not implemented yet", 1);
     }
-    $key = $method == 'GET' ? 'query' : 'form_params';
+    $key = ($method == 'GET') ? 'query' : 'form_params';
 
     $args[$key] = $fields;
     
@@ -227,7 +226,7 @@ class Api
    *
    * @param $obj datos de la consulta
    *
-   * @return $result array datos de transaccion
+   * @return array datos de transaccion
    */
   public function checkResponseCode($obj)
   {
