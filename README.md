@@ -44,21 +44,18 @@ creamos un archivo `index.php`
 
 require 'vendor/autoload.php';
 
-use \Instapago\InstapagoGateway\InstapagoPayment;
+use \Instapago\Api;
 
-$api = new InstapagoPayment('<keyId>','<publicKeyId>');
-```
+try{
+  $api = new Api('<keyId>','<publicKeyId>');
 
-#### sin composer
-
-```php
-<?php
-
-require_once 'Instapago/autoload.php';
-
-use \Instapago\InstapagoGateway\InstapagoPayment;
-
-$api = new InstapagoPayment('<keyId>','<publicKeyId>');
+  $respuesta = $api->directPayment($paymentData);
+  // hacer algo con $respuesta
+}catch(\Instapago\Exceptions\InstapagoException $e){
+    
+  echo "Ocurrió un problema procesando el pago.";
+  // manejar el error 
+}
 ```
 
 Podemos revisar rápidamente si todo funciona correctamente escribiendo:
