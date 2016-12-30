@@ -64,7 +64,7 @@ class Api
    */
   public function directPayment($fields)
   {
-    return $this->payment('direct', $fields);
+    return $this->payment('2', $fields);
   }
 
   /**
@@ -77,7 +77,7 @@ class Api
    */
   public function reservePayment($fields)
   {
-    return $this->payment('reserve', $fields);
+    return $this->payment('1', $fields);
   }
 
   /**
@@ -90,11 +90,7 @@ class Api
    * @throws Exceptions\InstapagoException
    */
 
-  private function payment($paymentType, $fields) {
-    $type = '2';
-    if ($paymentType == 'reserve') {
-      $type = '1';
-    }
+  private function payment($type, $fields) {
 
     (new Validator())->payment()->validate($fields);
 
