@@ -4,6 +4,17 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+### v3.0.0
+### Nuevo
+* Se re escribe la librería.
+* Añadidas mas excepciones para granular un poco los errores.
+* Agregadas validaciones un poco mas estrictas a las entradas de datos.
+* Actualizadas las pruebas.
+* Cambiado el esquema general del API, parece un poco más fluente.
+* Actualizados los Test Suites
+* Mejorado el Autoloading, ahora es solo PSR-4
+* Agregado script en composer.json para phpunit.
+* Cambios ligeros en el phpunit.xml
 
 ### v2.0.1
 ### Nuevo

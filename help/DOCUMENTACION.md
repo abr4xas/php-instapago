@@ -123,10 +123,12 @@ Efectúa un pago directo con tarjeta de crédito, los pagos directos son inmedia
 
 ```php
 try{
-  $api = new Instapago('<keyId>','<publicKeyId>');
+  $api = new Api('<keyId>','<publicKeyId>');
+
   $respuesta = $api->directPayment($paymentData);
   // hacer algo con $respuesta
 }catch(\Instapago\Exceptions\InstapagoException $e){
+
   echo "Ocurrió un problema procesando el pago.";
   // manejar el error 
 }
@@ -138,10 +140,12 @@ Efectúa una reserva o retención de pago en la tarjeta de crédito del cliente,
 
 ```php
 try{
-  $api = new Instapago('<keyId>','<publicKeyId>');
+  $api = new Api('<keyId>','<publicKeyId>');
+
   $respuesta = $api->reservePayment($paymentData);
   // hacer algo con $respuesta
 }catch(\Instapago\Exceptions\InstapagoException $e){
+
   echo "Ocurrió un problema procesando el pago.";
   // manejar el error 
 }
@@ -156,11 +160,13 @@ try{
 
 ```php
 try{
-  $api = new Instapago('<keyId>','<publicKeyId>');
+  $api = new Api('<keyId>','<publicKeyId>');
+
   $respuesta = $api-continuePayment([
     'id' => 'af614bca-0e2b-4232-bc8c-dbedbdf73b48',
     'amount' => '200.00'
   ]);
+
 }catch(\Instapago\Exceptions\InstapagoException $e){
   // manejar errores
 }
@@ -172,10 +178,12 @@ Consulta información sobre un pago previamente generado.
 
 ```php
 try{
-  $api = new Instapago('<keyId>','<publicKeyId>');
+  $api = new Api('<keyId>','<publicKeyId>');
+
   $idPago = 'af614bca-0e2b-4232-bc8c-dbedbdf73b48';
   
   $respuesta = $api->query($idPago);
+
 }catch(\Instapago\Exceptions\InstapagoException $e){
   // manejar errores
 }
@@ -188,10 +196,12 @@ Este método permite cancelar un pago, haya sido directo o retenido.
 
 ```php
 try{
-  $api = new Instapago('<keyId>','<publicKeyId>');
+  $api = new Api('<keyId>','<publicKeyId>');
+
   $idPago = 'af614bca-0e2b-4232-bc8c-dbedbdf73b48';
 
   $info = $api->cancel($idPago);
+  
 }catch(\Instapago\Exceptions\InstapagoException $e){
   // manejar errores
 }
