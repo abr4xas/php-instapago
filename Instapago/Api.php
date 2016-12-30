@@ -57,9 +57,9 @@ class Api
   /**
    * Crear un pago directo.
    *
-   * @param \ArrayObject<string, string> $fields Los campos necesarios 
+   * @param array<string> $fields Los campos necesarios 
    * para procesar el pago.
-   * @return \ArrayObject<string, string> Respuesta de Instapago
+   * @return array<string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
   public function directPayment($fields)
@@ -70,9 +70,9 @@ class Api
   /**
    * Crear un pago diferido o reservado.
    *
-   * @param \ArrayObject<string, string> $fields Los campos necesarios 
+   * @param array<string> $fields Los campos necesarios 
    * para procesar el pago.
-   * @return \ArrayObject<string, string> Respuesta de Instapago
+   * @return array<string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
   public function reservePayment($fields)
@@ -83,10 +83,10 @@ class Api
   /**
    * Crear un pago.
    *
-   * @param string $paymentType tipo de pago ('reserve' o 'direct')
-   * @param \ArrayObject<string, string> $fields Los campos necesarios 
+   * @param string $type tipo de pago ('1' o '0')
+   * @param array<string> $fields Los campos necesarios 
    * para procesar el pago.
-   * @return \ArrayObject<string, string> Respuesta de Instapago
+   * @return array<string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
 
@@ -119,9 +119,9 @@ class Api
    * Este método funciona para procesar un bloqueo o pre-autorización
    * para así procesarla y hacer el cobro respectivo.
    *
-   * @param \ArrayObject<string, string> $fields Los campos necesarios 
+   * @param array<string> $fields Los campos necesarios 
    * para procesar el pago.
-   * @return \ArrayObject<string, string> Respuesta de Instapago
+   * @return array<string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
   public function continuePayment($fields){
@@ -144,7 +144,7 @@ class Api
    * para así procesarla y hacer el cobro respectivo.
    *
    * @param string $id_pago ID del pago a consultar 
-   * @return \ArrayObject<string, string> Respuesta de Instapago
+   * @return array<string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
   public function query($id_pago) {
@@ -168,7 +168,7 @@ class Api
    * Este método funciona para cancelar un pago previamente procesado.
    *
    * @param string $id_pago ID del pago a cancelar
-   * @return \ArrayObject<string, string> Respuesta de Instapago
+   * @return array<string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
   public function cancel($id_pago) {
@@ -262,9 +262,9 @@ class Api
         'id_pago'      => $obj->id,
         'reference'    => $obj->reference,
       ];
-    }else {
-      throw new \Exception('Not implemented yet');
     }
+
+    throw new \Exception('Not implemented yet');
   }
 
 }
