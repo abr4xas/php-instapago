@@ -204,18 +204,13 @@ class Api
     ]);
 
     $args = [];
-    
-    if ($method == 'GET') {
-      $args = [
-        'query' => $fields
-      ];
-    }else if ($method == 'POST' || $method == 'DELETE') {
-      $args = [
-          'form_params' => $fields
-      ];
-    }else{
+    $key = null;
+    if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
       throw new Exception("Not implemented yet", 1);
     }
+    $key = $method == 'GET' ? 'query' : 'form_params';
+
+    $args[$key] = $fields;
     
     try {
       $request = $client->request($method, $url, $args);
