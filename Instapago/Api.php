@@ -214,7 +214,7 @@ class Api
     try {
       $request = $client->request($method, $url, $args);
       $body = $request->getBody()->getContents();
-      $obj = json_decode($body);
+      $obj = json_decode($body, true);
       return $obj;
     } catch (\GuzzleHttp\Exception\ConnectException $e) {
       throw new Exceptions\TimeoutException("Cannot connect to api.instapago.com");
@@ -230,7 +230,7 @@ class Api
    */
   public function checkResponseCode($obj)
   {
-    $code = $obj->code;
+    $code = $obj['code'];
 
     if ($code == 400) {
       throw new Exceptions\InvalidInputException(
@@ -256,10 +256,11 @@ class Api
     }else if ($code == 201) {
       return [
         'code'         => $code,
-        'msg_banco'    => $obj->message,
-        'voucher'      => html_entity_decode($obj->voucher),
-        'id_pago'      => $obj->id,
-        'reference'    => $obj->reference,
+        'msg_banco'    => $obj['message'],
+        'voucher'      => html_entity_decode($obj['voucher']),
+        'id_pago'      => $obj['id'],
+        'reference'    => $obj['reference'],
+        'original_response' => $obj
       ];
     }
 
