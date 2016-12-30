@@ -90,14 +90,10 @@ class Api
    * @throws Exceptions\InstapagoException
    */
 
-  public function payment($paymentType, $fields) {
-    $type = null;
-    if ($paymentType == 'direct') {
-      $type = '2';
-    }else if ($paymentType == 'reserve') {
+  private function payment($paymentType, $fields) {
+    $type = '2';
+    if ($paymentType == 'reserve') {
       $type = '1';
-    }else{
-      throw new Exceptions\InstapagoException("Invalid Payment type");
     }
 
     (new Validator())->payment()->validate($fields);
