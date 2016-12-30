@@ -237,7 +237,7 @@ class Api
       throw new Exceptions\InvalidInputException(
         'Error al validar los datos enviados.'
       );
-    }else if ($code == 401) {
+    } if ($code == 401) {
       throw new Exceptions\AuthException(
         'Error de autenticación, ha ocurrido un error'
         . ' con las llaves utilizadas.');
