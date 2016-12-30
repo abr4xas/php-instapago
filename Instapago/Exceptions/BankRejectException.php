@@ -22,13 +22,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author Angel Cruz <me@abr4xas.org>
- * @license MIT License
- * @copyright 2016 Angel Cruz
+ * @author José Gómez <1josegomezr@gmail.com>
+ * @license MIT Licens
+ * @copyright 2016 José Gómez
  */
+namespace Instapago\Exceptions;
 
-spl_autoload_register(function ($class) {
-    $file = dirname(__DIR__).DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
-
-    return (!is_file($file)) ?: require $file;
-});
+/**
+ * Custom BankRejectException.
+ */
+class BankRejectException extends \Exception{}
