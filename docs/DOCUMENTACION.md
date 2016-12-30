@@ -181,7 +181,6 @@ try{
 }
 ```
 Devuelve la misma respuesta que los métodos de crear pagos.
-```
 
 ### Anular Pago
 
