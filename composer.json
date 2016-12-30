@@ -26,5 +26,8 @@
         "psr-4": {
             "Instapago\\": "Instapago"
         }
+    },
+    "scripts": {
+      "test": "phpunit --verbose"
     }
 }

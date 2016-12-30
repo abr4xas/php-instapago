@@ -100,7 +100,7 @@ class Api
       throw new Exceptions\InstapagoException("Invalid Payment type");
     }
 
-    $validator = (new Validator())->payment()->validate($fields);
+    (new Validator())->payment()->validate($fields);
 
     $fields = [
       'KeyID'          => $this->keyId, 
@@ -133,7 +133,7 @@ class Api
    * @throws Exceptions\InstapagoException
    */
   public function continuePayment($fields){
-    $validator = (new Validator())->release()->validate($fields);
+    (new Validator())->release()->validate($fields);
     $fields = [
       'KeyID'        => $this->keyId, //required
       'PublicKeyId'  => $this->publicKeyId, //required
@@ -151,19 +151,19 @@ class Api
    * Este método funciona para procesar un bloqueo o pre-autorización
    * para así procesarla y hacer el cobro respectivo.
    *
-   * @param string $id ID del pago a consultar 
+   * @param string $id_pago ID del pago a consultar 
    * @return \ArrayObject<string, string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
-  public function query($id) {
-    $validator = (new Validator())->query()->validate([
-      'id' => $id
+  public function query($id_pago) {
+    (new Validator())->query()->validate([
+      'id' => $id_pago
     ]);
 
     $fields = [
       'KeyID'        => $this->keyId, //required
       'PublicKeyId'  => $this->publicKeyId, //required
-      'id'           => $id, //required
+      'id'           => $id_pago, //required
     ];
 
     $obj = $this->curlTransaccion('payment', $fields, 'GET');
@@ -175,19 +175,19 @@ class Api
    * Cancelar Pago
    * Este método funciona para cancelar un pago previamente procesado.
    *
-   * @param string $id ID del pago a cancelar
+   * @param string $id_pago ID del pago a cancelar
    * @return \ArrayObject<string, string> Respuesta de Instapago
    * @throws Exceptions\InstapagoException
    */
-  public function cancel($id) {
-    $validator = (new Validator())->query()->validate([
-      'id' => $id
+  public function cancel($id_pago) {
+    (new Validator())->query()->validate([
+      'id' => $id_pago
     ]);
 
     $fields = [
       'KeyID'        => $this->keyId, //required
       'PublicKeyId'  => $this->publicKeyId, //required
-      'id'           => $id, //required
+      'id'           => $id_pago, //required
     ];
 
     $obj = $this->curlTransaccion('payment', $fields, 'DELETE');
