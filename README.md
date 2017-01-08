@@ -13,7 +13,6 @@
 [![Build Status](https://travis-ci.org/abr4xas/php-instapago.svg?branch=master)](https://travis-ci.org/abr4xas/php-instapago)
 [![codecov](https://codecov.io/gh/abr4xas/php-instapago/branch/master/graph/badge.svg)](https://codecov.io/gh/abr4xas/php-instapago)
 
-
 ## instalación
 
 Primero, `composer`
