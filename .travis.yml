@@ -10,8 +10,7 @@ before_script:
   - composer install --prefer-source --no-interaction --dev
 
 # Commands you want to run that will verify your build.
-script: 
-  #- phpunit --configuration="phpunit.xml" --include-path="tests"
+script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 after_success:
