@@ -11,7 +11,7 @@ before_script:
 
 # Commands you want to run that will verify your build.
 script: 
-  - phpunit --configuration="phpunit.xml" --include-path="tests"
+  #- phpunit --configuration="phpunit.xml" --include-path="tests"
   - vendor/bin/phpunit --coverage-clover=coverage.xml
 
 after_success:
