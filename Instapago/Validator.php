@@ -41,7 +41,7 @@ class Validator {
     $this->validations = [
       'amount' => [FILTER_VALIDATE_FLOAT],
       'description' => [FILTER_VALIDATE_REGEXP, '/^(.{0,140})$/'],
-      'card_holder' => [FILTER_VALIDATE_REGEXP, '/^([a-zA-Z\ ]+)$/'],
+      'card_holder' => [FILTER_VALIDATE_REGEXP, '/^([a-zA-ZáéíóúñÁÉÍÓÚÑ\ ]+)$/'],
       'card_holder_id' => [FILTER_VALIDATE_REGEXP, '/^(\d{5,8})$/'],
       'card_number' => [FILTER_VALIDATE_REGEXP, '/^(\d{16})$/'],
       'cvc' => [FILTER_VALIDATE_INT],
