@@ -45,7 +45,7 @@ class ApiTest extends TestCase {
     return [
       'amount' => '200',
       'description' => 'test',
-      'card_holder' => 'jon doe',
+      'card_holder' => 'juan peñalver',
       'card_holder_id' => '11111111',
       'card_number' => '4111111111111111',
       'cvc' => '123',
