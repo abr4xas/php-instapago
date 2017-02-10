@@ -26,9 +26,12 @@
  * @license MIT Licens
  * @copyright 2016 José Gómez
  */
+
 namespace Instapago\Exceptions;
 
 /**
  * Custom InvalidInputException.
  */
-class InvalidInputException extends \Exception{}
+class InvalidInputException extends \Exception
+{
+}
