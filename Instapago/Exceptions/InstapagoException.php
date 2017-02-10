@@ -26,9 +26,12 @@
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
+
 namespace Instapago\Exceptions;
 
 /**
  * Custom InstapagoException.
  */
-class InstapagoException extends \Exception{}
+class InstapagoException extends \Exception
+{
+}

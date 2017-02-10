@@ -26,9 +26,12 @@
  * @license MIT Licens
  * @copyright 2016 José Gómez
  */
+
 namespace Instapago\Exceptions;
 
 /**
  * Custom TimeoutException.
  */
-class TimeoutException extends \Exception{}
+class TimeoutException extends \Exception
+{
+}

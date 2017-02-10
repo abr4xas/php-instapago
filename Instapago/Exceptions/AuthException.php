@@ -26,9 +26,12 @@
  * @license MIT Licens
  * @copyright 2016 José Gómez
  */
+
 namespace Instapago\Exceptions;
 
 /**
  * Custom AuthException.
  */
-class AuthException extends \Exception{}
+class AuthException extends \Exception
+{
+}
