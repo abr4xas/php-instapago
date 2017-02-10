@@ -1,5 +1,5 @@
+![Php Instapago](help/hYNsH6B.png)
 <p align="center">
-    ![Php Instapago](help/hYNsH6B.png)
     Librería Instapago para PHP
 </p>
 <p align="center">
