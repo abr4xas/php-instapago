@@ -26,9 +26,12 @@
  * @license MIT Licens
  * @copyright 2016 José Gómez
  */
+
 namespace Instapago\Exceptions;
 
 /**
  * Custom ValidationException.
  */
-class ValidationException extends \Exception{}
+class ValidationException extends \Exception
+{
+}
