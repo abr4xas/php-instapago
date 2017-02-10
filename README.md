@@ -78,7 +78,7 @@ $ php -S localhost:8000
 ## phpunit
 
 ```
-$ phpunit --configuration="phpunit.xml" --include-path="tests"
+$ phpunit --configuration="phpunit.xml.dist"
 ```
 
 ## enlaces
