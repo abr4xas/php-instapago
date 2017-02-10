@@ -4,6 +4,15 @@
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
 
+###v3.0.2
+* Se actualizan las pruebas unitarias 
+* Se actualiza versión de php unit a la vieja estable (5.7)
+
+### v3.0.1
+### Nuevo
+* Se actualiza la validación del campo card_holder para incluir la letra ñ
+* Cambios ligeros en el phpunit.xml
+
 ### v3.0.0
 ### Nuevo
 * Se re escribe la librería.
