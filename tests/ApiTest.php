@@ -74,7 +74,7 @@ class ApiTest extends TestCase
         try {
             $data = $this->_dataPagoPruebaError();
             $pago = $this->api->directPayment($data);
-        } catch(\Instapago\Exceptions\InvalidInputException $e){
+        } catch (\Instapago\Exceptions\InvalidInputException $e) {
             $this->assertContains('Error al validar los datos enviados', $e->getMessage());
         }
     }
