@@ -44,15 +44,39 @@ class ApiTest extends TestCase
     private function _dataPagoPrueba()
     {
         return [
-      'amount'         => '200',
-      'description'    => 'test',
-      'card_holder'    => 'juan peñalver',
-      'card_holder_id' => '11111111',
-      'card_number'    => '4111111111111111',
-      'cvc'            => '123',
-      'expiration'     => '12/2020',
-      'ip'             => '127.0.0.1',
-    ];
+            'amount'         => '200',
+            'description'    => 'test',
+            'card_holder'    => 'juan peñalver',
+            'card_holder_id' => '11111111',
+            'card_number'    => '4111111111111111',
+            'cvc'            => '123',
+            'expiration'     => '12/2020',
+            'ip'             => '127.0.0.1',
+        ];
+    }
+
+    private function _dataPagoPruebaError()
+    {
+        return [
+            'amount'         => '200',
+            'description'    => 'test',
+            'card_holder'    => 'juan peñalver',
+            'card_holder_id' => '11111111',
+            'card_number'    => '4111111111111112',
+            'cvc'            => '123',
+            'expiration'     => '12/2020',
+            'ip'             => '127.0.0.1',
+        ];
+    }
+
+    public function testBadData()
+    {
+        try {
+            $data = $this->_dataPagoPruebaError();
+            $pago = $this->api->directPayment($data);
+        } catch(\Instapago\Exceptions\InvalidInputException $e){
+            $this->assertContains('Error al validar los datos enviados', $e->getMessage());
+        }
     }
 
     public function testCreaPagoDirecto()
