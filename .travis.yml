@@ -8,8 +8,8 @@ php:
 
 # Commands to be run before your environment runs.
 before_script:
-    - travis_retry composer self-update
-    - travis_retry composer install --no-interaction --prefer-source --dev
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
 
 # Commands you want to run that will verify your build.
 script:
@@ -19,3 +19,4 @@ script:
 notifications:
     on_success: never
     on_failure: always
+    
