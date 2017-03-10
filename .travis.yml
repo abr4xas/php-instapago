@@ -13,10 +13,9 @@ before_script:
 
 # Commands you want to run that will verify your build.
 script:
-    - phpunit
+    - vendor/bin/phpunit
 
 # Customize when the notification emails are sent.
 notifications:
     on_success: never
     on_failure: always
-    
