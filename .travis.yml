@@ -4,7 +4,7 @@ php:
   - '7.0'
   - '7.1'
   - hhvm
-  - nightly
+  #- nightly
 
 # Commands to be run before your environment runs.
 before_script:
