@@ -13,7 +13,7 @@ before_script:
 
 # Commands you want to run that will verify your build.
 script:
-    - phpunit
+    - vendor/bin/phpunit --configuration="phpunit.xml"
 
 # Customize when the notification emails are sent.
 notifications:
