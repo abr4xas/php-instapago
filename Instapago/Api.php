@@ -222,7 +222,7 @@ class Api
 	]);
 
 	  $args = [];
-	  if (!in_array($method, ['GET', 'POST', 'DELETE'])) {
+	  if ( ! in_array($method, ['GET', 'POST', 'DELETE'])) {
 		  throw new Exception('Not implemented yet', 1);
 	  }
 	  $key = ($method == 'GET') ? 'query' : 'form_params';

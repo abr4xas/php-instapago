@@ -76,7 +76,7 @@ class Validator
 	public function validate($fields)
 	{
 		foreach ($this->validations as $key => $filters) {
-			if (!$this->_validation($fields[$key], $filters)) {
+			if ( ! $this->_validation($fields[$key], $filters)) {
 				throw new Exceptions\ValidationException("Error {$key}: {$fields[$key]}");
 			}
 		}
