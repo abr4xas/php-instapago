@@ -13,10 +13,7 @@ before_script:
 
 # Commands you want to run that will verify your build.
 script:
-    - vendor/bin/phpunit --coverage-clover=coverage.xml
-
-after_success:
-    - bash <(curl -s https://codecov.io/bash)
+    - phpunit
 
 # Customize when the notification emails are sent.
 notifications:
