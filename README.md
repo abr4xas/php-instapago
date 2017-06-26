@@ -27,9 +27,6 @@ $ composer dumpautoload -o // opcional
 
 creamos un archivo `index.php`
 
-
-#### composer
-
 ```php
 <?php
 
