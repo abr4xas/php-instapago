@@ -59,6 +59,26 @@ try{
 
   echo $e->getMessage(); // manejar el error
 
+}catch(\Instapago\Exceptions\AuthException $e){
+
+  echo $e->getMessage(); // manejar el error
+
+}catch(\Instapago\Exceptions\BankRejectException $e){
+
+  echo $e->getMessage(); // manejar el error
+
+}catch(\Instapago\Exceptions\InvalidInputException $e){
+
+  echo $e->getMessage(); // manejar el error
+
+}catch(\Instapago\Exceptions\TimeoutException $e){
+
+  echo $e->getMessage(); // manejar el error
+
+}catch(\Instapago\Exceptions\ValidationException $e){
+
+  echo $e->getMessage(); // manejar el error
+
 }
 ```
 
