@@ -26,7 +26,7 @@
  * @license MIT License
  * @copyright 2016 Angel Cruz
  */
-use \PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase as TestCase;
 
 class ApiTest extends TestCase
 {
@@ -36,7 +36,7 @@ class ApiTest extends TestCase
     protected function setUp()
     {
         $this->api = new \Instapago\Api(
-      '74D4A278-C3F8-4D7A-9894-FA0571D7E023',
+      '1019DC8E-40DE-4A47-A81B-51171DEDFB5E',
       'e9a5893e047b645fed12c82db877e05a'
     );
     }
@@ -45,7 +45,7 @@ class ApiTest extends TestCase
     {
         return [
             'amount'         => '200',
-            'description'    => 'test',
+            'description'    => 'PHPUnit Test Payment',
             'card_holder'    => 'juan peñalver',
             'card_holder_id' => '11111111',
             'card_number'    => '4111111111111111',
@@ -59,7 +59,7 @@ class ApiTest extends TestCase
     {
         return [
             'amount'         => '200',
-            'description'    => 'test',
+            'description'    => 'PHPUnit Test Payment',
             'card_holder'    => 'juan peñalver',
             'card_holder_id' => '11111111',
             'card_number'    => '4111111111111112',
