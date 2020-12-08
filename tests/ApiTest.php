@@ -27,7 +27,7 @@
  * @copyright 2016 Angel Cruz
  */
 use Instapago\Api;
-use PHPUnit\Framework\TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 class ApiTest extends TestCase
 {
@@ -45,28 +45,28 @@ class ApiTest extends TestCase
     private function _dataPagoPrueba()
     {
         return [
-            'amount'         => '200',
-            'description'    => 'PHPUnit Test Payment',
-            'card_holder'    => 'juan peñalver',
+            'amount' => '200',
+            'description' => 'PHPUnit Test Payment',
+            'card_holder' => 'juan peñalver',
             'card_holder_id' => '11111111',
-            'card_number'    => '4111111111111111',
-            'cvc'            => '123',
-            'expiration'     => '12/2020',
-            'ip'             => '127.0.0.1',
+            'card_number' => '4111111111111111',
+            'cvc' => '123',
+            'expiration' => '12/2020',
+            'ip' => '127.0.0.1',
         ];
     }
 
     private function _dataPagoPruebaError()
     {
         return [
-            'amount'         => '200.00',
-            'description'    => 'PHPUnit Test Payment',
-            'card_holder'    => 'juan peñalver',
+            'amount' => '200.00',
+            'description' => 'PHPUnit Test Payment',
+            'card_holder' => 'juan peñalver',
             'card_holder_id' => '11111111',
-            'card_number'    => '4111111111111112',
-            'cvc'            => '123',
-            'expiration'     => '12/2020',
-            'ip'             => '127.0.0.1',
+            'card_number' => '4111111111111112',
+            'cvc' => '123',
+            'expiration' => '12/2020',
+            'ip' => '127.0.0.1',
         ];
     }
 
@@ -105,7 +105,7 @@ class ApiTest extends TestCase
     public function testContinuarPago($pago)
     {
         $continue = $this->api->continuePayment([
-            'id'     => $pago['id_pago'],
+            'id' => $pago['id_pago'],
             'amount' => '200',
         ]);
 

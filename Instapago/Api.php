@@ -101,17 +101,17 @@ class Api
         (new Validator())->payment()->validate($fields);
 
         $fields = [
-            'KeyID'          => $this->keyId,
-            'PublicKeyId'    => $this->publicKeyId,
-            'amount'         => $fields['amount'],
-            'description'    => $fields['description'],
-            'cardHolder'     => $fields['card_holder'],
-            'cardHolderId'   => $fields['card_holder_id'],
-            'cardNumber'     => $fields['card_number'],
-            'cvc'            => $fields['cvc'],
+            'KeyID' => $this->keyId,
+            'PublicKeyId' => $this->publicKeyId,
+            'amount' => $fields['amount'],
+            'description' => $fields['description'],
+            'cardHolder' => $fields['card_holder'],
+            'cardHolderId' => $fields['card_holder_id'],
+            'cardNumber' => $fields['card_number'],
+            'cvc' => $fields['cvc'],
             'expirationDate' => $fields['expiration'],
-            'statusId'       => $type,
-            'IP'             => $fields['ip'],
+            'statusId' => $type,
+            'IP' => $fields['ip'],
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'POST');
@@ -135,11 +135,11 @@ class Api
     public function continuePayment($fields)
     {
         (new Validator())->release()->validate($fields);
-            $fields = [
-            'KeyID'        => $this->keyId, //required
-            'PublicKeyId'  => $this->publicKeyId, //required
-            'id'           => $fields['id'], //required
-            'amount'       => $fields['amount'], //required
+        $fields = [
+            'KeyID' => $this->keyId, //required
+            'PublicKeyId' => $this->publicKeyId, //required
+            'id' => $fields['id'], //required
+            'amount' => $fields['amount'], //required
         ];
 
         $obj = $this->curlTransaccion('complete', $fields, 'POST');
@@ -166,9 +166,9 @@ class Api
         ]);
 
         $fields = [
-            'KeyID'        => $this->keyId, //required
-            'PublicKeyId'  => $this->publicKeyId, //required
-            'id'           => $id_pago, //required
+            'KeyID' => $this->keyId, //required
+            'PublicKeyId' => $this->publicKeyId, //required
+            'id' => $id_pago, //required
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'GET');
@@ -194,9 +194,9 @@ class Api
         ]);
 
         $fields = [
-            'KeyID'        => $this->keyId, //required
-            'PublicKeyId'  => $this->publicKeyId, //required
-            'id'           => $id_pago, //required
+            'KeyID' => $this->keyId, //required
+            'PublicKeyId' => $this->publicKeyId, //required
+            'id' => $id_pago, //required
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'DELETE');
@@ -223,7 +223,7 @@ class Api
 
         $args = [];
         if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
-            throw new Exception('Not implemented yet', 1);
+            throw new Exceptions\GenericException('Not implemented yet', 1);
         }
         $key = ($method == 'GET') ? 'query' : 'form_params';
 
@@ -256,40 +256,40 @@ class Api
                 throw new Exceptions\InvalidInputException(
                     'Error al validar los datos enviados.'
                 );
-                break;
+
             case 401:
                 throw new Exceptions\AuthException(
                     'Error de autenticación, ha ocurrido un error con las llaves utilizadas.'
                 );
-                break;
+
             case 403:
                 throw new Exceptions\BankRejectException(
                     'Pago Rechazado por el banco.'
                 );
-                break;
+
             case 500:
                 throw new Exceptions\InstapagoException(
                     'Ha Ocurrido un error interno dentro del servidor.'
                 );
-                break;
+
             case 503:
                 throw new Exceptions\InstapagoException(
                     'Ha Ocurrido un error al procesar los parámetros de entrada.  Revise los datos enviados y vuelva a intentarlo.'
                 );
-                break;
+
             case 201:
                 return [
-                    'code'              => $code,
-                    'msg_banco'         => $obj['message'],
-                    'voucher'           => html_entity_decode($obj['voucher']),
-                    'id_pago'           => $obj['id'],
-                    'reference'         => $obj['reference'],
+                    'code' => $code,
+                    'msg_banco' => $obj['message'],
+                    'voucher' => html_entity_decode($obj['voucher']),
+                    'id_pago' => $obj['id'],
+                    'reference' => $obj['reference'],
                     'original_response' => $obj,
                 ];
-                break;                
+
             default:
-            throw new \Exception('Not implemented yet');
-                break;
+            throw new Exceptions\GenericException('Not implemented yet');
+
         }
     }
 }

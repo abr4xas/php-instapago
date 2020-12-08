@@ -36,64 +36,64 @@ namespace Instapago;
  */
 class Validator
 {
-	protected $validations = [];
+    protected $validations = [];
 
-	public function payment()
-	{
-		$this->validations = [
-	  'amount'         => [FILTER_VALIDATE_FLOAT],
-	  'description'    => [FILTER_VALIDATE_REGEXP, '/^(.{0,140})$/'],
-	  'card_holder'    => [FILTER_VALIDATE_REGEXP, '/^([a-zA-ZáéíóúñÁÉÍÓÚÑ\ ]+)$/'],
-	  'card_holder_id' => [FILTER_VALIDATE_REGEXP, '/^(\d{5,8})$/'],
-	  'card_number'    => [FILTER_VALIDATE_REGEXP, '/^(\d{16})$/'],
-	  'cvc'            => [FILTER_VALIDATE_INT],
-	  'expiration'     => [FILTER_VALIDATE_REGEXP, '/^(\d{2})\/(\d{4})$/'],
-	  'ip'             => [FILTER_VALIDATE_IP],
-	];
+    public function payment()
+    {
+        $this->validations = [
+      'amount' => [FILTER_VALIDATE_FLOAT],
+      'description' => [FILTER_VALIDATE_REGEXP, '/^(.{0,140})$/'],
+      'card_holder' => [FILTER_VALIDATE_REGEXP, '/^([a-zA-ZáéíóúñÁÉÍÓÚÑ\ ]+)$/'],
+      'card_holder_id' => [FILTER_VALIDATE_REGEXP, '/^(\d{5,8})$/'],
+      'card_number' => [FILTER_VALIDATE_REGEXP, '/^(\d{16})$/'],
+      'cvc' => [FILTER_VALIDATE_INT],
+      'expiration' => [FILTER_VALIDATE_REGEXP, '/^(\d{2})\/(\d{4})$/'],
+      'ip' => [FILTER_VALIDATE_IP],
+    ];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function release()
-	{
-		$this->validations = [
-	  'amount' => [FILTER_VALIDATE_FLOAT],
-	  'id'     => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
-	];
+    public function release()
+    {
+        $this->validations = [
+      'amount' => [FILTER_VALIDATE_FLOAT],
+      'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
+    ];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function query()
-	{
-		$this->validations = [
-	  'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
-	];
+    public function query()
+    {
+        $this->validations = [
+      'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
+    ];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function validate($fields)
-	{
-		foreach ($this->validations as $key => $filters) {
-			if ( ! $this->_validation($fields[$key], $filters)) {
-				throw new Exceptions\ValidationException("Error {$key}: {$fields[$key]}");
-			}
-		}
-	}
+    public function validate($fields)
+    {
+        foreach ($this->validations as $key => $filters) {
+            if (! $this->_validation($fields[$key], $filters)) {
+                throw new Exceptions\ValidationException("Error {$key}: {$fields[$key]}");
+            }
+        }
+    }
 
-	private function _validation($value, $filters)
-	{
-		$filter = $filters[0];
-		$flags = [];
-		if ($filter === FILTER_VALIDATE_REGEXP) {
-			$flags = [
-		'options' => [
-		  'regexp'=> $filters[1],
-		],
-	  ];
-		}
+    private function _validation($value, $filters)
+    {
+        $filter = $filters[0];
+        $flags = [];
+        if ($filter === FILTER_VALIDATE_REGEXP) {
+            $flags = [
+        'options' => [
+          'regexp' => $filters[1],
+        ],
+      ];
+        }
 
-		return filter_var($value, $filter, $flags);
-	}
+        return filter_var($value, $filter, $flags);
+    }
 }

@@ -2,10 +2,15 @@
 
 > Todos los cambios significativos en la librería serán registrados en éste documento.
 
-<small>Lamento haber olvidado hacer los tags correspondientes :( </small>
+### v6.0.0
+* Se actualiza el code base
+* Se agregan mejoras a nivel general
+* Se dropea soporte a cualquier cosa menor a php 7.4
 
-###v3.0.2
-* Se actualizan las pruebas unitarias 
+
+<small>Lamento haber olvidado hacer los tags correspondientes :( </small>
+### v3.0.2
+* Se actualizan las pruebas unitarias
 * Se actualiza versión de php unit a la vieja estable (5.7)
 
 ### v3.0.1
@@ -46,7 +51,7 @@
 
 ### v1.0.0
 ### Nuevo
-* Optimizaciones generales 
+* Optimizaciones generales
 * Agregada una funcion para el manejo de errores (exceptions).
 * Eliminado `fullPayment`
 * Optimizado ` __construct` (Else is never necessary and you can simplify the code to work without else.)
