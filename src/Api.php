@@ -29,6 +29,12 @@
 
 namespace Instapago\Instapago;
 
+use \Instapago\Instapago\Exceptions\AuthException;
+use \Instapago\Instapago\Exceptions\BankRejectException;
+use \Instapago\Instapago\Exceptions\GenericException;
+use \Instapago\Instapago\Exceptions\InstapagoException;
+use \Instapago\Instapago\Exceptions\InvalidInputException;
+use \Instapago\Instapago\Exceptions\TimeoutException;
 use GuzzleHttp\Client as Client;
 use GuzzleHttp\Exception\ConnectException;
 
@@ -50,7 +56,7 @@ class Api
     public function __construct(string $keyId, string $publicKeyId)
     {
         if (empty($keyId) || empty($publicKeyId)) {
-            throw new Exceptions\InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
+            throw new InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
         }
         $this->publicKeyId = $publicKeyId;
         $this->keyId = $keyId;
@@ -224,7 +230,7 @@ class Api
 
         $args = [];
         if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
-            throw new Exceptions\GenericException('Not implemented yet', 1);
+            throw new GenericException('Not implemented yet', 1);
         }
         $key = ($method == 'GET') ? 'query' : 'form_params';
 
@@ -237,7 +243,7 @@ class Api
 
             return $obj;
         } catch (ConnectException $e) {
-            throw new Exceptions\TimeoutException('Cannot connect to api.instapago.com');
+            throw new TimeoutException('Cannot connect to api.instapago.com');
         }
     }
 
@@ -254,27 +260,27 @@ class Api
 
         switch ($code) {
             case 400:
-                throw new Exceptions\InvalidInputException(
+                throw new InvalidInputException(
                     'Error al validar los datos enviados.'
                 );
 
             case 401:
-                throw new Exceptions\AuthException(
+                throw new AuthException(
                     'Error de autenticación, ha ocurrido un error con las llaves utilizadas.'
                 );
 
             case 403:
-                throw new Exceptions\BankRejectException(
+                throw new BankRejectException(
                     'Pago Rechazado por el banco.'
                 );
 
             case 500:
-                throw new Exceptions\InstapagoException(
+                throw new InstapagoException(
                     'Ha Ocurrido un error interno dentro del servidor.'
                 );
 
             case 503:
-                throw new Exceptions\InstapagoException(
+                throw new InstapagoException(
                     'Ha Ocurrido un error al procesar los parámetros de entrada.  Revise los datos enviados y vuelva a intentarlo.'
                 );
 
@@ -289,7 +295,7 @@ class Api
                 ];
 
             default:
-            throw new Exceptions\GenericException('Not implemented yet');
+            throw new GenericException('Not implemented yet');
 
         }
     }

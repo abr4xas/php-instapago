@@ -32,6 +32,15 @@ creamos un archivo `index.php`
 require 'vendor/autoload.php';
 
 use \Instapago\Instapago\Api;
+use \Instapago\Instapago\Exceptions\{
+	InstapagoException,
+	AuthException,
+	BankRejectException,
+	InvalidInputException,
+	TimeoutException,
+	ValidationException,
+	GenericException,
+};
 
 
 $paymentData = [
@@ -51,27 +60,31 @@ try{
 
   $respuesta = $api->directPayment($paymentData);
   // hacer algo con $respuesta
-}catch(\Instapago\Exceptions\InstapagoException $e){
+}catch(InstapagoException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\AuthException $e){
+}catch(AuthException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\BankRejectException $e){
+}catch(BankRejectException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\InvalidInputException $e){
+}catch(InvalidInputException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\TimeoutException $e){
+}catch(TimeoutException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\ValidationException $e){
+}catch(ValidationException $e){
+
+  echo $e->getMessage(); // manejar el error
+
+}catch(GenericException $e){
 
   echo $e->getMessage(); // manejar el error
 
