@@ -7,7 +7,7 @@
 </p>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/instapago/instapago/run-tests?label=tests)](https://github.com/instapago/instapago/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/instapago/instapago/run-tests?label=tests)](https://github.com/instapago/instapago/actions?query=workflow%3ATests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
 
 
