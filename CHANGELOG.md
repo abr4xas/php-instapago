@@ -3,6 +3,7 @@
 > Todos los cambios significativos en la librería serán registrados en éste documento.
 
 ### v6.0.0
+### Nuevo
 * Se actualiza el code base
 * Se agregan mejoras a nivel general
 * Se dropea soporte a cualquier cosa menor a php 7.4

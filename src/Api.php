@@ -27,17 +27,18 @@
  * @copyright 2016 Angel Cruz
  */
 
-namespace Instapago;
+namespace Instapago\Instapago;
 
 use GuzzleHttp\Client as Client;
+use GuzzleHttp\Exception\ConnectException;
 
 /**
  * Clase para la pasarela de pagos Instapago.
  */
 class Api
 {
-    protected $keyId;
-    protected $publicKeyId;
+    protected string $keyId;
+    protected string $publicKeyId;
 
     /**
      * Crear un nuevo objeto de Instapago.
@@ -46,7 +47,7 @@ class Api
      * @param string $publicKeyId llave publica
      *                            Requeridas.
      */
-    public function __construct($keyId, $publicKeyId)
+    public function __construct(string $keyId, string $publicKeyId)
     {
         if (empty($keyId) || empty($publicKeyId)) {
             throw new Exceptions\InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
@@ -210,12 +211,12 @@ class Api
      * Efectúa y retornar una respuesta a un metodo de pago.
      *
      * @param $url string endpoint a consultar
-     * @param $fields array datos para la consulta
      * @param $method string verbo http de la consulta
+     * @param (mixed|string)[] $fields datos para la consulta
      *
      * @return array resultados de la transaccion
      */
-    public function curlTransaccion($url, $fields, $method)
+    public function curlTransaccion(string $url, array $fields, string $method)
     {
         $client = new Client([
             'base_uri' => 'https://api.instapago.com/',
@@ -235,7 +236,7 @@ class Api
             $obj = json_decode($body, true);
 
             return $obj;
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+        } catch (ConnectException $e) {
             throw new Exceptions\TimeoutException('Cannot connect to api.instapago.com');
         }
     }
@@ -247,7 +248,7 @@ class Api
      *
      * @return array datos de transaccion
      */
-    public function checkResponseCode($obj)
+    public function checkResponseCode(array $obj)
     {
         $code = $obj['code'];
 

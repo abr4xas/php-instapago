@@ -27,7 +27,7 @@
  * @copyright 2016 José Gómez
  */
 
-namespace Instapago\Exceptions;
+namespace Instapago\Instapago\Exceptions;
 
 /**
  * Custom GenericException.

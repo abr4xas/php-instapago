@@ -6,7 +6,9 @@
     <sup style="color: #d0d0d0;"><b>NOTA</b> Los logos son propiedad de Instapago y Banesco, respectivamente.</sup>
 </p>
 
-[![GitHub issues](https://img.shields.io/github/issues/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/issues) [![GitHub forks](https://img.shields.io/github/forks/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/network) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/abr4xas/php-instapago/master/LICENSE)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/instapago/instapago/run-tests?label=tests)](https://github.com/instapago/instapago/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
 
 
 ## instalación
@@ -29,7 +31,7 @@ creamos un archivo `index.php`
 
 require 'vendor/autoload.php';
 
-use \Instapago\Api;
+use \Instapago\Instapago\Api;
 
 
 $paymentData = [
@@ -82,16 +84,7 @@ Podemos revisar rápidamente si todo funciona correctamente escribiendo:
 $ php -S localhost:8000
 ```
 
-### llaves de pruebas
-
-```
-* keyId = 74D4A278-C3F8-4D7A-9894-FA0571D7E023
-* publicKeyId = e9a5893e047b645fed12c82db877e05a
-```
-
 ## tests
-
-las llaves que se usan para los test son unicamente destinadas a este propósito.
 
 
 ```

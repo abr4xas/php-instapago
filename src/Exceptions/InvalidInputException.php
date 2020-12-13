@@ -22,16 +22,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author Angel Cruz <me@abr4xas.org>
- * @license MIT License
- * @copyright 2016 Angel Cruz
+ * @author José Gómez <1josegomezr@gmail.com>
+ * @license MIT Licens
+ * @copyright 2016 José Gómez
  */
 
-namespace Instapago\Exceptions;
+namespace Instapago\Instapago\Exceptions;
 
 /**
- * Custom InstapagoException.
+ * Custom InvalidInputException.
  */
-class InstapagoException extends \Exception
+class InvalidInputException extends \Exception
 {
 }
