@@ -82,7 +82,7 @@ class Validator
         }
     }
 
-    private function _validation(array $value, array $filters): bool
+    private function _validation(string $value, array $filters): bool
     {
         $filter = $filters[0];
         $flags = [];

@@ -1,4 +1,7 @@
-![Php Instapago](help/hYNsH6B.png)
+<p align="center">
+<img src="help/hYNsH6B.png">
+
+</p>
 <p align="center">
     Librería Instapago para PHP
 </p>
@@ -24,7 +27,7 @@ $ composer dumpautoload -o // opcional
 
 ### como usar
 
-creamos un archivo `index.php`
+>NOTA: Tomar en cuenta que esta nueva versión fue probada usando php7.4, no aseguro que funcione en algo menor a eso, en *teoría* debería pero no estoy seguro.
 
 ```php
 <?php

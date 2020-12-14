@@ -6,7 +6,7 @@
 ### Nuevo
 * Se actualiza el code base
 * Se agregan mejoras a nivel general
-* Se dropea soporte a cualquier cosa menor a php 7.4
+* Se agregan test y funcionan correctamente :)
 
 
 <small>Lamento haber olvidado hacer los tags correspondientes :( </small>
