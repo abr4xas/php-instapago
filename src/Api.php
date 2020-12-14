@@ -27,17 +27,24 @@
  * @copyright 2016 Angel Cruz
  */
 
-namespace Instapago;
+namespace Instapago\Instapago;
 
+use \Instapago\Instapago\Exceptions\AuthException;
+use \Instapago\Instapago\Exceptions\BankRejectException;
+use \Instapago\Instapago\Exceptions\GenericException;
+use \Instapago\Instapago\Exceptions\InstapagoException;
+use \Instapago\Instapago\Exceptions\InvalidInputException;
+use \Instapago\Instapago\Exceptions\TimeoutException;
 use GuzzleHttp\Client as Client;
+use GuzzleHttp\Exception\ConnectException;
 
 /**
  * Clase para la pasarela de pagos Instapago.
  */
 class Api
 {
-    protected $keyId;
-    protected $publicKeyId;
+    protected string $keyId;
+    protected string $publicKeyId;
 
     /**
      * Crear un nuevo objeto de Instapago.
@@ -46,10 +53,10 @@ class Api
      * @param string $publicKeyId llave publica
      *                            Requeridas.
      */
-    public function __construct($keyId, $publicKeyId)
+    public function __construct(string $keyId, string $publicKeyId)
     {
         if (empty($keyId) || empty($publicKeyId)) {
-            throw new Exceptions\InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
+            throw new InstapagoException('Los parámetros "keyId" y "publicKeyId" son requeridos para procesar la petición.');
         }
         $this->publicKeyId = $publicKeyId;
         $this->keyId = $keyId;
@@ -101,17 +108,17 @@ class Api
         (new Validator())->payment()->validate($fields);
 
         $fields = [
-            'KeyID'          => $this->keyId,
-            'PublicKeyId'    => $this->publicKeyId,
-            'amount'         => $fields['amount'],
-            'description'    => $fields['description'],
-            'cardHolder'     => $fields['card_holder'],
-            'cardHolderId'   => $fields['card_holder_id'],
-            'cardNumber'     => $fields['card_number'],
-            'cvc'            => $fields['cvc'],
+            'KeyID' => $this->keyId,
+            'PublicKeyId' => $this->publicKeyId,
+            'amount' => $fields['amount'],
+            'description' => $fields['description'],
+            'cardHolder' => $fields['card_holder'],
+            'cardHolderId' => $fields['card_holder_id'],
+            'cardNumber' => $fields['card_number'],
+            'cvc' => $fields['cvc'],
             'expirationDate' => $fields['expiration'],
-            'statusId'       => $type,
-            'IP'             => $fields['ip'],
+            'statusId' => $type,
+            'IP' => $fields['ip'],
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'POST');
@@ -135,11 +142,11 @@ class Api
     public function continuePayment($fields)
     {
         (new Validator())->release()->validate($fields);
-            $fields = [
-            'KeyID'        => $this->keyId, //required
-            'PublicKeyId'  => $this->publicKeyId, //required
-            'id'           => $fields['id'], //required
-            'amount'       => $fields['amount'], //required
+        $fields = [
+            'KeyID' => $this->keyId, //required
+            'PublicKeyId' => $this->publicKeyId, //required
+            'id' => $fields['id'], //required
+            'amount' => $fields['amount'], //required
         ];
 
         $obj = $this->curlTransaccion('complete', $fields, 'POST');
@@ -166,9 +173,9 @@ class Api
         ]);
 
         $fields = [
-            'KeyID'        => $this->keyId, //required
-            'PublicKeyId'  => $this->publicKeyId, //required
-            'id'           => $id_pago, //required
+            'KeyID' => $this->keyId, //required
+            'PublicKeyId' => $this->publicKeyId, //required
+            'id' => $id_pago, //required
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'GET');
@@ -194,9 +201,9 @@ class Api
         ]);
 
         $fields = [
-            'KeyID'        => $this->keyId, //required
-            'PublicKeyId'  => $this->publicKeyId, //required
-            'id'           => $id_pago, //required
+            'KeyID' => $this->keyId, //required
+            'PublicKeyId' => $this->publicKeyId, //required
+            'id' => $id_pago, //required
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'DELETE');
@@ -210,12 +217,12 @@ class Api
      * Efectúa y retornar una respuesta a un metodo de pago.
      *
      * @param $url string endpoint a consultar
-     * @param $fields array datos para la consulta
      * @param $method string verbo http de la consulta
+     * @param (mixed|string)[] $fields datos para la consulta
      *
      * @return array resultados de la transaccion
      */
-    public function curlTransaccion($url, $fields, $method)
+    public function curlTransaccion(string $url, array $fields, string $method)
     {
         $client = new Client([
             'base_uri' => 'https://api.instapago.com/',
@@ -223,7 +230,7 @@ class Api
 
         $args = [];
         if (! in_array($method, ['GET', 'POST', 'DELETE'])) {
-            throw new Exception('Not implemented yet', 1);
+            throw new GenericException('Not implemented yet', 1);
         }
         $key = ($method == 'GET') ? 'query' : 'form_params';
 
@@ -235,8 +242,8 @@ class Api
             $obj = json_decode($body, true);
 
             return $obj;
-        } catch (\GuzzleHttp\Exception\ConnectException $e) {
-            throw new Exceptions\TimeoutException('Cannot connect to api.instapago.com');
+        } catch (ConnectException $e) {
+            throw new TimeoutException('Cannot connect to api.instapago.com');
         }
     }
 
@@ -247,49 +254,49 @@ class Api
      *
      * @return array datos de transaccion
      */
-    public function checkResponseCode($obj)
+    public function checkResponseCode(array $obj)
     {
         $code = $obj['code'];
 
         switch ($code) {
             case 400:
-                throw new Exceptions\InvalidInputException(
+                throw new InvalidInputException(
                     'Error al validar los datos enviados.'
                 );
-                break;
+
             case 401:
-                throw new Exceptions\AuthException(
+                throw new AuthException(
                     'Error de autenticación, ha ocurrido un error con las llaves utilizadas.'
                 );
-                break;
+
             case 403:
-                throw new Exceptions\BankRejectException(
+                throw new BankRejectException(
                     'Pago Rechazado por el banco.'
                 );
-                break;
+
             case 500:
-                throw new Exceptions\InstapagoException(
+                throw new InstapagoException(
                     'Ha Ocurrido un error interno dentro del servidor.'
                 );
-                break;
+
             case 503:
-                throw new Exceptions\InstapagoException(
+                throw new InstapagoException(
                     'Ha Ocurrido un error al procesar los parámetros de entrada.  Revise los datos enviados y vuelva a intentarlo.'
                 );
-                break;
+
             case 201:
                 return [
-                    'code'              => $code,
-                    'msg_banco'         => $obj['message'],
-                    'voucher'           => html_entity_decode($obj['voucher']),
-                    'id_pago'           => $obj['id'],
-                    'reference'         => $obj['reference'],
+                    'code' => $code,
+                    'msg_banco' => $obj['message'],
+                    'voucher' => html_entity_decode($obj['voucher']),
+                    'id_pago' => $obj['id'],
+                    'reference' => $obj['reference'],
                     'original_response' => $obj,
                 ];
-                break;                
+
             default:
-            throw new \Exception('Not implemented yet');
-                break;
+            throw new GenericException('Not implemented yet');
+
         }
     }
 }

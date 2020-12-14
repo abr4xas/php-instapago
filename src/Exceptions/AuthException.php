@@ -27,11 +27,11 @@
  * @copyright 2016 José Gómez
  */
 
-namespace Instapago\Exceptions;
+namespace Instapago\Instapago\Exceptions;
 
 /**
- * Custom BankRejectException.
+ * Custom AuthException.
  */
-class BankRejectException extends \Exception
+class AuthException extends \Exception
 {
 }

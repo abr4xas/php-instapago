@@ -27,11 +27,11 @@
  * @copyright 2016 José Gómez
  */
 
-namespace Instapago\Exceptions;
+namespace Instapago\Instapago\Exceptions;
 
 /**
- * Custom ValidationException.
+ * Custom TimeoutException.
  */
-class ValidationException extends \Exception
+class TimeoutException extends \Exception
 {
 }
