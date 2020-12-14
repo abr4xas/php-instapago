@@ -22,16 +22,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author José Gómez <1josegomezr@gmail.com>
- * @license MIT Licens
- * @copyright 2016 José Gómez
+ * @author Angel Cruz <me@abr4xas.org>
+ * @license MIT License
+ * @copyright 2016 Angel Cruz
  */
 
-namespace Instapago\Exceptions;
+namespace Instapago\Instapago\Exceptions;
 
 /**
- * Custom TimeoutException.
+ * Custom InstapagoException.
  */
-class TimeoutException extends \Exception
+class InstapagoException extends \Exception
 {
 }

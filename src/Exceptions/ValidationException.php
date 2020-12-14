@@ -27,11 +27,11 @@
  * @copyright 2016 José Gómez
  */
 
-namespace Instapago\Exceptions;
+namespace Instapago\Instapago\Exceptions;
 
 /**
- * Custom AuthException.
+ * Custom ValidationException.
  */
-class AuthException extends \Exception
+class ValidationException extends \Exception
 {
 }

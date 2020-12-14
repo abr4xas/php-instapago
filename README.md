@@ -1,4 +1,7 @@
-![Php Instapago](help/hYNsH6B.png)
+<p align="center">
+<img src="help/hYNsH6B.png">
+
+</p>
 <p align="center">
     Librería Instapago para PHP
 </p>
@@ -6,11 +9,10 @@
     <sup style="color: #d0d0d0;"><b>NOTA</b> Los logos son propiedad de Instapago y Banesco, respectivamente.</sup>
 </p>
 
-[![GitHub issues](https://img.shields.io/github/issues/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/issues) [![GitHub forks](https://img.shields.io/github/forks/abr4xas/php-instapago.svg?style=flat-square)](https://github.com/abr4xas/php-instapago/network) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/abr4xas/php-instapago/master/LICENSE)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/abr4xas/php-instapago/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/abr4xas/php-instapago/?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a2b75f8ad49b4a988400fc4633737f28)](https://www.codacy.com/app/abr4xas/php-instapago?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=abr4xas/php-instapago&amp;utm_campaign=Badge_Grade)
-[![Join the chat at https://gitter.im/abr4xas/php-instapago](https://badges.gitter.im/abr4xas/php-instapago.svg)](https://gitter.im/abr4xas/php-instapago?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/abr4xas/php-instapago.svg?branch=master)](https://travis-ci.org/abr4xas/php-instapago)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/instapago/instapago/run-tests?label=tests)](https://github.com/instapago/instapago/actions?query=workflow%3ATests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
+
 
 ## instalación
 
@@ -25,14 +27,23 @@ $ composer dumpautoload -o // opcional
 
 ### como usar
 
-creamos un archivo `index.php`
+>NOTA: Tomar en cuenta que esta nueva versión fue probada usando php7.4, no aseguro que funcione en algo menor a eso, en *teoría* debería pero no estoy seguro.
 
 ```php
 <?php
 
 require 'vendor/autoload.php';
 
-use \Instapago\Api;
+use \Instapago\Instapago\Api;
+use \Instapago\Instapago\Exceptions\{
+	InstapagoException,
+	AuthException,
+	BankRejectException,
+	InvalidInputException,
+	TimeoutException,
+	ValidationException,
+	GenericException,
+};
 
 
 $paymentData = [
@@ -52,27 +63,31 @@ try{
 
   $respuesta = $api->directPayment($paymentData);
   // hacer algo con $respuesta
-}catch(\Instapago\Exceptions\InstapagoException $e){
+}catch(InstapagoException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\AuthException $e){
+}catch(AuthException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\BankRejectException $e){
+}catch(BankRejectException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\InvalidInputException $e){
+}catch(InvalidInputException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\TimeoutException $e){
+}catch(TimeoutException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(\Instapago\Exceptions\ValidationException $e){
+}catch(ValidationException $e){
+
+  echo $e->getMessage(); // manejar el error
+
+}catch(GenericException $e){
 
   echo $e->getMessage(); // manejar el error
 
@@ -85,17 +100,11 @@ Podemos revisar rápidamente si todo funciona correctamente escribiendo:
 $ php -S localhost:8000
 ```
 
-### llaves de pruebas
+## tests
+
 
 ```
-* keyId = 74D4A278-C3F8-4D7A-9894-FA0571D7E023
-* publicKeyId = e9a5893e047b645fed12c82db877e05a
-```
-
-## phpunit
-
-```
-$ phpunit --configuration="phpunit.xml.dist"
+$ composer all
 ```
 
 ## enlaces
