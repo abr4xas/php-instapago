@@ -10,7 +10,7 @@
 </p>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/instapago/instapago/run-tests?label=tests)](https://github.com/abr4xas/php-instapago/actions?query=workflow%3ATests+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/abr4xas/php-instapago/run-tests?label=tests)](https://github.com/abr4xas/php-instapago/actions?query=workflow%3ATests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
 
 
