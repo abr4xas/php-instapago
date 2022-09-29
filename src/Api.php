@@ -29,6 +29,7 @@
 
 namespace Instapago\Instapago;
 
+use GuzzleHttp\Exception\GuzzleException;
 use \Instapago\Instapago\Exceptions\AuthException;
 use \Instapago\Instapago\Exceptions\BankRejectException;
 use \Instapago\Instapago\Exceptions\GenericException;
@@ -150,9 +151,10 @@ class Api
         ];
 
         $obj = $this->curlTransaccion('complete', $fields, 'POST');
-        $result = $this->checkResponseCode($obj);
-
-        return $result;
+		try {
+			return $this->checkResponseCode($obj);
+		} catch (AuthException|BankRejectException|GenericException|InstapagoException|InvalidInputException $e) {
+		}
     }
 
     /**
@@ -179,23 +181,22 @@ class Api
         ];
 
         $obj = $this->curlTransaccion('payment', $fields, 'GET');
-        $result = $this->checkResponseCode($obj);
+		try {
+			return $this->checkResponseCode($obj);
+		} catch (AuthException|BankRejectException|GenericException|InstapagoException|InvalidInputException $e) {
+		}
+	}
 
-        return $result;
-    }
-
-    /**
-     * Cancelar Pago
-     * Este método funciona para cancelar un pago previamente procesado.
-     *
-     * @param string $id_pago ID del pago a cancelar
-     *
-     * @throws Exceptions\InstapagoException
-     *
-     * @return array<string> Respuesta de Instapago
-     */
-    public function cancel($id_pago)
-    {
+	/**
+	 * Cancelar Pago
+	 * Este método funciona para cancelar un pago previamente procesado.
+	 *
+	 * @param string $id_pago ID del pago a cancelar
+	 * @return array|string
+	 * @throws Exceptions\ValidationException
+	 */
+	public function cancel(string $id_pago)
+	{
         (new Validator())->query()->validate([
             'id' => $id_pago,
         ]);
@@ -206,24 +207,27 @@ class Api
             'id' => $id_pago, //required
         ];
 
-        $obj = $this->curlTransaccion('payment', $fields, 'DELETE');
-        $result = $this->checkResponseCode($obj);
+		try {
+			return $this->curlTransaccion('payment', $fields, 'DELETE');
+		} catch (GuzzleException|GenericException|TimeoutException $e) {
+			return $e->getMessage();
+		}
+	}
 
-        return $result;
-    }
-
-    /**
-     * Realiza Transaccion
-     * Efectúa y retornar una respuesta a un metodo de pago.
-     *
-     * @param $url string endpoint a consultar
-     * @param $method string verbo http de la consulta
-     * @param (mixed|string)[] $fields datos para la consulta
-     *
-     * @return array resultados de la transaccion
-     */
-    public function curlTransaccion(string $url, array $fields, string $method)
-    {
+	/**
+	 * Realiza Transaccion
+	 * Efectúa y retornar una respuesta a un metodo de pago.
+	 *
+	 * @param $url string endpoint a consultar
+	 * @param array $fields
+	 * @param $method string verbo http de la consulta
+	 * @return array resultados de la transaccion
+	 * @throws GenericException
+	 * @throws TimeoutException
+	 * @throws GuzzleException
+	 */
+    public function curlTransaccion(string $url, array $fields, string $method): array
+	{
         $client = new Client([
             'base_uri' => 'https://api.instapago.com/',
         ]);
@@ -239,21 +243,23 @@ class Api
         try {
             $request = $client->request($method, $url, $args);
             $body = $request->getBody()->getContents();
-            $obj = json_decode($body, true);
-
-            return $obj;
+			return json_decode($body, true);
         } catch (ConnectException $e) {
             throw new TimeoutException('Cannot connect to api.instapago.com');
         }
     }
 
-    /**
-     * Verifica y retornar el resultado de la transaccion.
-     *
-     * @param $obj datos de la consulta
-     *
-     * @return array datos de transaccion
-     */
+	/**
+	 * Verifica y retornar el resultado de la transaccion.
+	 *
+	 * @param array $obj datos de la consulta
+	 * @return array datos de transaccion
+	 * @throws AuthException
+	 * @throws BankRejectException
+	 * @throws GenericException
+	 * @throws InstapagoException
+	 * @throws InvalidInputException
+	 */
     public function checkResponseCode(array $obj)
     {
         $code = $obj['code'];
