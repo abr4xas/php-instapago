@@ -73,14 +73,14 @@ class Validator
         return $this;
     }
 
-	/**
-	 * @throws Exceptions\ValidationException
-	 */
-	public function validate(array $fields): void
+    /**
+     * @throws Exceptions\ValidationException
+     */
+    public function validate(array $fields): void
     {
         foreach ($this->validations as $key => $filters) {
             if (! $this->_validation($fields[$key], $filters)) {
-                throw new Exceptions\ValidationException("Error {$key}: {$fields[$key]}");
+                throw new Exceptions\ValidationException("Error? {$key}: {$fields[$key]}");
             }
         }
     }

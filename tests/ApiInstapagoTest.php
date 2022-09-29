@@ -1,118 +1,77 @@
 <?php
 
-namespace Instapago\Instapago\Tests;
-
 use Instapago\Instapago\Api;
-use Instapago\Instapago\Exceptions\InvalidInputException;
-use Instapago\Instapago\Exceptions\ValidationException;
-use PHPUnit\Framework\TestCase;
 
-class ApiInstapagoTest extends TestCase
-{
-    protected Api $api;
-//    protected $pago;
+use function PHPUnit\Framework\assertEquals;
 
-    protected function setUp(): void
-    {
-        $this->api = new Api('1E488391-7934-4301-9F8E-17DC99AB49B3', '691f77db9d62c0f2fe191ce69ed9bb41');
-    }
+beforeEach(function () {
+    $this->api = new Api('1E488391-7934-4301-9F8E-17DC99AB49B3', '691f77db9d62c0f2fe191ce69ed9bb41');
 
-    private function _dataPagoPrueba()
-    {
-        return [
-            'amount' => '200',
-            'description' => 'PHPUnit Test Payment',
-            'card_holder' => 'juan peñalver',
-            'card_holder_id' => '11111111',
-            'card_number' => '4111111111111111',
-            'cvc' => '123',
-            'expiration' => '12/2026',
-            'ip' => '127.0.0.1',
-        ];
-    }
+    $this->dataOk = [
+        'amount' => '200',
+        'description' => 'PHPUnit Test Payment',
+        'card_holder' => 'juan peñalver',
+        'card_holder_id' => '11111111',
+        'card_number' => '4111111111111111',
+        'cvc' => '123',
+        'expiration' => '12/2026',
+        'ip' => '127.0.0.1',
+    ];
 
-    private function _dataPagoPruebaError()
-    {
-        return [
-            'amount' => '200.00',
-            'description' => 'PHPUnit Test Payment',
-            'card_holder' => 'juan peñalver',
-            'card_holder_id' => '11111111',
-            'card_number' => '4111111111111112',
-            'cvc' => '123',
-            'expiration' => '12/2020',
-            'ip' => '127.0.0.1',
-        ];
-    }
+    $this->dataNoOk = [
+        'amount' => '200.00',
+        'description' => 'PHPUnit Test Payment',
+        'card_holder' => 'juan peñalver',
+        'card_holder_id' => '11111111',
+        'card_number' => '4111111111111112',
+        'cvc' => '123',
+        'expiration' => '12/2026',
+        'ip' => '127.0.0.1',
+    ];
+});
 
-    /** @test */
-    public function test_data_erronea()
-    {
-        try {
-            $data = $this->_dataPagoPruebaError();
-            $this->api->directPayment($data);
-        } catch (InvalidInputException $e) {
-            $this->assertStringContainsStringIgnoringCase('Error al validar los datos enviados', $e->getMessage());
-        } catch (ValidationException $e) {
-		}
-	}
+it('can trow an invalid input error', function () {
+    $payment = $this->api->directPayment($this->dataNoOk);
+    expect($payment)->toBe('Error al validar los datos enviados');
+});
 
-	/** @test
-	 * @throws ValidationException
-	 */
-    public function test_crear_pago_directo()
-    {
-        $data = $this->_dataPagoPrueba();
-        $pago = $this->api->directPayment($data);
-        $this->assertEquals(201, $pago['code']);
+it('can create a direct payment', function () {
+    $payment = $this->api->directPayment($this->dataOk);
 
-        return $pago;
-    }
+    assertEquals(201, $payment['code']);
+    expect($payment['message'])->toBe('Pago Aprobado')
+        ->and($payment['id_pago'])->toBeString();
 
-	/** @test
-	 * @throws ValidationException
-	 */
-    public function test_crear_pago_reserva()
-    {
-        $data = $this->_dataPagoPrueba();
-        $pago = $this->api->reservePayment($data);
-        $this->assertEquals(201, $pago['code']);
-        $this->assertStringContainsStringIgnoringCase('pago aprobado', strtolower($pago['msg_banco']));
+    return $payment;
+});
 
-        return $pago;
-    }
+it('can create a reserved payment', function () {
+    $payment = $this->api->reservePayment($this->dataOk);
 
-	/**
-	 * @depends test_crear_pago_reserva
-	 * @throws ValidationException
-	 */
-    public function testContinuarPago($pago)
-    {
-        $continue = $this->api->continuePayment([
-            'id' => $pago['id_pago'],
-            'amount' => '200',
-        ]);
+    assertEquals(201, $payment['code']);
 
-        $this->assertStringContainsStringIgnoringCase('pago completado', strtolower($continue['msg_banco']));
-    }
+    return $payment;
+});
 
-	/**
-	 * @depends test_crear_pago_directo
-	 * @throws ValidationException
-	 */
-    public function test_info_pago($pago)
-    {
-        $info = $this->api->query($pago['id_pago']);
-        $this->assertStringContainsStringIgnoringCase('autorizada', strtolower($info['msg_banco']));
-    }
+it('can complete the payment', function ($param) {
+    $payment = $this->api->completePayment([
+        'id' => $param['id_pago'],
+        'amount' => '200',
+    ]);
 
-	/**
-	 * @depends test_crear_pago_directo
-	 * @throws ValidationException
-	 */
-    public function test_cancelar_pago($pago)
-    {
-        $info = $this->api->cancel($pago['id_pago']);
-        $this->assertStringContainsStringIgnoringCase('el pago ha sido anulado', strtolower($info['message']));
-    }
-}
+    expect($payment['message'])->toBe('Pago Completado');
+
+    return $param['id_pago'];
+})->depends('it can create a reserved payment');
+
+it('can check if the payment is authorized', function ($payment) {
+    $payment = $this->api->query($payment);
+
+    expect($payment['message'])->toBe('Completada');
+})->depends('it can complete the payment');
+
+it('can cancel a payment', function ($param) {
+    $payment = $this->api->cancel($param['id_pago']);
+
+    expect($payment['message'])->toBe('El pago ha sido anulado');
+})->depends('it can create a direct payment');

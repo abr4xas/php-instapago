@@ -20,7 +20,6 @@ Table of Contents
   * [Reservar un Pago](#reservar-un-pago)
   * [Completar Pago](#completar-pago)
   * [Información de un Pago](#información-de-un-pago)
-* [Licencia](#licencia)
 
 
 ## Información General
@@ -208,7 +207,3 @@ try{
 ```
 Devuelve la misma respuesta que los métodos de crear pagos.
 
-
-## Licencia
-
-Licencia [MIT](http://opensource.org/licenses/MIT) :copyright: 2015 [Autores de la librería](AUTORES.md)
