@@ -1,28 +1,26 @@
 {
     "name": "instapago/instapago",
-    "description": "Librería Instapago para PHP",
+    "description": ":D",
     "keywords": [
-        "instapago",
+        "Instapago",
         "instapago"
     ],
     "homepage": "https://github.com/instapago/instapago",
     "license": "MIT",
     "authors": [
         {
-            "name": "angel cruz",
+            "name": "Angel Cruz",
             "email": "angel@tepuilabs.dev",
-            "homepage": "https://angelcruz.me",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
-        "guzzlehttp/guzzle": "^7.2"
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.5"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11"
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "pestphp/pest": "^1.20"
     },
     "autoload": {
         "psr-4": {
@@ -35,14 +33,13 @@
         }
     },
     "scripts": {
-        "psalm": "vendor/bin/psalm",
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
-		"all" : "composer psalm && composer test && composer test-coverage && composer format"
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true

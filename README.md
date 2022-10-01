@@ -27,7 +27,7 @@ $ composer dumpautoload -o // opcional
 
 ### como usar
 
->NOTA: Tomar en cuenta que esta nueva versión fue probada usando php7.4, no aseguro que funcione en algo menor a eso, en *teoría* debería pero no estoy seguro.
+>NOTA: Tomar en cuenta que esta nueva versión fue probada usando php8.X, no aseguro que funcione en algo menor a eso, en *teoría* debería pero no estoy seguro.
 
 ```php
 <?php
@@ -100,20 +100,29 @@ Podemos revisar rápidamente si todo funciona correctamente escribiendo:
 $ php -S localhost:8000
 ```
 
-## tests
+### tests
 
-
+```bash
+composer test
 ```
-$ composer all
-```
 
-## enlaces
+## Changelog
 
-* [Documentación de la librería](help/DOCUMENTACION.md)
-* [Registro de cambios](CHANGELOG.md)
-* [Colaboración](help/CONTRIBUCION.md)
-* [Autores](help/AUTORES.md)
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-## licencia
+## Contributing
 
-Licencia [MIT](http://opensource.org/licenses/MIT) :copyright: 2016
+Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
+
+## Security Vulnerabilities
+
+Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+
+## Credits
+
+- [Angel Cruz](https://github.com/abr4xas)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
