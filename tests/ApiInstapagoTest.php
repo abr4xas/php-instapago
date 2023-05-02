@@ -2,8 +2,6 @@
 
 use Instapago\Instapago\Api;
 
-use function PHPUnit\Framework\assertEquals;
-
 beforeEach(function () {
     $this->api = new Api('1E488391-7934-4301-9F8E-17DC99AB49B3', '691f77db9d62c0f2fe191ce69ed9bb41');
 
@@ -38,17 +36,20 @@ it('can trow an invalid input error', function () {
 it('can create a direct payment', function () {
     $payment = $this->api->directPayment($this->dataOk);
 
-    assertEquals(201, $payment['code']);
-    expect($payment['message'])->toBe('Pago Aprobado')
+    expect($payment['code'])->toBeString()
+        ->and($payment['code'])->toBe('201')
+        ->and($payment['message'])->toBe('Pago Aprobado')
         ->and($payment['id_pago'])->toBeString();
 
     return $payment;
 });
 
 it('can create a reserved payment', function () {
+
     $payment = $this->api->reservePayment($this->dataOk);
 
-    assertEquals(201, $payment['code']);
+    expect($payment['code'])->toBeString()
+        ->and($payment['code'])->toBe('201');
 
     return $payment;
 });

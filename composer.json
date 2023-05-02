@@ -5,7 +5,7 @@
         "Instapago",
         "instapago"
     ],
-    "homepage": "https://github.com/instapago/instapago",
+    "homepage": "https://github.com/abr4xas/instapago",
     "license": "MIT",
     "authors": [
         {
@@ -15,12 +15,12 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "guzzlehttp/guzzle": "^7.5"
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.5.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "pestphp/pest": "^1.20"
+        "laravel/pint": "^1.10",
+        "pestphp/pest": "^2.6"
     },
     "autoload": {
         "psr-4": {
@@ -35,7 +35,7 @@
     "scripts": {
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+        "format": "vendor/bin/pint"
     },
     "config": {
         "sort-packages": true,
