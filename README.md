@@ -10,9 +10,8 @@
 </p>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/abr4xas/php-instapago/Tests?style=flat-square)](https://github.com/abr4xas/php-instapago/actions?query=workflow%3ATests+branch%3Amaster)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/abr4xas/php-instapago/run-tests-pest.yml?style=flat-square)](https://github.com/abr4xas/php-instapago/actions?query=workflow%3ATests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/instapago/instapago.svg?style=flat-square)](https://packagist.org/packages/instapago/instapago)
-
 
 ## instalación
 
