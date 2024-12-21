@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * The MIT License (MIT)
  * Copyright (c) 2016 Angel Cruz <me@abr4xas.org>.
@@ -29,74 +31,65 @@
 
 namespace Instapago\Instapago;
 
-/**
- * Validator.
- *
- * Valida las entradas de datos para los métodos del API.
- */
+use Instapago\Instapago\Exceptions\ValidationException;
+
 class Validator
 {
-    protected array $validations = [];
+    private array $validations = [];
 
-    public function payment(): self
+    public function setValidations(string $type): self
     {
-        $this->validations = [
-            'amount' => [FILTER_VALIDATE_FLOAT],
-            'description' => [FILTER_VALIDATE_REGEXP, '/^(.{0,140})$/'],
-            'card_holder' => [FILTER_VALIDATE_REGEXP, '/^([a-zA-ZáéíóúñÁÉÍÓÚÑ\ ]+)$/'],
-            'card_holder_id' => [FILTER_VALIDATE_REGEXP, '/^(\d{5,8})$/'],
-            'card_number' => [FILTER_VALIDATE_REGEXP, '/^(\d{16})$/'],
-            'cvc' => [FILTER_VALIDATE_INT],
-            'expiration' => [FILTER_VALIDATE_REGEXP, '/^(\d{2})\/(\d{4})$/'],
-            'ip' => [FILTER_VALIDATE_IP],
-        ];
-
-        return $this;
-    }
-
-    public function release(): self
-    {
-        $this->validations = [
-            'amount' => [FILTER_VALIDATE_FLOAT],
-            'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
-        ];
-
-        return $this;
-    }
-
-    public function query(): self
-    {
-        $this->validations = [
-            'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
-        ];
+        $rules = $this->getValidationRules();
+        $this->validations = $rules[$type] ?? [];
 
         return $this;
     }
 
     /**
-     * @throws Exceptions\ValidationException
+     * @throws ValidationException
      */
     public function validate(array $fields): void
     {
+        $errors = [];
         foreach ($this->validations as $key => $filters) {
-            if (! $this->_validation($fields[$key], $filters)) {
-                throw new Exceptions\ValidationException("Error? {$key}: {$fields[$key]}");
+            if (! $this->_validation($fields[$key] ?? null, $filters)) {
+                $errors[$key] = "Invalid value for {$key}";
             }
+        }
+
+        if ($errors) {
+            throw new ValidationException(json_encode($errors));
         }
     }
 
-    private function _validation(string $value, array $filters): bool
+    private function _validation(mixed $value, array $filters): bool
     {
         $filter = $filters[0];
-        $flags = [];
-        if ($filter === FILTER_VALIDATE_REGEXP) {
-            $flags = [
-                'options' => [
-                    'regexp' => $filters[1],
-                ],
-            ];
-        }
+        $options = $filter === FILTER_VALIDATE_REGEXP ? ['options' => ['regexp' => $filters[1]]] : [];
 
-        return filter_var($value, $filter, $flags);
+        return filter_var($value, $filter, $options) !== false;
+    }
+
+    private function getValidationRules(): array
+    {
+        return [
+            'payment' => [
+                'amount' => [FILTER_VALIDATE_FLOAT],
+                'description' => [FILTER_VALIDATE_REGEXP, '/^(.{0,140})$/'],
+                'card_holder' => [FILTER_VALIDATE_REGEXP, '/^([a-zA-ZáéíóúñÁÉÍÓÚÑ\ ]+)$/'],
+                'card_holder_id' => [FILTER_VALIDATE_REGEXP, '/^(\d{5,8})$/'],
+                'card_number' => [FILTER_VALIDATE_REGEXP, '/^(\d{16})$/'],
+                'cvc' => [FILTER_VALIDATE_INT],
+                'expiration' => [FILTER_VALIDATE_REGEXP, '/^(\d{2})\/(\d{4})$/'],
+                'ip' => [FILTER_VALIDATE_IP],
+            ],
+            'release' => [
+                'amount' => [FILTER_VALIDATE_FLOAT],
+                'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
+            ],
+            'query' => [
+                'id' => [FILTER_VALIDATE_REGEXP, '/^([0-9a-f]{8})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{4})\-([0-9a-f]{12})$/'],
+            ],
+        ];
     }
 }

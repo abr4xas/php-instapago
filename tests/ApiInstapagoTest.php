@@ -30,7 +30,7 @@ beforeEach(function () {
 
 it('can trow an invalid input error', function () {
     $payment = $this->api->directPayment($this->dataNoOk);
-    expect($payment)->toBe('Error al validar los datos enviados');
+    expect($payment)->toBe('Datos inválidos.');
 });
 
 it('can create a direct payment', function () {

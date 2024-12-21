@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instapago\Instapago;
 
 use GuzzleHttp\Client as Client;
@@ -20,9 +22,9 @@ class Api
     /**
      * Crear un nuevo objeto de Instapago.
      *
-     * @param  string  $keyId llave privada
-     * @param  string  $publicKeyId llave publica
-     *                            Requeridas.
+     * @param  string  $keyId  llave privada
+     * @param  string  $publicKeyId  llave pública
+     *                               Requeridas.
      *
      * @throws InstapagoException
      */
@@ -36,11 +38,11 @@ class Api
     /**
      * Crear un pago directo.
      */
-    public function directPayment(array $fields): array|string
+    public function directPayment(array $fields): array | string
     {
         try {
             return $this->payment('2', $fields);
-        } catch (AuthException|BankRejectException|GenericException|InstapagoException|InvalidInputException|TimeoutException|Exceptions\ValidationException|GuzzleException $e) {
+        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException | TimeoutException | Exceptions\ValidationException | GuzzleException $e) {
             return $e->getMessage();
         }
     }
@@ -48,11 +50,11 @@ class Api
     /**
      * Crear un pago diferido o reservado.
      */
-    public function reservePayment($fields): array|string
+    public function reservePayment($fields): array | string
     {
         try {
             return $this->payment('1', $fields);
-        } catch (AuthException|BankRejectException|GenericException|InstapagoException|InvalidInputException|TimeoutException|Exceptions\ValidationException|GuzzleException $e) {
+        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException | TimeoutException | Exceptions\ValidationException | GuzzleException $e) {
             return $e->getMessage();
         }
     }
@@ -67,9 +69,9 @@ class Api
      * @throws GuzzleException
      * @throws TimeoutException
      */
-    public function completePayment(array $fields): array|string
+    public function completePayment(array $fields): array | string
     {
-        (new Validator())->release()->validate($fields);
+        (new Validator())->validate($fields);
 
         $fields = [
             'KeyID' => $this->keyId, //required
@@ -78,11 +80,11 @@ class Api
             'amount' => $fields['amount'], //required
         ];
 
-        $obj = $this->curlTransaccion('complete', $fields, 'POST');
+        $obj = $this->curlTransaction('complete', $fields, 'POST');
 
         try {
             return $this->checkResponseCode($obj);
-        } catch (AuthException|BankRejectException|GenericException|InstapagoException|InvalidInputException $e) {
+        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException $e) {
             return $e->getMessage();
         }
     }
@@ -97,9 +99,9 @@ class Api
      * @throws GuzzleException
      * @throws TimeoutException
      */
-    public function query(string $id_pago): array|string
+    public function query(string $id_pago): array | string
     {
-        (new Validator())->query()->validate([
+        (new Validator())->validate([
             'id' => $id_pago,
         ]);
 
@@ -109,11 +111,11 @@ class Api
             'id' => $id_pago, //required
         ];
 
-        $obj = $this->curlTransaccion('payment', $fields, 'GET');
+        $obj = $this->curlTransaction('payment', $fields, 'GET');
 
         try {
             return $this->checkResponseCode($obj);
-        } catch (AuthException|BankRejectException|GenericException|InstapagoException|InvalidInputException $e) {
+        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException $e) {
             return $e->getMessage();
         }
     }
@@ -124,9 +126,9 @@ class Api
      *
      * @throws Exceptions\ValidationException
      */
-    public function cancel(string $id_pago): array|string
+    public function cancel(string $id_pago): array | string
     {
-        (new Validator())->query()->validate([
+        (new Validator())->validate([
             'id' => $id_pago,
         ]);
 
@@ -137,8 +139,8 @@ class Api
         ];
 
         try {
-            return $this->curlTransaccion('payment', $fields, 'DELETE');
-        } catch (GuzzleException|GenericException|TimeoutException $e) {
+            return $this->curlTransaction('payment', $fields, 'DELETE');
+        } catch (GuzzleException | GenericException | TimeoutException $e) {
             return $e->getMessage();
         }
     }
@@ -146,7 +148,7 @@ class Api
     /**
      * Crear un pago.
      *
-     * @param  string  $type   tipo de pago ('1' o '0')
+     * @param  string  $type  tipo de pago ('1' o '0')
      *
      * @throws AuthException
      * @throws BankRejectException
@@ -158,7 +160,7 @@ class Api
      */
     private function payment(string $type, array $fields): array
     {
-        (new Validator())->payment()->validate($fields);
+        (new Validator())->validate($fields);
 
         $fields = [
             'KeyID' => $this->keyId,
@@ -174,24 +176,24 @@ class Api
             'IP' => $fields['ip'],
         ];
 
-        $obj = $this->curlTransaccion('payment', $fields, 'POST');
+        $obj = $this->curlTransaction('payment', $fields, 'POST');
 
         return $this->checkResponseCode($obj);
     }
 
     /**
-     * Realiza Transaccion
-     * Efectúa y retornar una respuesta a un metodo de pago.
+     * Realiza Transacción
+     * Efectúa y retornar una respuesta a un método de pago.
      *
-     * @param $url string endpoint a consultar
-     * @param $method string verbo http de la consulta
-     * @return array resultados de la transaccion
+     * @param  $url  string endpoint a consultar
+     * @param  $method  string verbo http de la consulta
+     * @return array resultados de la transacción
      *
      * @throws GenericException
      * @throws TimeoutException
      * @throws GuzzleException
      */
-    private function curlTransaccion(string $url, array $fields, string $method): array
+    private function curlTransaction(string $url, array $fields, string $method): array
     {
         $client = new Client([
             'base_uri' => 'https://api.instapago.com/',
@@ -216,10 +218,10 @@ class Api
     }
 
     /**
-     * Verifica y retornar el resultado de la transaccion.
+     * Verifica y retornar el resultado de la transacción.
      *
-     * @param  array  $obj datos de la consulta
-     * @return array datos de transaccion
+     * @param  array  $obj  datos de la consulta
+     * @return array datos de transacción
      *
      * @throws AuthException
      * @throws BankRejectException
@@ -229,29 +231,15 @@ class Api
      */
     private function checkResponseCode(array $obj): array
     {
-
         return match ($obj['code']) {
-            '400' => throw new InvalidInputException(
-                'Error al validar los datos enviados'
-            ),
-            '401' => throw new AuthException(
-                'Error de autenticación, ha ocurrido un error con las llaves utilizadas'
-            ),
-            '403' => throw new BankRejectException(
-                'Pago Rechazado por el banco'
-            ),
-            '500' => throw new InstapagoException(
-                'Ha Ocurrido un error interno dentro del servidor'
-            ),
-            '503' => throw new InstapagoException(
-                'Ha Ocurrido un error al procesar los parámetros de entrada.  Revise los datos enviados y vuelva a intentarlo'
-            ),
+            '400' => throw new InvalidInputException('Datos inválidos.'),
+            '401' => throw new AuthException('Error de autenticación.'),
+            '403' => throw new BankRejectException('Pago rechazado por el banco.'),
+            '500' => throw new InstapagoException('Error interno del servidor.'),
+            '503' => throw new InstapagoException('Error al procesar los parámetros de entrada.'),
             '201' => $this->getResponse($obj),
-            default => throw new GenericException(
-                'Not implemented yet'
-            ),
+            default => throw new GenericException('Respuesta no implementada: ' . $obj['code']),
         };
-
     }
 
     private function getResponse(array $obj): array
