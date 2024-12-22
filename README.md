@@ -36,10 +36,10 @@ require 'vendor/autoload.php';
 use \Instapago\Instapago\Api;
 use \Instapago\Instapago\Exceptions\{
 	InstapagoException,
-	AuthException,
-	BankRejectException,
-	InvalidInputException,
-	TimeoutException,
+	InstapagoAuthException,
+	InstapagoBankRejectException,
+	InstapagoInvalidInputException,
+	InstapagoTimeoutException,
 	ValidationException,
 	GenericException,
 };
@@ -66,19 +66,19 @@ try{
 
   echo $e->getMessage(); // manejar el error
 
-}catch(AuthException $e){
+}catch(InstapagoAuthException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(BankRejectException $e){
+}catch(InstapagoBankRejectException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(InvalidInputException $e){
+}catch(InstapagoInvalidInputException $e){
 
   echo $e->getMessage(); // manejar el error
 
-}catch(TimeoutException $e){
+}catch(InstapagoTimeoutException $e){
 
   echo $e->getMessage(); // manejar el error
 

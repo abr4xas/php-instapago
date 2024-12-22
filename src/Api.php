@@ -7,12 +7,13 @@ namespace Instapago\Instapago;
 use GuzzleHttp\Client as Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
-use Instapago\Instapago\Exceptions\AuthException;
-use Instapago\Instapago\Exceptions\BankRejectException;
+use Instapago\Instapago\Exceptions\InstapagoAuthException;
+use Instapago\Instapago\Exceptions\InstapagoBankRejectException;
 use Instapago\Instapago\Exceptions\GenericException;
 use Instapago\Instapago\Exceptions\InstapagoException;
-use Instapago\Instapago\Exceptions\InvalidInputException;
-use Instapago\Instapago\Exceptions\TimeoutException;
+use Instapago\Instapago\Exceptions\InstapagoInvalidInputException;
+use Instapago\Instapago\Exceptions\InstapagoTimeoutException;
+use Instapago\Instapago\Exceptions\ValidationException;
 
 /**
  * Clase para la pasarela de pagos Instapago.
@@ -42,7 +43,7 @@ class Api
     {
         try {
             return $this->payment('2', $fields);
-        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException | TimeoutException | Exceptions\ValidationException | GuzzleException $e) {
+        } catch (InstapagoAuthException | InstapagoBankRejectException | GenericException | InstapagoException | InstapagoInvalidInputException | InstapagoTimeoutException | ValidationException | GuzzleException $e) {
             return $e->getMessage();
         }
     }
@@ -54,7 +55,7 @@ class Api
     {
         try {
             return $this->payment('1', $fields);
-        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException | TimeoutException | Exceptions\ValidationException | GuzzleException $e) {
+        } catch (InstapagoAuthException | InstapagoBankRejectException | GenericException | InstapagoException | InstapagoInvalidInputException | InstapagoTimeoutException | ValidationException | GuzzleException $e) {
             return $e->getMessage();
         }
     }
@@ -64,14 +65,14 @@ class Api
      * Este método funciona para procesar un bloqueo o pre-autorización
      * para así procesarla y hacer el cobro respectivo.
      *
-     * @throws Exceptions\ValidationException
+     * @throws ValidationException
      * @throws GenericException
      * @throws GuzzleException
-     * @throws TimeoutException
+     * @throws InstapagoTimeoutException
      */
     public function completePayment(array $fields): array | string
     {
-        (new Validator())->validate($fields);
+        (new Validator())->setValidations('release')->validate($fields);
 
         $fields = [
             'KeyID' => $this->keyId, //required
@@ -84,8 +85,8 @@ class Api
 
         try {
             return $this->checkResponseCode($obj);
-        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException $e) {
-            return $e->getMessage();
+        } catch (InstapagoAuthException | InstapagoBankRejectException | GenericException | InstapagoException | InstapagoInvalidInputException $e) {
+            return $e;
         }
     }
 
@@ -94,14 +95,14 @@ class Api
      * Este método funciona para procesar un bloqueo o pre-autorización
      * para así procesarla y hacer el cobro respectivo.
      *
-     * @throws Exceptions\ValidationException
+     * @throws ValidationException
      * @throws GenericException
      * @throws GuzzleException
-     * @throws TimeoutException
+     * @throws InstapagoTimeoutException
      */
     public function query(string $id_pago): array | string
     {
-        (new Validator())->validate([
+        (new Validator())->setValidations('query')->validate([
             'id' => $id_pago,
         ]);
 
@@ -115,7 +116,7 @@ class Api
 
         try {
             return $this->checkResponseCode($obj);
-        } catch (AuthException | BankRejectException | GenericException | InstapagoException | InvalidInputException $e) {
+        } catch (InstapagoAuthException | InstapagoBankRejectException | GenericException | InstapagoException | InstapagoInvalidInputException $e) {
             return $e->getMessage();
         }
     }
@@ -124,11 +125,11 @@ class Api
      * Cancelar Pago
      * Este método funciona para cancelar un pago previamente procesado.
      *
-     * @throws Exceptions\ValidationException
+     * @throws ValidationException
      */
     public function cancel(string $id_pago): array | string
     {
-        (new Validator())->validate([
+        (new Validator())->setValidations('query')->validate([
             'id' => $id_pago,
         ]);
 
@@ -140,7 +141,7 @@ class Api
 
         try {
             return $this->curlTransaction('payment', $fields, 'DELETE');
-        } catch (GuzzleException | GenericException | TimeoutException $e) {
+        } catch (GuzzleException | GenericException | InstapagoTimeoutException $e) {
             return $e->getMessage();
         }
     }
@@ -150,17 +151,17 @@ class Api
      *
      * @param  string  $type  tipo de pago ('1' o '0')
      *
-     * @throws AuthException
-     * @throws BankRejectException
-     * @throws Exceptions\ValidationException
+     * @throws InstapagoAuthException
+     * @throws InstapagoBankRejectException
+     * @throws ValidationException
      * @throws GenericException
      * @throws InstapagoException
-     * @throws InvalidInputException
-     * @throws TimeoutException|GuzzleException
+     * @throws InstapagoInvalidInputException
+     * @throws InstapagoTimeoutException|GuzzleException
      */
     private function payment(string $type, array $fields): array
     {
-        (new Validator())->validate($fields);
+        (new Validator())->setValidations('payment')->validate($fields);
 
         $fields = [
             'KeyID' => $this->keyId,
@@ -190,7 +191,7 @@ class Api
      * @return array resultados de la transacción
      *
      * @throws GenericException
-     * @throws TimeoutException
+     * @throws InstapagoTimeoutException
      * @throws GuzzleException
      */
     private function curlTransaction(string $url, array $fields, string $method): array
@@ -213,7 +214,7 @@ class Api
 
             return json_decode($body, true);
         } catch (ConnectException $e) {
-            throw new TimeoutException('Cannot connect to api.instapago.com');
+            throw new InstapagoTimeoutException('Cannot connect to api.instapago.com');
         }
     }
 
@@ -223,18 +224,18 @@ class Api
      * @param  array  $obj  datos de la consulta
      * @return array datos de transacción
      *
-     * @throws AuthException
-     * @throws BankRejectException
+     * @throws InstapagoAuthException
+     * @throws InstapagoBankRejectException
      * @throws GenericException
      * @throws InstapagoException
-     * @throws InvalidInputException
+     * @throws InstapagoInvalidInputException
      */
     private function checkResponseCode(array $obj): array
     {
         return match ($obj['code']) {
-            '400' => throw new InvalidInputException('Datos inválidos.'),
-            '401' => throw new AuthException('Error de autenticación.'),
-            '403' => throw new BankRejectException('Pago rechazado por el banco.'),
+            '400' => throw new InstapagoInvalidInputException('Datos inválidos.'),
+            '401' => throw new InstapagoAuthException('Error de autenticación.'),
+            '403' => throw new InstapagoBankRejectException('Pago rechazado por el banco.'),
             '500' => throw new InstapagoException('Error interno del servidor.'),
             '503' => throw new InstapagoException('Error al procesar los parámetros de entrada.'),
             '201' => $this->getResponse($obj),

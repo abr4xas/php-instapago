@@ -14,3 +14,4 @@
 /docs                    export-ignore
 /UPGRADING.md            export-ignore
 /help                    export-ignore
+/.phpunit.cache          export-ignore
