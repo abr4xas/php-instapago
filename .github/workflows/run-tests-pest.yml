@@ -5,11 +5,12 @@ on: [pull_request]
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
     strategy:
       fail-fast: true
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: [8.2, 8.1]
+        php: [8.2, 8.3, 8.4]
         stability: [prefer-lowest, prefer-stable]
 
     name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -33,5 +34,8 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
+      - name: List Installed Dependencies
+        run: composer show -D
+
       - name: Execute tests
-        run: vendor/bin/pest
+        run: vendor/bin/pest --ci

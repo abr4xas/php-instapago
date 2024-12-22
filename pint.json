@@ -1,0 +1,19 @@
+{
+    "preset": "psr12",
+    "rules": {
+        "blank_line_before_statement": true,
+        "method_argument_space": true,
+        "single_trait_insert_per_statement": true,
+        "types_spaces": {
+            "space": "single"
+        },
+        "align_multiline_comment": true,
+        "array_indentation": true,
+        "array_syntax": true,
+        "concat_space": {
+            "spacing": "one"
+        },
+        "explicit_string_variable": true,
+        "fully_qualified_strict_types": true
+    }
+}
