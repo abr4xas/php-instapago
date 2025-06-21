@@ -33,7 +33,7 @@ namespace Instapago\Instapago;
 
 use Instapago\Instapago\Exceptions\ValidationException;
 
-class Validator
+final class Validator
 {
     private array $validations = [];
 

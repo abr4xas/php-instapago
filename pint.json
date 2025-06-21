@@ -1,12 +1,18 @@
 {
-    "preset": "psr12",
+    "preset": "laravel",
     "rules": {
+        "final_class": true,
+        "combine_consecutive_issets": true,
+        "combine_consecutive_unsets": true,
+        "backtick_to_shell_exec": true,
+        "blank_line_between_import_groups": true,
         "blank_line_before_statement": true,
         "method_argument_space": true,
         "single_trait_insert_per_statement": true,
         "types_spaces": {
             "space": "single"
         },
+        "declare_strict_types": true,
         "align_multiline_comment": true,
         "array_indentation": true,
         "array_syntax": true,
@@ -14,6 +20,23 @@
             "spacing": "one"
         },
         "explicit_string_variable": true,
-        "fully_qualified_strict_types": true
+        "simple_to_complex_string_variable": true,
+        "strict_comparison": true,
+        "mb_str_functions": true,
+        "modernize_types_casting": true,
+        "new_with_parentheses": false,
+        "no_superfluous_elseif": true,
+        "no_useless_else": true,
+        "no_multiple_statements_per_line": true,
+        "array_push": true,
+        "ordered_interfaces": true,
+        "ordered_traits": true,
+        "protected_to_private": true,
+        "self_accessor": true,
+        "self_static_accessor": true,
+        "visibility_required": true,
+        "ternary_to_null_coalescing": true,
+        "use_arrow_functions": true,
+        "modernize_strpos": true
     }
 }

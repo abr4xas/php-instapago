@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instapago\Instapago\Exceptions;
 
 use Exception;
@@ -7,6 +9,4 @@ use Exception;
 /**
  * Custom InstapagoTimeoutException.
  */
-class InstapagoTimeoutException extends Exception
-{
-}
+final class InstapagoTimeoutException extends Exception {}

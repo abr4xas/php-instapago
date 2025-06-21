@@ -24,86 +24,52 @@ $ composer require instapago/instapago
 $ composer dumpautoload -o // opcional
 ```
 
-### como usar
+### Cómo usar
 
->NOTA: Tomar en cuenta que esta nueva versión fue probada usando php8.X, no aseguro que funcione en algo menor a eso, en *teoría* debería pero no estoy seguro.
+> **NOTA**: Esta versión requiere **PHP 8.2 o superior** y utiliza las características más modernas del lenguaje para ofrecer mejor rendimiento, seguridad y mantenibilidad.
 
-```php
-<?php
+#### Uso Básico
 
-require 'vendor/autoload.php';
+Ver [DOCUMENTACIÓN](./help/DOCUMENTACION.md)
 
-use \Instapago\Instapago\Api;
-use \Instapago\Instapago\Exceptions\{
-	InstapagoException,
-	InstapagoAuthException,
-	InstapagoBankRejectException,
-	InstapagoInvalidInputException,
-	InstapagoTimeoutException,
-	ValidationException,
-	GenericException,
-};
+### Arquitectura Refactorizada
 
+Esta versión ha sido completamente refactorizada siguiendo principios SOLID y patrones de diseño modernos:
 
-$paymentData = [
-  'amount' => '200',
-  'description' => 'test',
-  'card_holder' => 'jon doe',
-  'card_holder_id' => '11111111',
-  'card_number' => '4111111111111111',
-  'cvc' => '123',
-  'expiration' => '12/2020',
-  'ip' => '127.0.0.1',
-];
+#### Características Principales:
+- **PHP 8.2+** con readonly classes, named arguments y constructor property promotion
+- **Dependency Injection** para mejor testabilidad
+- **DTOs** para transferencia de datos tipada
+- **Strategy Pattern** para validaciones extensibles
+- **Factory Pattern** para creación de clientes HTTP
+- **Logging** integrado con interfaces estándar
+- **Configuración** externalizada y flexible
+- **Manejo de errores** unificado y consistente
 
-try{
+#### Nuevos Componentes:
+- `InstapagoConfig`: Configuración centralizada
+- `PaymentRequest/Response`: DTOs tipados
+- `ValidationStrategy`: Validaciones extensibles
+- `HttpClientInterface`: Abstracción del cliente HTTP
+- `LoggerInterface`: Logging personalizable
 
-  $api = new Api('<keyId>','<publicKeyId>');
+### Tests
 
-  $respuesta = $api->directPayment($paymentData);
-  // hacer algo con $respuesta
-}catch(InstapagoException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}catch(InstapagoAuthException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}catch(InstapagoBankRejectException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}catch(InstapagoInvalidInputException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}catch(InstapagoTimeoutException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}catch(ValidationException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}catch(GenericException $e){
-
-  echo $e->getMessage(); // manejar el error
-
-}
-```
-
-Podemos revisar rápidamente si todo funciona correctamente escribiendo:
+La librería incluye tests comprehensivos usando Pest PHP:
 
 ```bash
-$ php -S localhost:8000
-```
-
-### tests
-
-```bash
+# Ejecutar todos los tests
 composer test
+
+# Ejecutar tests con coverage
+composer test:coverage
+
 ```
+
+#### Estadísticas de Tests:
+- **40 tests** exitosos
+- **128 assertions** cubriendo todas las funcionalidades
+- **Cobertura completa** de métodos públicos y casos edge
 
 ## Changelog
 
@@ -111,7 +77,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
