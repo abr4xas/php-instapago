@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Instapago\Instapago\Exceptions;
 
 use Exception;
@@ -7,6 +9,4 @@ use Exception;
 /**
  * Custom InstapagoBankRejectException.
  */
-class InstapagoBankRejectException extends Exception
-{
-}
+final class InstapagoBankRejectException extends Exception {}

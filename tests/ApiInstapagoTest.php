@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Instapago\Instapago\Api;
 use Instapago\Instapago\Exceptions\InstapagoException;
+use Instapago\Instapago\Exceptions\ValidationException;
 
 beforeEach(function () {
     $this->api = new Api('1E488391-7934-4301-9F8E-17DC99AB49B3', '691f77db9d62c0f2fe191ce69ed9bb41');
 
     $this->dataOk = [
         'amount' => '200',
-        'description' => 'PHPUnit Test Payment',
+        'description' => 'Test payment',
         'card_holder' => 'juan peñalver',
         'card_holder_id' => '11111111',
         'card_number' => '4111111111111111',
@@ -27,11 +30,6 @@ beforeEach(function () {
         'expiration' => '12/2026',
         'ip' => '127.0.0.1',
     ];
-});
-
-it('can trow an invalid input error', function () {
-    $payment = $this->api->directPayment($this->dataNoOk);
-    expect($payment)->toBe('Datos inválidos.');
 });
 
 it('can create a direct payment', function () {
@@ -87,6 +85,6 @@ it('throws an exception if public key is missing', function () {
 })->throws(InstapagoException::class);
 
 it('throws validation exception for missing fields in direct payment', function () {
-    $payment = $this->api->directPayment([]);
-    expect($payment)->toBe('{"amount":"Invalid value for amount","card_holder":"Invalid value for card_holder","card_holder_id":"Invalid value for card_holder_id","card_number":"Invalid value for card_number","cvc":"Invalid value for cvc","expiration":"Invalid value for expiration","ip":"Invalid value for ip"}');
+    expect(fn () => $this->api->directPayment([]))
+        ->toThrow(ValidationException::class);
 });

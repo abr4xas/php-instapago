@@ -1,6 +1,6 @@
 {
     "name": "instapago/instapago",
-    "description": "Instapago is a technological solution designed for the market of electronic commerce (eCommerce) in Venezuela and Latin America, with the intention of offering a premium product category, which allows people and companies leverage their expansion capabilities, facilitating payment mechanisms for customers with a friendly integration into systems currently used.",
+    "description": "Instapago is a technological solution designed for the market of electronic commerce (eCommerce) in Venezuela and Latin America.",
     "keywords": [
         "Instapago",
         "instapago"
@@ -16,12 +16,12 @@
     ],
     "require": {
         "php": "^8.2|^8.3|^8.4",
-        "guzzlehttp/guzzle": "^7.9.2"
+        "guzzlehttp/guzzle": "^7.9.3"
     },
     "require-dev": {
-        "laravel/pint": "^1.18.3",
-        "mockery/mockery": "^1.6",
-        "pestphp/pest": "^3.7"
+        "laravel/pint": "^1.22.1",
+        "mockery/mockery": "^1.6.12",
+        "pestphp/pest": "^3.8.2"
     },
     "autoload": {
         "psr-4": {
