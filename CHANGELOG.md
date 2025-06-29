@@ -2,6 +2,18 @@
 
 All notable changes to `instapago` will be documented in this file.
 
+## v10.0.0 - 2025-06-29
+
+### What's Changed
+
+* ⬆️ Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/abr4xas/php-instapago/pull/63
+* ⬆️ Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/abr4xas/php-instapago/pull/64
+* ⬆️ Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot in https://github.com/abr4xas/php-instapago/pull/65
+* Resumen de Refactorizaciones - Instapago PHP SDK by @abr4xas in https://github.com/abr4xas/php-instapago/pull/67
+* ⬆️ Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot in https://github.com/abr4xas/php-instapago/pull/66
+
+**Full Changelog**: https://github.com/abr4xas/php-instapago/compare/v9.0.0...v10.0.0
+
 ## v9.0.0 - 2024-12-22
 
 ### What's Changed
